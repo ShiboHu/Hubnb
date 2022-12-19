@@ -25,34 +25,36 @@ const validateSignup = [
       .exists({ checkFalsy: true })
       .isLength({ min: 6 })
       .withMessage('Password must be 6 characters or more.'),
+      check('firstName')
+      .exists({checkFalsy: true}) 
+      .withMessage('please enter firstName'),
+      check('lastName')
+      .exists({checkFalsy: true}) 
+      .withMessage('please enter lastName'),
+      check('phoneNumber')
+      .exists({checkFalsy: true}) 
+      .isLength({min: 10, max: 12})
+      .withMessage('please enter a valid phone number'), 
     handleValidationErrors
   ];
 //methods end!!!
 
 // Sign up
-router.post( '/', async (req, res) => {
-      const { email, password, username } = req.body;
-      const user = await User.signup({ email, username, password });
-  
-      await setTokenCookie(res, user);
-  
-      return res.json({
-        user: user
-      });
-    }
-  );
-
   //check for validate signup inputs 
   router.post('/', validateSignup, async (req, res) => {
-      const { email, password, username } = req.body;
-      const user = await User.signup({ email, username, password });
-  
+      const { firstName, lastName, phoneNumber, email, password, username } = req.body;
+      const user = await User.signup({ firstName, lastName, phoneNumber, email, username, password });
+
+
       await setTokenCookie(res, user);
-  
+    
       return res.json({
         user: user
       });
     }
   );
 
+  router.get('/' , async (req, res) => { 
+      res.send('signup with firstName, lastName, username, email and phone number')
+  })
 module.exports = router;

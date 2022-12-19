@@ -1,4 +1,7 @@
 'use strict';
+
+const { sequelize } = require('../models');
+
 /** @type {import('sequelize-cli').Migration} */
 
 let options = {};
@@ -15,6 +18,14 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
+      firstName: { 
+        allowNull: false,
+        type: Sequelize.STRING(30) 
+      },
+      lastName: { 
+        allowNull: false,
+        type: Sequelize.STRING(30),
+      },
       username: {
         type: Sequelize.STRING(30),
         allowNull: false,
@@ -23,6 +34,11 @@ module.exports = {
       email: {
         type: Sequelize.STRING(256),
         allowNull: false,
+        unique: true
+      },
+      phoneNumber: { 
+        allowNull: false, 
+        type: Sequelize.INTEGER(14), 
         unique: true
       },
       hashedPassword: {
