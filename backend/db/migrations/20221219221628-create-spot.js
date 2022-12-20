@@ -14,13 +14,13 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false
       },
-      ownerName: { 
-        type: Sequelize.STRING, 
-        allowNull: false
-      },
       ownerId: { 
         type: Sequelize.INTEGER, 
-        allowNull: false
+        allowNull: false,
+        references: { 
+          model: 'Users',
+          key: 'id'
+        }
       },
       adress: { 
         type: Sequelize.STRING,

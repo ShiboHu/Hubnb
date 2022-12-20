@@ -12,10 +12,9 @@ module.exports = {
      *   isBetaMember: false
      * }], {});
     */
-   await queryInterface.bulkInsert('Spots', [
+   return queryInterface.bulkInsert('Spots', [
     { 
         name: 'demoHouse1', 
-        ownerName: 'demoOwner1',
         ownerId: 1,
         adress: '2839 treeland drive',
         city: 'mountain', 
@@ -29,7 +28,6 @@ module.exports = {
    },
     { 
         name: 'bigHouse', 
-        ownerName: 'demoOwner2',
         ownerId: 2,
         adress: '2132 bigland house',
         city: 'mountain', 
@@ -43,7 +41,6 @@ module.exports = {
    },
     { 
         name: 'smallHouse', 
-        ownerName: 'demoOwner3',
         ownerId: 3,
         adress: '3658 smallLand drive',
         city: 'mountain', 

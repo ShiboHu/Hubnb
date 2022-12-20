@@ -54,7 +54,8 @@ module.exports = (sequelize, DataTypes) => {
     //Instance methods ends !!!!
 
     static associate(models) {
-    
+      User.hasMany(models.Spot, {foreignKey: 'ownerId'} );
+      User.hasMany(models.Review, {foreignKey: 'userId'})
     }
   }
   User.init({
