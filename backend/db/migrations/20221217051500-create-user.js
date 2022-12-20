@@ -2,12 +2,12 @@
 
 const { sequelize } = require('../models');
 
-/** @type {import('sequelize-cli').Migration} */
+// /** @type {import('sequelize-cli').Migration} */
 
-let options = {};
-if (process.env.NODE_ENV === 'production') {
-  options.schema = process.env.SCHEMA;  // define your schema in options object
-}
+// let options = {};
+// if (process.env.NODE_ENV === 'production') {
+//   options.schema = process.env.SCHEMA;  // define your schema in options object
+// }
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
@@ -55,10 +55,10 @@ module.exports = {
         type: Sequelize.DATE,
         defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
       }
-    }, options);
+    });
   },
   down: async (queryInterface, Sequelize) => {
-    options.tableName = "Users";
-    return queryInterface.dropTable(options);
+    // options.tableName = "Users";
+    await queryInterface.dropTable('Users');
   }
 };
