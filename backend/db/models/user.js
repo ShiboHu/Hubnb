@@ -54,7 +54,7 @@ module.exports = (sequelize, DataTypes) => {
     //Instance methods ends !!!!
 
     static associate(models) {
-      // define association here
+      User.hasMany()
     }
   }
   User.init({

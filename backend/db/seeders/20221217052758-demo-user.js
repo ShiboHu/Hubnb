@@ -1,16 +1,16 @@
 'use strict';
-/** @type {import('sequelize-cli').Migration} */
+// /** @type {import('sequelize-cli').Migration} */
 const bcrypt = require("bcryptjs");
 
-let options = {};
-if (process.env.NODE_ENV === 'production') {
-  options.schema = process.env.SCHEMA;  // define your schema in options object
-}
+// let options = {};
+// if (process.env.NODE_ENV === 'production') {
+//   options.schema = process.env.SCHEMA;  // define your schema in options object
+// }
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    options.tableName = 'Users';
-    return queryInterface.bulkInsert(options, [
+    // options.tableName = 'Users';
+    return queryInterface.bulkInsert('Users', [
       {
         firstName: 'demo1',
         lastName: 'demon1lastname',
@@ -39,10 +39,11 @@ module.exports = {
   },
 
   down: async (queryInterface, Sequelize) => {
-    options.tableName = 'Users';
-    const Op = Sequelize.Op;
-    return queryInterface.bulkDelete(options, {
-      username: { [Op.in]: ['Demo-lition', 'FakeUser1', 'FakeUser2'] }
-    }, {});
+    // options.tableName = 'Users';
+    // const Op = Sequelize.Op;
+    // return queryInterface.bulkDelete(options, {
+      // username: { [Op.in]: ['Demo-lition', 'FakeUser1', 'FakeUser2'] }
+    // }, {});
+    await queryInterface.bulkDelete('Users')
   }
 };
