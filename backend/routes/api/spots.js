@@ -12,18 +12,6 @@ router.get('/', async (req, res) => {
     }); 
 })
 
-router.get('/:userId', async (req, res) => { 
-    const currUserSpot = await User.findAll({ 
-        where: { 
-            id: req.params.userId
-        },
-        include: { 
-            model: Spot
-        }
-    })
-    
-    res.json(currUserSpot)
-})
 
 
 

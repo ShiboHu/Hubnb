@@ -2,7 +2,7 @@ const express = require('express')
 const router = express.Router();
 
 const { setTokenCookie, restoreUser } = require('../../utils/auth');
-const { User } = require('../../db/models');
+const { User, Spot } = require('../../db/models');
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 
@@ -52,13 +52,17 @@ router.post( '/', validateLogin, async (req, res, next) => {
   //restore session for user
   router.get( '/', restoreUser,(req, res) => {
     const { user } = req;
+
+    const token = setTokenCookie(res, user);
+
     if (user) {
       return res.json({
         user: user.toSafeObject(),
+        token
       });
     } else return res.json({ user: null });
   }
 );
 
-
+ 
 module.exports = router;

@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 const { setTokenCookie, requireAuth } = require('../../utils/auth');
-const { User } = require('../../db/models');
+const { User, Spot } = require('../../db/models');
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 const { Router } = require('express');
@@ -41,11 +41,21 @@ const validateSignup = [
 
 // Sign up
   //check for validate signup inputs 
-  router.post('/', validateSignup, async (req, res) => {
+  router.post('/', validateSignup, async (req, res, next) => {
       const { firstName, lastName, phoneNumber, email, password, username } = req.body;
       const user = await User.signup({ firstName, lastName, phoneNumber, email, username, password });
 
+      const checkEmail = User.findAll({ 
+        email: user.email
+      });
 
+      if(checkEmail){ 
+        const err = new Error('SignUp failed'); 
+        err.status = 403;
+        err.title = 'SignUp failed';
+        err.errors = ['The provided email already exists.'];
+        return next(err);
+      }
       await setTokenCookie(res, user);
     
       return res.json({
@@ -54,7 +64,55 @@ const validateSignup = [
     }
   );
 
-  router.get('/' , async (req, res) => { 
-      res.send('signup with firstName, lastName, username, email and phone number')
-  })
+  //if logined in return user, else signup
+  router.get('/', (req, res) => {
+    const { user } = req;
+    if (user) {
+      return res.json({
+        user: user.toSafeObject(),
+      });
+    } else return res.json({message: 'sign up on this page' });
+  }
+);
+
+  //getting current user spots
+  router.get('/spots', async (req, res) => { 
+      const currentUserSpot = await Spot.findAll({ 
+        where: { 
+          ownerId : req.user.id
+        }
+      })
+      res.json({ 
+        Spots: currentUserSpot
+      });
+  });
+
+  //creating new spot
+  router.post('/spots', async(req, res, err) => { 
+
+    const {name, adress, city, country, price,
+          latitude, longitude, description, avgRating, previewImage} = req.body;
+
+   const newSpot = await Spot.create({ 
+        name, 
+        ownerId: req.user.id,
+        adress, 
+        city, 
+        country,
+        price,
+        latitude, 
+        longitude,
+        description,    
+        avgRating,
+        previewImage
+      })
+
+      res.json({
+        message: 'New Spot Created Successfully',
+        newSpot
+      })
+   
+    
+  }) 
+
 module.exports = router;
