@@ -1,7 +1,7 @@
 {
-  "name": "authenicate-me",
+  "name": "airbnb_clone",
   "version": "1.0.0",
-  "description": "",
+  "description": "## Database Schema Design",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -12,7 +12,15 @@
     "start": "npm start --prefix backend",
     "build": "npm run --prefix backend build"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ShiboHu/Airbnb_clone_windows.git"
+  },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ShiboHu/Airbnb_clone_windows/issues"
+  },
+  "homepage": "https://github.com/ShiboHu/Airbnb_clone_windows#readme"
 }
