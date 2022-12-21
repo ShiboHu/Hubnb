@@ -23,7 +23,8 @@ module.exports = {
         references: { 
           model: 'Spots',
           key: 'id'
-        }
+        },
+        ondelete: 'CASCADE'
       },
       stars: {
         type: Sequelize.FLOAT
