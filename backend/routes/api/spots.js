@@ -3,7 +3,7 @@ const router = express.Router();
 
 const {requireAuth } = require('../../utils/auth');
 const { handleValidationErrors } = require('../../utils/validation');
-const { Spot, User, SpotImage, Review } = require('../../db/models');
+const { Spot, User, SpotImage, Review, ReviewImage } = require('../../db/models');
 const { check } = require('express-validator');
 
 
@@ -34,6 +34,17 @@ const validateSpot = [
     handleValidationErrors,
   ];
 
+  const validateReview = [
+    check("review")
+      .exists({ checkFalsy: true })
+      .withMessage("Review text is required"),
+    check("stars")
+      .exists({ checkFalsy: true })
+      .withMessage("Stars is required")
+      .isLength({ min: 1, max: 5 })
+      .withMessage("Stars must be an integer from 1 to 5"),
+    handleValidationErrors,
+  ];
   // get all spots 
     router.get('/', async (req, res) => { 
         const allSpots = await Spot.findAll({}); 
@@ -283,5 +294,64 @@ router.post('/', requireAuth, validateSpot,  async(req, res) => {
             statusCode: 200
         })
     });
+
+    //  Get all Reviews by a Spot's id
+    router.get('/:spotId/reviews', async (req, res) => { 
+        const review = await Review.findByPk(req.params.spotId, { 
+            attributes: { 
+                exclude: ['images']
+            },
+            include: [
+                { 
+                    model: User,
+                    attributes: ['id','firstName', 'lastName']
+                },
+                {
+                    model: ReviewImage, 
+                    attributes: ['id','url']
+                }
+            ]
+        }); 
+
+        if(!review){ 
+            res.status(404);
+            return res.json({
+                message: `Spot couldn't be found`,
+                statusCode: 404
+            })
+        };
+
+        return res.json({ 
+            Reviews: review
+        })
+    });
+
+    //create a review for a spot base on spot id
+    router.post('/:spotId/reviews', validateReview, requireAuth, async (req, res) => { 
+        const { review, stars } = req.body
+
+        if(!req.params.spotId){ 
+            res.status(404);
+            return res.json({
+                message: `Spot couldn't be found`,
+                statusCode: 404
+            })
+        };
+
+        const newReview = await Review.create({ 
+            userId: req.user.id,
+            spotId: req.params.spotId,
+            review,
+            stars
+        })
+
+        res.json(newReview)
+
+    })
+
+
+
+
+
 
 module.exports = router;
