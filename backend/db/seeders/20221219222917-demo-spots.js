@@ -23,8 +23,6 @@ module.exports = {
         latitude: 12.232132, 
         longitude: -40.32121412, 
         description: 'a very nice house', 
-        avgRating: 4.5, 
-        previewImage: 'wwww.image5.com'
    },
     { 
         name: 'bigHouse', 
@@ -36,8 +34,6 @@ module.exports = {
         latitude: 3242.232132, 
         longitude: -357.32121412, 
         description: 'a very nice house', 
-        avgRating: 4.5, 
-        previewImage: 'wwww.image3.com'
    },
     { 
         name: 'smallHouse', 
@@ -49,8 +45,6 @@ module.exports = {
         latitude: 3241.232132, 
         longitude: -234.32121412, 
         description: 'a very nice house', 
-        avgRating: 4.5, 
-        previewImage: 'wwww.image2.com'
    },
   ])
   },

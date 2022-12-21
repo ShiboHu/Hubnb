@@ -49,12 +49,6 @@ module.exports = {
       description: { 
         type: Sequelize.STRING,
       },
-      avgRating: { 
-        type: Sequelize.FLOAT,
-      },
-      previewImage: { 
-        type: Sequelize.STRING
-      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,
