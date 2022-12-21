@@ -13,6 +13,7 @@ module.exports = (sequelize, DataTypes) => {
       Spot.belongsTo(models.User, {foreignKey: 'ownerId'});
       Spot.hasMany(models.Booking, {foreignKey: 'spotId'}); 
       Spot.hasMany(models.SpotImage, {foreignKey: 'spotId'});
+      Spot.hasMany(models.Review, {foreignKey: 'spotId'});
     }
   }
   Spot.init({
@@ -20,16 +21,20 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING(50),
       allowNull: false, 
       validate: { 
-        isNumeric: false
+        len: [5, 50]
       }
     },
     ownerId: { 
       type: DataTypes.INTEGER, 
       allowNull: false
     },
-    adress: { 
+    address: { 
       type: DataTypes.STRING,
       allowNull: false, 
+      unique: true,
+      validate: { 
+        len: [5, 60]
+      }
     },
     city: { 
       type: DataTypes.STRING(20),
@@ -43,7 +48,11 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.FLOAT, 
       allowNull: false, 
       validate: { 
-        isAlpha: false
+        checkZero(value){ 
+          if(value <= 0){ 
+            throw new Error('Price per day is required')
+          }
+        }
       }
     },
     latitude: { 
@@ -56,7 +65,28 @@ module.exports = (sequelize, DataTypes) => {
     },
     description: { 
       type: DataTypes.STRING,
+      validate: { 
+        checkZero(value){ 
+          if(value.length <= 0){ 
+            throw new Error('Description is required')
+          }
+        }
+      }
     },
+    avgRating: { 
+      type: DataTypes.FLOAT, 
+      allowNull: true
+    },
+    previewImage: { 
+      type: DataTypes.STRING,
+      allowNull: true
+
+    },
+    numReviews: { 
+      type: DataTypes.INTEGER,
+      allowNull: true
+
+    }
   }, {
     sequelize,
     modelName: 'Spot',

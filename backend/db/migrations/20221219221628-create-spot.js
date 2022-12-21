@@ -22,9 +22,10 @@ module.exports = {
           key: 'id'
         }
       },
-      adress: { 
+      address: { 
         type: Sequelize.STRING,
         allowNull: false, 
+        unique: true
       },
       city: { 
         type: Sequelize.STRING,
@@ -58,7 +59,19 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE,
         defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'), 
-      }
+      },
+      avgRating: { 
+        type: Sequelize.FLOAT,
+        allowNull: true 
+      },
+      previewImage: { 
+        type: Sequelize.STRING,
+        allowNull: true
+      },
+      numReviews: { 
+        type: Sequelize.INTEGER,
+        allowNull: true
+      },
     });
   },
   async down(queryInterface, Sequelize) {
