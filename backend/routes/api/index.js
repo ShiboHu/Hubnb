@@ -9,8 +9,6 @@ router.use('/session', sessionRouter); //login, logout
 router.use('/users', usersRouter); //signup
 router.use('/spots', spotRouter);
 
-router.post('/test', (req, res) => {
-    res.json({ requestBody: req.body });
-  });
+
   
 module.exports = router;

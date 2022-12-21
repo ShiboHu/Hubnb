@@ -34,9 +34,11 @@ router.post( '/', validateLogin, async (req, res, next) => {
         return next(err);
       }
   
-      await setTokenCookie(res, user);
-  
-      return res.json({
+      //  await setTokenCookie(res, user);
+
+      user.dataValues.token = await setTokenCookie(res, user);
+
+     return res.json({
         user: user
       });
     }
@@ -53,12 +55,11 @@ router.post( '/', validateLogin, async (req, res, next) => {
   router.get( '/', restoreUser,(req, res) => {
     const { user } = req;
 
-    const token = setTokenCookie(res, user);
+    user.dataValues.token =  setTokenCookie(res, user);
 
     if (user) {
       return res.json({
-        user: user.toSafeObject(),
-        token
+        user
       });
     } else return res.json({ user: null });
   }

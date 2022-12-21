@@ -44,14 +44,6 @@ if (!isProduction) {
     })
   );
 
-  app.get("/api/csrf/restore", (req, res) => {
-        const csrfToken = req.csrfToken();
-        res.cookie("XSRF-TOKEN", csrfToken);
-        res.status(200).json({
-          'XSRF-Token': csrfToken
-        });
-      });
-
   app.use((_req, _res, next) => {
     const err = new Error("The requested resource couldn't be found.");
     err.title = "Resource Not Found";
