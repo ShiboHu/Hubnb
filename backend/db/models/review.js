@@ -25,7 +25,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
     } ,
     stars: DataTypes.FLOAT,
-    comment: DataTypes.STRING,
+    review: DataTypes.STRING,
     images: DataTypes.STRING
   }, {
     sequelize,

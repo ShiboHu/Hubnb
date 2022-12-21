@@ -29,7 +29,7 @@ module.exports = {
       stars: {
         type: Sequelize.FLOAT
       },
-      comment: {
+      review: {
         type: Sequelize.STRING
       },
       images: {
