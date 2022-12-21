@@ -88,14 +88,6 @@ module.exports = (sequelize, DataTypes) => {
         isEmail: true,
       }
     },
-    phoneNumber: { 
-      type: DataTypes.INTEGER, 
-      allowNull: false, 
-      unique: true, 
-      validate: { 
-        len: [10, 12]
-      }
-    },
     hashedPassword: { 
       type: DataTypes.STRING,
       allowNull: false, 

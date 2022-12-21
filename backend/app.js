@@ -2,48 +2,51 @@ const express = require('express');
 require('express-async-errors');
 const morgan = require('morgan');
 const cors = require('cors');
+const cookieParser = require('cookie-parser');
 const csurf = require('csurf');
 const helmet = require('helmet');
-const cookieParser = require('cookie-parser');
 const { environment } = require('./config');
 const isProduction = environment === 'production';
 const { ValidationError } = require('sequelize');
 
 
-const router = require('./routes/index')
-
 const app = express(); 
 
+const router = require('./routes/index');
+
 app.use(morgan('dev'));
-app.use(cookieParser());
 app.use(express.json());
-app.use(router);
+
+app.use(cookieParser());
 
 
 
 // Security Middleware
 if (!isProduction) {
-    // enable cors only in development
-    app.use(cors());
-  }
-  
-  // helmet helps set a variety of headers to better secure your app
-  app.use(
-    helmet.crossOriginResourcePolicy({
-      policy: "cross-origin"
-    })
+  // enable cors only in development
+  app.use(cors());
+}
+
+// helmet helps set a variety of headers to better secure your app
+app.use(
+  helmet.crossOriginResourcePolicy({
+    policy: "cross-origin"
+  })
   );
   
   // Set the _csrf token and create req.csrfToken method
-  app.use(csurf({
+  app.use(
+    csurf({
       cookie: {
         secure: isProduction,
         sameSite: isProduction && "Lax",
         httpOnly: true
       }
     })
-  );
-
+    );
+    
+    app.use(router);
+    
   app.use((_req, _res, next) => {
     const err = new Error("The requested resource couldn't be found.");
     err.title = "Resource Not Found";

@@ -5,6 +5,7 @@ const { setTokenCookie, requireAuth } = require('../../utils/auth');
 
 const { Spot, User, SpotImage } = require('../../db/models');
 
+
 // get all spots 
     router.get('/', async (req, res) => { 
         const allSpots = await Spot.findAll({}); 
@@ -13,6 +14,44 @@ const { Spot, User, SpotImage } = require('../../db/models');
         Spots: allSpots
      }); 
 });
+
+  //current user creating new spot
+  router.post('/', requireAuth, async(req, res) => { 
+
+    const {name, adress, city, country, price,
+          latitude, longitude, description, avgRating, previewImage} = req.body;
+
+   const newSpot = await Spot.create({ 
+        name, 
+        ownerId: req.user.id,
+        adress, 
+        city, 
+        country,
+        price,
+        latitude, 
+        longitude,
+        description,    
+        avgRating,
+        previewImage
+      })
+
+      res.json({
+        message: 'New Spot Created Successfully',
+        newSpot
+      })
+  });
+
+    //getting current user spots
+    router.get('/current', requireAuth, async (req, res) => { 
+        const currentUserSpot = await Spot.findAll({ 
+          where: { 
+            ownerId : req.user.id
+          }
+        })
+        res.json({ 
+          Spots: currentUserSpot
+        });
+    });
 
 //get spots details by id
     router.get('/:spotId', async (req, res) => { 

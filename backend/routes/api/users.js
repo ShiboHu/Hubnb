@@ -30,10 +30,6 @@ const validateSignup = [
       check('lastName')
       .exists({checkFalsy: true}) 
       .withMessage('please enter lastName'),
-      check('phoneNumber')
-      .exists({checkFalsy: true}) 
-      .isLength({min: 10, max: 12})
-      .withMessage('please enter a valid phone number'), 
     handleValidationErrors
   ];
 //methods end!!!
@@ -44,24 +40,51 @@ const validateSignup = [
       const { 
         firstName, 
         lastName, 
-        phoneNumber,
         email, 
         password, 
         username 
       } = req.body;
 
+      const checkEmail = await User.findOne({where:{email}});
+      const checkUserName = await User.findOne({where: {username}});
+
+      if(checkEmail){ 
+        res.status(403);
+        return res.json({ 
+          message: "User already exists", 
+          StatusCode: 403,
+          errors: [
+            "User with that email already exists"
+          ]
+        });
+      };
+
+      if(checkUserName){ 
+        res.status(403);
+        return res.json({ 
+          message: "User already exists", 
+          StatusCode: 403,
+          errors: [
+            "User with that username already exists"
+          ]
+        });
+      };
+
       const user = await User.signup({ 
         firstName,
         lastName,
-        phoneNumber,
         email,
         username, 
         password 
       });
 
-      await setTokenCookie(res, user);
+      await setTokenCookie(res, user)
 
-      return res.json(user)
+      user.dataValues.token = "";
+      
+       return res.json({ 
+        user: user
+      })
     }
   );
 
@@ -79,44 +102,7 @@ const validateSignup = [
   }
 );
 
-  //getting current user spots
-  router.get('/spots', requireAuth, async (req, res) => { 
-      const currentUserSpot = await Spot.findAll({ 
-        where: { 
-          ownerId : req.user.id
-        }
-      })
-      res.json({ 
-        Spots: currentUserSpot
-      });
-  });
 
-  //current user creating new spot
-  router.post('/spots', requireAuth, async(req, res) => { 
 
-    const {name, adress, city, country, price,
-          latitude, longitude, description, avgRating, previewImage} = req.body;
-
-   const newSpot = await Spot.create({ 
-        name, 
-        ownerId: req.user.id,
-        adress, 
-        city, 
-        country,
-        price,
-        latitude, 
-        longitude,
-        description,    
-        avgRating,
-        previewImage
-      })
-
-      res.json({
-        message: 'New Spot Created Successfully',
-        newSpot
-      })
-  });
-
-  //updating/editing a spot by current user
   
 module.exports = router;
