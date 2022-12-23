@@ -83,14 +83,48 @@ const validateSpot = [
     }
   
     const allSpots = await Spot.findAll({
-      ...pagination,
+        attributes: { 
+            exclude: ['numReviews']
+        },
+        ...pagination,
     });
 
-     res.json({ 
-        Spots: allSpots,
+    let rate = 0; 
+    for(let i = 0; i < allSpots.length; i++){ 
+        let id = allSpots[i].dataValues.id
+        let previewUrl = await SpotImage.findOne({ 
+            where: { 
+                spotId: id,
+                preview: true
+            },
+            attributes: ['url']
+        });
+        if(!previewUrl){ 
+            allSpots[i].dataValues.previewImage = 'current spot does not have preview images'
+        }else { 
+            allSpots[i].dataValues.previewImage = previewUrl.url
+        }
+        let avgRate = await Review.findAll({ 
+            where: { 
+                spotId: id
+            },
+            attributes: ['stars']
+        })
+        for(let review of avgRate){ 
+           var star = review.stars + rate / avgRate.length;
+        }
+        if(avgRate.length <= 0){ 
+         allSpots[i].dataValues.avgRating = 'current spot does not have any ratings'
+        }else { 
+         allSpots[i].dataValues.avgRating += star 
+        }
+    }
+
+    res.json({ 
+        user: allSpots,
         page,
         size
-     }); 
+    })
 });
 
     //getting current user spots
@@ -104,93 +138,48 @@ const validateSpot = [
           }
         });
 
-        const avgRating = await Review.findAll({ 
-            where: { 
-                spotId: req.user.id
-            },
-            attributes: ['stars']
+            
+        let rate = 0; 
+        for(let i = 0; i < currentUserSpot.length; i++){ 
+            let id = currentUserSpot[i].dataValues.id
+            let previewUrl = await SpotImage.findOne({ 
+                where: { 
+                    spotId: id,
+                    preview: true
+                },
+                attributes: ['url']
+            });
+            if(!previewUrl){ 
+                currentUserSpot[i].dataValues.previewImage = 'current spot does not have preview images'
+            }else { 
+                currentUserSpot[i].dataValues.previewImage = previewUrl.url
+            }
+            let avgRate = await Review.findAll({ 
+                where: { 
+                    spotId: id
+                },
+                attributes: ['stars']
+            })
+            for(let review of avgRate){ 
+               var star = review.stars + rate / avgRate.length;
+            }
+            if(avgRate.length <= 0){ 
+                currentUserSpot[i].dataValues.avgRating = 'current spot does not have any ratings'
+            }else { 
+                currentUserSpot[i].dataValues.avgRating += star 
+            }
+        }
+
+        res.json({ 
+            user: currentUserSpot
         })
 
-        let sumRating = 0; 
-        avgRating.forEach(rating => { 
-            sumRating += rating.dataValues.stars / avgRating.length;
-        })
-        
-        
-        const previewUrl = await SpotImage.findAll({ 
-            where: { 
-                spotId : req.user.id,
-                preview: true
-            },
-            attributes: ['url']
-        });
-        
-        
-        if(currentUserSpot.length >= 1){ 
-            return res.json({ 
-                Spots: currentUserSpot
-            });
-        }else { 
-          currentUserSpot[0].dataValues.avgRating = sumRating; 
-          currentUserSpot[0].dataValues.previewImage = previewUrl[0].dataValues.url
-            return res.json({ 
-                message: 'Current user does not have any spots'
-            });
-        }
     });
 
 
 //get spots details by id
     router.get('/:spotId', async (req, res) => { 
-     const spot = await Spot.findByPk(req.params.spotId, { 
-         include:
-            [
-            {
-                model: SpotImage,
-               attributes: ['id', 'url', 'preview'] ,
-            },
-            {
-             model: User, 
-             attributes: ['id', 'firstName','lastName'],
-            }
-            ]
-    })
-
-    const avgRating = await Review.findAll({ 
-        where: { 
-            spotId: req.user.id
-        },
-        attributes: ['stars']
-    })
-
-    let sumRating = 0; 
-    avgRating.forEach(rating => { 
-        sumRating += rating.dataValues.stars / avgRating.length;
-    })
-    
-    
-    const previewUrl = await SpotImage.findAll({ 
-        where: { 
-            spotId : req.user.id,
-            preview: true
-        },
-        attributes: ['url']
-    });
-    
-    
-    if(!spot){ 
-        res.status(404);
-        return res.json({ 
-            message: `Spot couldn't be found`,
-            StatusCode: 404,
-        })
-    }
-
-    spot.dataValues.avgRating = sumRating; 
-    spot.dataValues.previewImage = previewUrl[0].dataValues.url;
-    spot.dataValues.numReviews = avgRating.length;
-
-    return res.json(spot);
+     
 });
 
 //current user creating new spot

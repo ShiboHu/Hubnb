@@ -79,8 +79,6 @@ const validateSignup = [
       });
 
       await setTokenCookie(res, user)
-
-      user.dataValues.token = "";
       
        return res.json({ 
         user: user
