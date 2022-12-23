@@ -471,58 +471,53 @@ router.post('/', requireAuth, validateSpot,  async(req, res) => {
     });
 
     //get all booking for a spot by spot id.
-    router.get('/:spotId/bookings', requireAuth ,async (req, res) => { 
-        const spot = await Spot.findByPk(req.params.spotId); 
-
-        if(!spot){ 
-            res.status(404);
-            return res.json({ 
-                message: `Spot couldn't be found`,
-                statusCode: 404
-            })
-        };
-
-        const bookings = await Booking.findAll({ 
-            where: { 
-                spotId: req.params.spotId
-            },
-        });
+    router.get("/:spotId/bookings", requireAuth, async (req, res, next) => {
+        let user = req.user;
+    
+        const { spotId } = req.params;
+    
+        const findSpot = await Spot.findByPk(spotId);
         
-        const bookNotOwner = await Booking.findAll({
-            where: { 
-                spotId: req.params.spotId
-            },
-            attributes: ['spotId', 'startDate', 'endDate']
-        }) ;
-
-        const bookIsOwner = await Booking.findAll({ 
-            where: { 
-                spotId: req.params.spotId
-            },
-            include: { 
-                model: User, 
-                where: { 
-                    id: spot.ownerId
-                },
-                attributes: ['id', 'firstName', 'lastName']
-            }
-        })
-        let currSpotUserId = 0;
-
-        bookings.forEach(el => { 
-            currSpotUserId += +el.dataValues.userId;
-        });
-
-        if(spot.ownerId === currSpotUserId){ 
-            return res.json({ 
-                Bookings: bookIsOwner
-            })
-        }else { 
-            return res.json({ 
-                Bookings: bookNotOwner
-            })
+                // authroization start!!
+      if(+findSpot.ownerId === user.id){ 
+                    res.status(403); 
+                    return res.json({ 
+                        message: 'Forbidden',
+                        statusCode: 403
+                    })
+    };
+                //authroization end!!
+    
+        if(!findSpot) {
+            return res.status(404).json({
+                message: "Spot couldn't be found",
+                statusCode: res.statusCode
+            });
         }
-    });
+    
+        if (user.id !== findSpot.ownerId){
+            const getBooking = await Booking.findAll({
+                where: {
+                    spotId: spotId
+                },
+                attributes: ["spotId", "startDate", "endDate"]
+            })
+            return res.status(200).json({Bookings: getBooking});
+        } else {
+            const ownerBooking = await Booking.findAll({
+                where: {
+                    spotId: spotId
+                },
+                include: [
+                    {
+                        model: User,
+                        attributes: ["id", "firstName", "lastName"]
+                    }
+                ]
+            })
+            return res.status(200).json({Bookings: ownerBooking});
+        }
+    })
 
     //Create a Booking from a Spot based on the Spot's id
     router.post("/:spotId/bookings", requireAuth, async (req, res) => {
