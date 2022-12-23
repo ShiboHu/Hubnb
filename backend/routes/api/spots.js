@@ -256,24 +256,6 @@ router.post('/', requireAuth, validateSpot,  async(req, res) => {
         return res.json(newSpot)
   });
 
-//get spot image by current spot 
-    router.get('/:spotId/images', requireAuth, async (req, res) => { 
-        const image = await SpotImage.findAll({ 
-            where: { 
-                spotId: req.params.spotId
-            }
-        })
-        
-        if(!image){ 
-            res.status(404)
-            res.json({ 
-                message: 'Spot couldnt be found',
-                StatusCode: 404
-            })
-        } else { 
-            res.json(image)
-        }
-    })
 
 //create spot image by current user
     router.post('/:spotId/images',  requireAuth ,async (req, res) => { 
@@ -288,6 +270,17 @@ router.post('/', requireAuth, validateSpot,  async(req, res) => {
                StatusCode : 404
            });
         };
+
+         //authorization start!! 
+         const checkSpot = await Spot.findByPk(req.params.spotId);
+         if(checkSpot.ownerId !== req.user.id){ 
+             res.status(403); 
+             return res.json({ 
+                 message: 'Forbidden: require proper authorization',
+                 statusCode: 403
+             })
+         };
+         //authroization end!!
 
        const newImage = await SpotImage.create({ 
             spotId : req.params.spotId,
@@ -338,6 +331,17 @@ router.post('/', requireAuth, validateSpot,  async(req, res) => {
         });
      };
 
+      //authorization start!! 
+      const checkSpot = await Spot.findByPk(req.params.spotId);
+      if(checkSpot.ownerId !== req.user.id){ 
+          res.status(403); 
+          return res.json({ 
+              message: 'Forbidden: require proper authorization',
+              statusCode: 403
+          })
+      };
+      //authroization end!!
+
        const newSpot =  await spot.update({ 
             name, 
             ownerId,
@@ -355,7 +359,11 @@ router.post('/', requireAuth, validateSpot,  async(req, res) => {
 
     //delete a spot 
     router.delete('/:spotId', requireAuth, async (req, res) => { 
-        const spot = await Spot.findByPk(req.params.spotId);
+        const spot = await Spot.findByPk(req.params.spotId, { 
+            where: { 
+                ownerId: req.user.id
+            }
+        });
 
         if(!spot){ 
             res.status(404); 
@@ -364,6 +372,17 @@ router.post('/', requireAuth, validateSpot,  async(req, res) => {
                 StatusCode : 404
             });
          };
+
+        //authorization start!! 
+      const checkSpot = await Spot.findByPk(req.params.spotId);
+      if(checkSpot.ownerId !== req.user.id){ 
+          res.status(403); 
+          return res.json({ 
+              message: 'Forbidden: require proper authorization',
+              statusCode: 403
+          })
+      };
+      //authroization end!!
 
         await spot.destroy();
 

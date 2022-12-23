@@ -26,7 +26,8 @@ module.exports = {
         references: { 
           model: 'Spots',
           key: 'id'
-        }
+        },
+        onDelete: 'CASCADE'
       },
       startDate: {
         allowNull: false,
