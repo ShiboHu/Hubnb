@@ -120,7 +120,7 @@ const validateSpot = [
         }
     }
 
-    res.json({ 
+   return res.json({ 
         user: allSpots,
         page,
         size
@@ -170,7 +170,7 @@ const validateSpot = [
             }
         }
 
-        res.json({ 
+        return res.json({ 
             user: currentUserSpot
         })
 
@@ -179,7 +179,57 @@ const validateSpot = [
 
 //get spots details by id
     router.get('/:spotId', async (req, res) => { 
-     
+     const spot = await Spot.findByPk(req.params.spotId, { 
+        include: { 
+            model: SpotImage,
+            attributes: ['id', 'url', 'preview']
+        },
+        attributes: { 
+            exclude: ['previewImage']
+        }
+     });
+
+     const spotImage = await SpotImage.findAll({ 
+        where: { 
+            spotId: req.params.spotId
+        }
+     });
+
+     const spotOwner = await User.findOne({ 
+        where: { 
+            id: spot.dataValues.ownerId
+        },
+        attributes: ['id', 'firstName', 'lastName']
+     });
+
+     const spotReview = await Review.findAll({ 
+        where: { 
+            spotId: req.params.spotId
+        },
+        attributes: ['stars']
+     });
+
+     if(!spot){ 
+        res.status(404); 
+        return res.json({ 
+            message: `Spot couldn't be found`,
+            statusCode: 404
+        })
+     };
+
+     if(spotImage.length <= 0){ 
+        spot.dataValues.SpotImages = 'Current spot does not have any images'
+     };
+
+     let star = 0; 
+     spotReview.forEach(review => { 
+        return star += review.dataValues.stars  / spotReview.length
+     })
+
+     spot.dataValues.avgRating = star;
+     spot.dataValues.numReviews = spotReview.length;
+     spot.dataValues.Owner = spotOwner;
+     return res.json(spot)
 });
 
 //current user creating new spot
