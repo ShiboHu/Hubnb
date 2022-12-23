@@ -138,6 +138,13 @@ const validateSpot = [
           }
         });
 
+        if(currentUserSpot.length === 0){ 
+            res.status(404); 
+            return res.json({ 
+                message: "Current user doesnt not have any spots", 
+                statusCode: 404
+            })
+        }
             
         let rate = 0; 
         for(let i = 0; i < currentUserSpot.length; i++){ 
