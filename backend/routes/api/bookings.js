@@ -20,6 +20,14 @@ router.get('/current', requireAuth, async (req, res) => {
             }
         }
     })
+
+    if(booking.length === 0){ 
+        res.status(404); 
+        return res.json({ 
+            message: 'current user does not have any bookings',
+            statusCode: 404
+        })
+    }
     for(let i = 0; i < booking.length; i++){ 
         var allbook = booking[i].dataValues; 
     }

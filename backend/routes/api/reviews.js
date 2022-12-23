@@ -85,6 +85,7 @@ router.post('/:reviewId/images', requireAuth, async  (req, res) => {
         }
     });
 
+
     if(!review){ 
         res.status(404); 
         return res.json({ 
@@ -92,6 +93,17 @@ router.post('/:reviewId/images', requireAuth, async  (req, res) => {
             statusCode: 404
         })
     };
+
+     //authorization start!! 
+     const checkReview = await Review.findByPk(req.params.reviewId);
+     if(checkReview.userId !== req.user.id){ 
+         res.status(403); 
+         return res.json({ 
+             message: 'Forbidden',
+             statusCode: 403
+         })
+     };
+     //authroization end!!
 
     const newImage = await ReviewImage.create({ 
         reviewId: +req.params.reviewId, 
@@ -122,9 +134,13 @@ router.post('/:reviewId/images', requireAuth, async  (req, res) => {
 router.put('/:reviewId', validateReview, requireAuth, async (req, res) => { 
     const { review, stars} = req.body;
 
+    
     const findReview = await Review.findOne({ 
         where: { 
             id: req.params.reviewId
+        },
+        attributes: { 
+            exclude: ['images']
         }
     });
 
@@ -135,6 +151,17 @@ router.put('/:reviewId', validateReview, requireAuth, async (req, res) => {
             statusCode: 404
         })
     };
+
+     //authorization start!! 
+     const checkReview = await Review.findByPk(req.params.reviewId);
+     if(checkReview.userId !== req.user.id){ 
+         res.status(403); 
+         return res.json({ 
+             message: 'Forbidden',
+             statusCode: 403
+         })
+     };
+     //authroization end!!
 
     const updateReview = await findReview.update({ 
         review, 
@@ -160,6 +187,17 @@ router.delete('/:reviewId', requireAuth, async (req, res) => {
             statusCode: 404
         })
     };
+
+      //authorization start!! 
+      const checkReview = await Review.findByPk(req.params.reviewId);
+      if(checkReview.userId !== req.user.id){ 
+          res.status(403); 
+          return res.json({ 
+              message: 'Forbidden',
+              statusCode: 403
+          })
+      };
+      //authroization end!!
 
     await findReview.destroy(); 
 

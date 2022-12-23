@@ -283,7 +283,7 @@ router.post('/', requireAuth, validateSpot,  async(req, res) => {
          if(checkSpot.ownerId !== req.user.id){ 
              res.status(403); 
              return res.json({ 
-                 message: 'Forbidden: require proper authorization',
+                 message: 'Forbidden',
                  statusCode: 403
              })
          };
@@ -343,7 +343,7 @@ router.post('/', requireAuth, validateSpot,  async(req, res) => {
       if(checkSpot.ownerId !== req.user.id){ 
           res.status(403); 
           return res.json({ 
-              message: 'Forbidden: require proper authorization',
+              message: 'Forbidden',
               statusCode: 403
           })
       };
@@ -385,7 +385,7 @@ router.post('/', requireAuth, validateSpot,  async(req, res) => {
       if(checkSpot.ownerId !== req.user.id){ 
           res.status(403); 
           return res.json({ 
-              message: 'Forbidden: require proper authorization',
+              message: 'Forbidden',
               statusCode: 403
           })
       };
