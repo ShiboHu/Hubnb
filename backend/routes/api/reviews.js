@@ -36,7 +36,7 @@ router.get('/current', requireAuth, async (req, res) => {
             {
             model: Spot,
             attributes: { 
-                exclude: ['avgRating', 'numReviews', 'createdAt', 'updatedAt'],
+                exclude: ['avgRating', 'numReviews', 'createdAt', 'updatedAt','description'],
             },
             }, 
             { 
