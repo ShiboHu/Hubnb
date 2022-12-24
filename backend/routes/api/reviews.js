@@ -58,7 +58,7 @@ router.get('/current', requireAuth, async (req, res) => {
         var id = reviews[i].spotId
     };
 
-    const previewUrl = await SpotImage.findAll({ 
+    const previewUrl = await SpotImage.findOne({ 
         where: { 
             spotId : id,
             preview: true
@@ -71,7 +71,7 @@ router.get('/current', requireAuth, async (req, res) => {
         if(!previewUrl){ 
             review.Spot.previewImage = 'current review does not have any preview images'
         }else {
-        review.Spot.previewImage = previewUrl[0].dataValues.url
+        review.Spot.previewImage = previewUrl.url
         }
     })
 
