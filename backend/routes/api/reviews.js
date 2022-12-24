@@ -66,8 +66,13 @@ router.get('/current', requireAuth, async (req, res) => {
         attributes: ['url']
     });
 
+    
     reviews.forEach(review=> { 
+        if(!previewUrl){ 
+            review.Spot.previewImage = 'current review does not have any preview images'
+        }else {
         review.Spot.previewImage = previewUrl[0].dataValues.url
+        }
     })
 
     return res.json({ 
