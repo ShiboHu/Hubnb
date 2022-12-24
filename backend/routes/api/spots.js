@@ -195,6 +195,14 @@ const validateSpot = [
             exclude: ['previewImage']
         }
      });
+     
+     if(!spot){ 
+        res.status(404); 
+        return res.json({ 
+            message: `Spot couldn't be found`,
+            statusCode: 404
+        })
+     };
 
      const spotImage = await SpotImage.findAll({ 
         where: { 
@@ -216,13 +224,6 @@ const validateSpot = [
         attributes: ['stars']
      });
 
-     if(!spot){ 
-        res.status(404); 
-        return res.json({ 
-            message: `Spot couldn't be found`,
-            statusCode: 404
-        })
-     };
 
      if(spotImage.length <= 0){ 
         spot.dataValues.SpotImages = 'Current spot does not have any images'
