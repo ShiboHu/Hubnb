@@ -60,6 +60,15 @@ router.put('/:bookingId', requireAuth, async (req, res) => {
         })
     };
 
+    // authroization start!!
+         if(booking.userId !== req.user.id){ 
+            res.status(403); 
+            return res.json({ 
+               message: 'Forbidden',
+               statusCode: 403
+            })
+        };
+        //authroization end!!
     const date = Date.now();
 
     if(Date.parse(startDate) < date && Date.parse(endDate) < date){ 
@@ -81,22 +90,17 @@ router.put('/:bookingId', requireAuth, async (req, res) => {
         })
     };
     
-    for(let i = 0; i < booking.length; i++){ 
-        let allStartDate = booking[i].dataValues.startDate;
-        let allEndDate = booking[i].dataValues.endDate;
-        if(startDate <= allEndDate && startDate >= allStartDate
-            || endDate >= allStartDate && endDate <= allEndDate){
-                res.status(403)
-                return res.json({ 
-                    message: "Sorry, this spot is already booked for the specified dates",
-                    statusCode: 403,
-                    errors: [
-                      "Start date conflicts with an existing booking",
-                      "End date conflicts with an existing booking"
-                    ]
-                })
-        }
-    };
+    if((booking.startDate >= startDate && booking.endDate <= endDate) || booking.startDate <= startDate && booking.endDate >= endDate) {
+        res.status(403)
+        res.json({
+          message: "Sorry, this spot is already booked for the specified dates",
+          statusCode: 403,
+          errors: {
+            startDate: "Start date conflicts with an existing booking",
+            endDate: "End date conflicts with an existing booking",
+          },
+        });
+    } 
 
     const updateBooking = await booking.update({ 
         startDate,
@@ -106,10 +110,10 @@ router.put('/:bookingId', requireAuth, async (req, res) => {
     return res.json(updateBooking)
 });
 
-
+//delete a booking
 router.delete('/:bookingId', requireAuth, async (req, res ) => { 
     const booking = await Booking.findByPk(req.params.bookingId);
-
+    const spot = await Spot.findByPk(req.user.id)
     if(!booking){ 
         res.status(404);
         return res.json({ 
@@ -117,6 +121,16 @@ router.delete('/:bookingId', requireAuth, async (req, res ) => {
             statusCode: 404
         })
     };
+
+    // authroization start!!
+    if(+booking.userId !== req.user.id || +spot.ownerId !== req.user.id){ 
+        res.status(403); 
+        return res.json({ 
+           message: 'Forbidden',
+           statusCode: 403
+        })
+    };
+    //authroization end!!
 
     const date = Date.now(); 
     const startDate = booking.dataValues.startDate; 
