@@ -121,7 +121,7 @@ const validateSpot = [
     }
 
    return res.json({ 
-        user: allSpots,
+        Spots: allSpots,
         page,
         size
     })
@@ -178,7 +178,7 @@ const validateSpot = [
         }
 
         return res.json({ 
-            user: currentUserSpot
+            Spots: currentUserSpot
         })
 
     });
