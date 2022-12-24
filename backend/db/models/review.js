@@ -26,7 +26,6 @@ module.exports = (sequelize, DataTypes) => {
     } ,
     stars: DataTypes.FLOAT,
     review: DataTypes.STRING,
-    images: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'Review',

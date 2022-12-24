@@ -34,9 +34,6 @@ module.exports = {
       review: {
         type: Sequelize.STRING
       },
-      images: {
-        type: Sequelize.STRING
-      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,

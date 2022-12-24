@@ -482,15 +482,7 @@ router.post('/', requireAuth, validateSpot,  async(req, res) => {
             review
         })
 
-       return res.json({ 
-            id: newReview.id,
-            userId: newReview.userId,
-            spotId: newReview.spotId,
-            review: newReview.review,
-            review: newReview.review,
-            createdAt: newReview.createdAt,
-            updatedAt: newReview.updatedAt,
-       })
+       return res.json(newReview)
     });
 
     //get all booking for a spot by spot id.

@@ -14,21 +14,18 @@ module.exports = {
         spotId: 3, 
         stars: 4, 
         review: 'this is a pretty chilllllllll place.', 
-        images: 'www.thisimage1.com',
       },
       {
         userId: 2, 
         spotId: 3, 
         stars: 1, 
         review: 'this is a pretty gooooooooood place.', 
-        images: 'www.thisimage2.com',
       },
       {
         userId: 3, 
         spotId: 2, 
         stars: 4, 
         review: 'this is a pretty niceeeeeeeeeee place.', 
-        images: 'www.thisimage3.com',
       }
     ], {});
   },
