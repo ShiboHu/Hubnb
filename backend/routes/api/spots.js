@@ -525,28 +525,28 @@ router.post('/', requireAuth, validateSpot,  async(req, res) => {
     //Create a Booking from a Spot based on the Spot's id
     router.post("/:spotId/bookings", requireAuth, async (req, res) => {
         const { startDate, endDate } = req.body;
-    const spotId = +req.params.spotId;
-    const userId = req.user.id;
-
-    
-    
-    const spot = await Spot.findOne({
-        where: {
-            id: spotId,
-        },
-        [Op.not]: { ownerId: req.user.id }
-    });
-    
-    if (!spot) {
-        res.status(404);
-        res.json({
-            message: "Spot couldn't be found",
-            statusCode: 404
-        })
-    }
-    if (spot.ownerId === userId) {
-        res.status(403);
-        res.json({
+        const spotId = +req.params.spotId;
+        const userId = req.user.id;
+        
+        
+        
+        const spot = await Spot.findOne({
+            where: {
+                id: spotId,
+            },
+            [Op.not]: { ownerId: req.user.id }
+        });
+        
+        if (!spot) {
+            res.status(404);
+            res.json({
+                message: "Spot couldn't be found",
+                statusCode: 404
+            })
+        }
+        if (spot.ownerId === userId) {
+            res.status(403);
+            res.json({
             message: "Can't create booking for your own spot",
             statusCode: 403
         })
@@ -572,11 +572,12 @@ router.post('/', requireAuth, validateSpot,  async(req, res) => {
     const endDateTime = new Date(endDate).getTime();
     
     for (let booking of currentBookings) {
-        const bookingStartDate = new Date(booking.startDate).getTime();
-        const bookingEndDate = new Date(booking.endDate).getTime();
-
-        if ((startDateTime >= bookingStartDate && startDateTime < bookingEndDate) ||
-        (endDateTime > bookingStartDate && endDateTime <= bookingEndDate)) {
+        const allBookingStart = new Date(booking.startDate).getTime();
+        const allBookingEnd = new Date(booking.endDate).getTime();
+        
+        if ((startDateTime >= allBookingStart && endDateTime <= allBookingEnd) || 
+            (startDateTime <= allBookingStart && (endDateTime >= allBookingStart || endDateTime <= allBookingEnd)) || 
+            (endDateTime >= allBookingEnd && (startDateTime >= allBookingStart || startDateTime <= endDateTime))) {
             res.status(403);
             return res.json({
                 message: "Sorry, this spot is already booked for the specified dates",
