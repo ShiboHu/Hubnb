@@ -273,6 +273,8 @@ router.post('/', requireAuth, validateSpot,  async(req, res) => {
             latitude: newSpot.latitude,
             longitude: newSpot.longitude,
             description: newSpot.description,
+            createdAt: newSpot.createdAt,
+            updatedAt: newSpot.updatedAt
         })
   });
 
