@@ -568,16 +568,15 @@ router.post('/', requireAuth, validateSpot,  async(req, res) => {
             spotId
         }
     });
-    const startDateTime = new Date(startDate).getTime();
-    const endDateTime = new Date(endDate).getTime();
-    
-    for (let booking of currentBookings) {
-        const allBookingStart = new Date(booking.startDate).getTime();
-        const allBookingEnd = new Date(booking.endDate).getTime();
+    const startDateTime = Date.parse(startDate);
+    const endDateTime = Date.parse(endDate);
+    for (let i = 0; i < currentBookings.length; i++) {
+        let allBookingStart = Date.parse(currentBookings[i].startDate);
+        let allBookingEnd = Date.parse(currentBookings[i].endDate);
         
-        if ((startDateTime >= allBookingStart && endDateTime <= allBookingEnd) || 
-            (startDateTime <= allBookingStart && (endDateTime >= allBookingStart || endDateTime <= allBookingEnd)) || 
-            (endDateTime >= allBookingEnd && (startDateTime >= allBookingStart || startDateTime <= endDateTime))) {
+        if ((startDateTime >= allBookingStart && startDateTime <= allBookingEnd) ||
+            (endDateTime >= allBookingStart && endDateTime <= allBookingEnd) || 
+            (startDateTime <= allBookingStart && endDateTime >= allBookingEnd)) {
             res.status(403);
             return res.json({
                 message: "Sorry, this spot is already booked for the specified dates",
