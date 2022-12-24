@@ -261,7 +261,19 @@ router.post('/', requireAuth, validateSpot,  async(req, res) => {
       })
 
         res.status(201);
-        return res.json(newSpot)
+        return res.json({ 
+            id: newSpot.id,
+            name: newSpot.name,
+            ownerId: newSpot.ownerId,
+            address: newSpot.address,
+            city: newSpot.city,
+            state: newSpot.state,
+            country: newSpot.country,
+            price: newSpot.price,
+            latitude: newSpot.latitude,
+            longitude: newSpot.longitude,
+            description: newSpot.description,
+        })
   });
 
 
