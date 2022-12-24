@@ -489,19 +489,7 @@ router.post('/', requireAuth, validateSpot,  async(req, res) => {
     router.get("/:spotId/bookings", requireAuth, async (req, res, next) => {
         let user = req.user;
     
-        const { spotId } = req.params;
-    
-        const findSpot = await Spot.findByPk(spotId);
-        
-                // authroization start!!
-      if(+findSpot.ownerId === user.id){ 
-                    res.status(403); 
-                    return res.json({ 
-                        message: 'Forbidden',
-                        statusCode: 403
-                    })
-    };
-                //authroization end!!
+        const findSpot = await Spot.findByPk(req.params.spotId);
     
         if(!findSpot) {
             return res.status(404).json({
@@ -510,18 +498,10 @@ router.post('/', requireAuth, validateSpot,  async(req, res) => {
             });
         }
     
-        if (user.id !== findSpot.ownerId){
-            const getBooking = await Booking.findAll({
-                where: {
-                    spotId: spotId
-                },
-                attributes: ["spotId", "startDate", "endDate"]
-            })
-            return res.status(200).json({Bookings: getBooking});
-        } else {
+        if (user.id === findSpot.ownerId){
             const ownerBooking = await Booking.findAll({
                 where: {
-                    spotId: spotId
+                    spotId: findSpot.id
                 },
                 include: [
                     {
@@ -531,6 +511,14 @@ router.post('/', requireAuth, validateSpot,  async(req, res) => {
                 ]
             })
             return res.status(200).json({Bookings: ownerBooking});
+        } else {
+            const getBooking = await Booking.findAll({
+                where: {
+                    spotId: findSpot.id
+                },
+                attributes: ["spotId", "startDate", "endDate"]
+            })
+            return res.status(200).json({Bookings: getBooking});
         }
     })
 
