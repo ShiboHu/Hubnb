@@ -305,7 +305,7 @@ router.post('/', requireAuth, validateSpot,  async(req, res) => {
          //authroization end!!
 
        const newImage = await SpotImage.create({ 
-            spotId : req.params.spotId,
+            spotId : +req.params.spotId,
             url, 
             preview
         });
@@ -479,7 +479,7 @@ router.post('/', requireAuth, validateSpot,  async(req, res) => {
             userId: req.user.id,
             spotId: +req.params.spotId,
             review,
-            review
+            stars
         })
 
        return res.json(newReview)
@@ -597,5 +597,6 @@ router.post('/', requireAuth, validateSpot,  async(req, res) => {
     });
     return res.json(newBooking)
       });
+
 
 module.exports = router;

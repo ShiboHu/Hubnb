@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router(); 
 
 const {requireAuth } = require('../../utils/auth');
-const { ReviewImage } = require('../../db/models');
+const { ReviewImage, Review } = require('../../db/models');
 
 
 router.delete('/:reviewImageId', requireAuth, async (req, res) => { 
@@ -16,6 +16,16 @@ router.delete('/:reviewImageId', requireAuth, async (req, res) => {
         })
     }
 
+    //authroziation start!
+    const review = await Review.findByPk(reviewImage.reviewId)
+    if(req.user.id !== review.userId){ 
+        res.status(403);
+        return res.json({ 
+            message: 'Forbidden',
+            statusCode: 403
+        })
+    }
+    //authorizaiton end!
     await reviewImage.destroy();
 
     res.json({ 
