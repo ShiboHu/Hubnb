@@ -59,15 +59,15 @@ module.exports = (sequelize, DataTypes) => {
         }
       }
     },
-    latitude: { 
+    lat: { 
       type: DataTypes.FLOAT, 
       allowNull: false, 
     },
-    lat: { 
+    lng: { 
       type: DataTypes.FLOAT,
       allowNull: false,
     },
-    lng: { 
+    description: { 
       type: DataTypes.STRING,
       validate: { 
         checkZero(value){ 
