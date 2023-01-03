@@ -538,14 +538,15 @@ router.post('/', requireAuth, validateSpot,  async(req, res) => {
             [Op.not]: { ownerId: req.user.id }
         });
         
-        if (!spot) {
+        if(!spot) {
             res.status(404);
             res.json({
                 message: "Spot couldn't be found",
                 statusCode: 404
             })
         }
-        if (spot.ownerId === userId) {
+        
+        if(spot.ownerId === userId) {
             res.status(403);
             res.json({
             message: "Can't create booking for your own spot",
@@ -553,7 +554,7 @@ router.post('/', requireAuth, validateSpot,  async(req, res) => {
         })
     }
     
-    if (startDate >= endDate) {
+    if(startDate >= endDate) {
         res.status(400);
         return res.json({
             message: "Validation error",
@@ -569,6 +570,7 @@ router.post('/', requireAuth, validateSpot,  async(req, res) => {
             spotId
         }
     });
+
     const startDateTime = Date.parse(startDate);
     const endDateTime = Date.parse(endDate);
     for (let i = 0; i < currentBookings.length; i++) {
