@@ -472,7 +472,8 @@ router.post('/', requireAuth, validateSpot,  async(req, res) => {
         if(oldReview){ 
             res.status(403);
             return res.json({ 
-                message: 'User already have review for this spot'
+                message: 'User already have review for this spot',
+                statusCode: 403
             })
         }
         const newReview = await Review.create({ 
