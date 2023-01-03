@@ -16,8 +16,8 @@ const validateSpot = [
     check("country")
       .exists({ checkFalsy: true })
       .withMessage("Country is required"),
-    check("latitude").exists({ checkFalsy: true }),
-    check("longitude")
+    check("lat").exists({ checkFalsy: true }),
+    check("lng")
       .exists({ checkFalsy: true })
       .withMessage("Longitude is not valid"),
     check("name")
@@ -245,7 +245,7 @@ const validateSpot = [
 router.post('/', requireAuth, validateSpot,  async(req, res) => { 
 
     const {name, address, city, country, price, state,
-          latitude, longitude, description} = req.body;
+          lat, lng, description} = req.body;
 
    const newSpot = await Spot.create({ 
         name, 
@@ -255,8 +255,8 @@ router.post('/', requireAuth, validateSpot,  async(req, res) => {
         state,
         country,
         price,
-        latitude, 
-        longitude,
+        lat, 
+        lng,
         description,    
       })
 
@@ -270,8 +270,8 @@ router.post('/', requireAuth, validateSpot,  async(req, res) => {
             state: newSpot.state,
             country: newSpot.country,
             price: newSpot.price,
-            latitude: newSpot.latitude,
-            longitude: newSpot.longitude,
+            lat: newSpot.lat,
+            lng: newSpot.lng,
             description: newSpot.description,
             createdAt: newSpot.createdAt,
             updatedAt: newSpot.updatedAt
@@ -334,7 +334,7 @@ router.post('/', requireAuth, validateSpot,  async(req, res) => {
     //Edit a spot
     router.put('/:spotId', validateSpot, requireAuth, async (req, res) => { 
         const { name, ownerId, address, city, country, 
-             price, latitude, longitude, description } = req.body;
+             price, lat, lng, description } = req.body;
 
         const spot = await Spot.findOne({
             where: { 
@@ -371,8 +371,8 @@ router.post('/', requireAuth, validateSpot,  async(req, res) => {
             city, 
             country,
             price,
-            latitude,
-            longitude,
+            lat,
+            lng,
             description
         })
 

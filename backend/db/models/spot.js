@@ -63,11 +63,11 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.FLOAT, 
       allowNull: false, 
     },
-    longitude: { 
+    lat: { 
       type: DataTypes.FLOAT,
       allowNull: false,
     },
-    description: { 
+    lng: { 
       type: DataTypes.STRING,
       validate: { 
         checkZero(value){ 
