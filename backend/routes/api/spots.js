@@ -315,10 +315,11 @@ router.post('/', requireAuth, validateSpot,  async(req, res) => {
                 spotId: req.params.spotId
             }
         })
-        var lastSpotImage = allSpotImage.length-1
+        let lastSpotImage = allSpotImage.length-1
+        var last = SpotImage.dataValues[lastSpotImage]
 
        return res.json({ 
-        id: lastSpotImage.dataValues.id,
+        id: last.dataValues.id,
         url: newImage.url, 
         preview: newImage.preview
        })
