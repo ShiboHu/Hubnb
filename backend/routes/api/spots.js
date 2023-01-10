@@ -310,7 +310,7 @@ router.post('/', requireAuth, validateSpot,  async(req, res) => {
         });
    
        res.json({ 
-        id: newImage.id, 
+        id: SpotImage.id, 
         url: newImage.url,
         preview: newImage.preview
        })
