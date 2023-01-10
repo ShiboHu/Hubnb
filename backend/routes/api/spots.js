@@ -309,9 +309,16 @@ router.post('/', requireAuth, validateSpot,  async(req, res) => {
             url, 
             preview
         });
-   
+        
+        const allSpotImage = await SpotImage.findAll({ 
+            where: { 
+                spotId: req.params.spotId
+            }
+        })
+        var lastSpotImage = allSpotImage.length-1
+
        return res.json({ 
-        id: SpotImage.id,
+        id: lastSpotImage.dataValues.id,
         url: newImage.url, 
         preview: newImage.preview
        })
