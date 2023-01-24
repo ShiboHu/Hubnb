@@ -280,55 +280,44 @@ router.post('/', requireAuth, validateSpot,  async(req, res) => {
 
 
 //create spot image by current user
-    router.post('/:spotId/images',  requireAuth ,async (req, res) => { 
-        const { url, preview} = req.body;
-
-       const spot = await Spot.findByPk(req.params.spotId);
-
-       if(!spot){ 
-           res.status(404); 
-           return res.json({ 
-               message: "Spot couldnt be found", 
-               StatusCode : 404
-           });
-        };
-
-         //authorization start!! 
-         const checkSpot = await Spot.findByPk(req.params.spotId);
-         if(checkSpot.ownerId !== req.user.id){ 
-             res.status(403); 
-             return res.json({ 
-                 message: 'Forbidden',
-                 statusCode: 403
-             })
-         };
-         //authroization end!!
-
-       const newImage = await SpotImage.create({ 
-            spotId : +req.params.spotId,
-            url, 
-            preview
-        });
-   
-        if(!newImage){ 
-            res.status(404)
-            return res.json({message: 'Image was not created'})
-        };
-
-        const allImages = await SpotImage.findAll();
-
-        const withoutSpotId = await SpotImage.findOne({ 
-            where: { 
-                spotId: req.params.spotId,
-                id: allImages.length
-            },
-            attributes: { 
-                exclude: ['spotId', 'createdAt', 'updatedAt']
-            }
-        })
-
-        return res.json(withoutSpotId)
-});
+router.post('/:id/images', requireAuth, async (req, res) => {
+    const spotId = req.params.id;
+    const spot = await Spot.findByPk(spotId);
+  
+    if (!spot) {
+      res.status(404);
+      return res.json(
+        {
+          message: "Spot couldn't be found",
+          statusCode: 404
+        }
+      );
+    }
+  
+    if (spot.dataValues.ownerId !== req.user.id) {
+      res.status(403);
+      return res.json(
+        {
+          message: "Forbidden",
+          statusCode: 403
+        }
+      );
+    }
+  
+    const { url, preview } = req.body;
+  
+    const newImg = await SpotImage.create({
+      spotId,
+      url,
+      preview: preview,
+    });
+  
+    delete newImg.dataValues.createdAt;
+    delete newImg.dataValues.updatedAt;
+    delete newImg.dataValues.spotId;
+  
+    return res.json(newImg);
+  });
 
 
     //Edit a spot
