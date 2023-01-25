@@ -63,7 +63,7 @@ router.put('/:bookingId', requireAuth, async (req, res) => {
         })
     };
     
-    // authroization start!!
+    // authorization start!!
     if(booking.userId !== req.user.id){ 
         res.status(403); 
         return res.json({ 
@@ -71,7 +71,7 @@ router.put('/:bookingId', requireAuth, async (req, res) => {
             statusCode: 403
         })
     };
-    //authroization end!!
+    //authorization end!!
 
     const date = Date.now();
 
@@ -142,7 +142,7 @@ router.delete('/:bookingId', requireAuth, async (req, res ) => {
         })
     };
 
-    //authroization start!! 
+    //authorization start!! 
     const owner = booking.dataValues.userId;
     const userId = req.user.id;
     if(owner !== userId){ 
@@ -152,7 +152,7 @@ router.delete('/:bookingId', requireAuth, async (req, res ) => {
            statusCode: 403
         })
     };
-    //authroization end!!
+    //authorization end!!
 
     const date = Date.now(); 
     const startDate = booking.dataValues.startDate; 

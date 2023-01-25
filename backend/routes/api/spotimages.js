@@ -18,7 +18,7 @@ router.delete('/:spotImageId', requireAuth, async (req, res) => {
         })
     }
     
-    //authroization start!! 
+    //authorization start!! 
     const spot = await Spot.findByPk(image.spotId)
    if(req.user.id !== spot.ownerId){ 
         res.status(403);

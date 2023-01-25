@@ -108,7 +108,7 @@ router.post('/:reviewId/images', requireAuth, async  (req, res) => {
              statusCode: 403
          })
      };
-     //authroization end!!
+     //authorization end!!
 
     const newImage = await ReviewImage.create({ 
         reviewId: +req.params.reviewId, 
@@ -166,7 +166,7 @@ router.put('/:reviewId', validateReview, requireAuth, async (req, res) => {
              statusCode: 403
          })
      };
-     //authroization end!!
+     //authorization end!!
 
     const updateReview = await findReview.update({ 
         review, 
@@ -202,7 +202,7 @@ router.delete('/:reviewId', requireAuth, async (req, res) => {
               statusCode: 403
           })
       };
-      //authroization end!!
+      //authorization end!!
 
     await findReview.destroy(); 
 

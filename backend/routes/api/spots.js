@@ -351,7 +351,7 @@ router.post('/:id/images', requireAuth, async (req, res) => {
               statusCode: 403
           })
       };
-      //authroization end!!
+      //authorization end!!
 
        const newSpot =  await spot.update({ 
             name, 
@@ -393,7 +393,7 @@ router.post('/:id/images', requireAuth, async (req, res) => {
               statusCode: 403
           })
       };
-      //authroization end!!
+      //authorization end!!
 
         await spot.destroy();
 

@@ -16,7 +16,7 @@ router.delete('/:reviewImageId', requireAuth, async (req, res) => {
         })
     }
 
-    //authroziation start!
+    //authorization start!
     const review = await Review.findByPk(reviewImage.reviewId)
     if(req.user.id !== review.userId){ 
         res.status(403);
@@ -25,7 +25,7 @@ router.delete('/:reviewImageId', requireAuth, async (req, res) => {
             statusCode: 403
         })
     }
-    //authorizaiton end!
+    //authorization end!
     await reviewImage.destroy();
 
     res.json({ 
