@@ -5,6 +5,7 @@ import OpenModalButton from '../OpenModalButton';
 import LoginFormModal from '../LoginFormModal';
 import SignupFormModal from '../SignupFormModal';
 
+
 function ProfileButton({ user }) {
   const dispatch = useDispatch();
   const [showMenu, setShowMenu] = useState(false);
@@ -37,12 +38,12 @@ function ProfileButton({ user }) {
     closeMenu();
   };
 
-  const ulClassName = "profile-dropdown" + (showMenu ? "" : " hidden");
+  const ulClassName = "profile-dropdown" + (showMenu ? "" : "hidden");
 
   return (
-    <>
-      <button onClick={openMenu}>
-        <i className="fas fa-user-circle" />
+    <div className="navbar">
+      <button onClick={openMenu} className="navbar menu-icon">
+      <i class="fa-solid fa-circle-user"></i>
       </button>
       <ul className={ulClassName} ref={ulRef}>
         {user ? (
@@ -73,7 +74,7 @@ function ProfileButton({ user }) {
           </>
         )}
       </ul>
-    </>
+    </div>
   );
 }
 
