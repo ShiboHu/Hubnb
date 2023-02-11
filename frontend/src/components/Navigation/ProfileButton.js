@@ -42,7 +42,8 @@ function ProfileButton({ user }) {
 
   return (
     <div className="navbar">
-      <button onClick={openMenu} className="navbar menu-icon">
+      <button onClick={openMenu} className="menu-icon">
+      <i class="fa-solid fa-bars"></i>
       <i class="fa-solid fa-circle-user"></i>
       </button>
       <ul className={ulClassName} ref={ulRef}>
