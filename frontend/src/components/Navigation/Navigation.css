@@ -4,9 +4,13 @@ ul {
     margin: 0;
 }
 
+body { 
+  padding: 0; 
+  margin: 0;
+}
+
 .navbar { 
   width: 100%;
-  padding: 10px;
 }
 
 .navigation-bar { 
@@ -28,21 +32,37 @@ ul {
 .menu-icon { 
   display: flex;
   align-items: center;
-  padding: 10px;
+  padding: 20px;
   margin: 10px;
   border-radius: 50px;
 }
 
-.logo { 
-  width: 100px;
+.navbar :hover { 
+  cursor: pointer;
 }
 
-.profile-dropdown { 
-  height: fit-content;
-  display: flex;
-  flex-direction: column;
+.logo { 
+  width: 110px;
+}
+
+.user-menu-dropdown { 
+  box-sizing: border-box;
+  border-radius: 10px;
+  background-color: #f3f2f1;
   position: fixed;
-  top: 125px;
-  right: 8px;
-  
+  right: 40px;
+  top: 10%;
+  font-size: 20px;
+  align-items: center;
+}
+
+.user-menu-dropdown button { 
+  width: 100%;
+  border-radius: 15px;
+  padding: 15px;
+  font-size: 15px;
+}
+
+.user-menu-dropdown li  :hover { 
+  background-color:  #dbb9b8
 }
