@@ -29,6 +29,11 @@ module.exports = {
       url: 'https://a0.muscache.com/im/pictures/55824903-6574-4566-a641-0985011c91cb.jpg?im_w=1200', 
       preview: true
     },
+    {
+      spotId: 4,
+      url: 'https://a0.muscache.com/im/pictures/7fe4d108-19f7-4a34-85e9-df14be54c0c4.jpg?im_w=1200',
+      preview: true
+    }
    ])
   },
 
