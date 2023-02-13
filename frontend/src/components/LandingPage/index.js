@@ -16,13 +16,13 @@ function LandingPage() {
 
     return ( 
         <>
-        <div>
-          <ul>
+        <div className="landing-page">
+          <ul className="spot-card">
           {spots.Spots.map((spot) => 
           <li key={spot.id}>
-            <img className="spot-image" src={spot.previewImage}></img>
+            <img className="spot-image" src={spot.previewImage} alt="previewimages"></img>
             <h3>{spot.name}</h3>
-            <h4>{spot.city} {spot.country}</h4>
+            <h4 className="city-text">{spot.city}</h4>
             <h4>${spot.price} Night</h4>
           </li>
           )}

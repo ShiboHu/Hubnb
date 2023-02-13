@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import ProfileButton from './ProfileButton';
 import hubnbLogo from './hubnblogo.png'
 import './Navigation.css';
+import LandingPage from '../LandingPage';
 
 function Navigation({ isLoaded }){
   const sessionUser = useSelector(state => state.session.user);

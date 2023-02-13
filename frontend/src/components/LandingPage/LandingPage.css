@@ -1,3 +1,14 @@
+ul.spot-card{ 
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 85px;
+    align-items: center;
+    vertical-align: center;
+    padding: 30px;
+}
+
 .spot-image { 
-    width: 20%
+    width: 90%;
+    border-radius: 25px;
 }
