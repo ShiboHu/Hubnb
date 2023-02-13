@@ -69,6 +69,21 @@ module.exports = {
        previewImage: null,
        numReviews: null,
   },
+   { 
+       name: 'demoHouse', 
+       ownerId: 2,
+       address: 'demo adress drive',
+       city: 'flushing', 
+       state: 'newyork',
+       country: 'United States', 
+       price: 200, 
+       lat: 23123.232132, 
+       lng: -321321.32121412, 
+       description: 'i think is a pretty good house', 
+       avgRating: null, 
+       previewImage: null,
+       numReviews: null,
+  },
   ])
   },
 

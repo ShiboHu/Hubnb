@@ -24,7 +24,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       allowNull: false,
     } ,
-    stars: DataTypes.FLOAT,
+    stars: DataTypes.DECIMAL,
     review: DataTypes.STRING,
   }, {
     sequelize,

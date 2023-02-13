@@ -114,9 +114,9 @@ const validateSpot = [
            var star = review.stars + rate / avgRate.length;
         }
         if(avgRate.length <= 0){ 
-         allSpots[i].dataValues.avgRating = 'current spot does not have any ratings'
+         allSpots[i].dataValues.avgRating = 'New'
         }else { 
-         allSpots[i].dataValues.avgRating += star 
+         allSpots[i].dataValues.avgRating = star.toFixed(2);
         }
     }
 
@@ -161,22 +161,22 @@ const validateSpot = [
             }else { 
                 currentUserSpot[i].dataValues.previewImage = previewUrl.url
             }
+            
             let avgRate = await Review.findAll({ 
                 where: { 
                     spotId: id
                 },
                 attributes: ['stars']
             })
-            for(let review of avgRate){ 
-               var star = review.stars + rate / avgRate.length;
-            }
+            avgRate.forEach(review => { 
+                return rate += review.dataValues.stars  / spotReview.length
+             })
             if(avgRate.length <= 0){ 
                 currentUserSpot[i].dataValues.avgRating = 'current spot does not have any ratings'
             }else { 
                 currentUserSpot[i].dataValues.avgRating += star 
             }
         }
-
         return res.json({ 
             Spots: currentUserSpot
         })
@@ -234,7 +234,7 @@ const validateSpot = [
         return star += review.dataValues.stars  / spotReview.length
      })
 
-     spot.dataValues.avgRating = star;
+     spot.dataValues.avgRating = star.toFixed(2);
      spot.dataValues.numReviews = spotReview.length;
      spot.dataValues.Owner = spotOwner;
      return res.json(spot)
