@@ -11,6 +11,7 @@ body {
 
 .navbar { 
   width: 100%;
+  position: sticky;
 }
 
 .navigation-bar { 
@@ -23,6 +24,7 @@ body {
   width: 100%;
   margin: 0;
   padding: 0;
+  position: fixed;
 }
 
 .profile-dropdownhidden { 
@@ -66,4 +68,3 @@ body {
 .user-menu-dropdown li  :hover { 
   background-color:  #dbb9b8
 }
-

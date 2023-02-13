@@ -11,23 +11,23 @@ module.exports = {
    await queryInterface.bulkInsert(options, [
     { 
       spotId: 1, 
-      url: 'www.image.com', 
-      preview: false
+      url: 'https://a0.muscache.com/im/pictures/monet/Luxury-570973165437649140/original/704468c1-47cd-44e0-9d1a-3ea3db51a2e6?im_w=1200', 
+      preview: true
+    },
+    {
+      spotId: 1,
+      url: 'https://a0.muscache.com/im/pictures/monet/Luxury-570973165437649140/original/5b3872b7-fc85-4e67-bd3b-dc69e298dae3?im_w=1200',
+      preview: true
     },
     { 
       spotId: 3, 
-      url: 'www.image2.com', 
+      url: 'https://a0.muscache.com/im/pictures/prohost-api/Hosting-755883515153921452/original/4aaec17a-636c-45f8-993a-3a0d65b89508.jpeg?im_w=1200', 
       preview: true
     },
     { 
       spotId: 2, 
-      url: 'www.image3.com', 
+      url: 'https://a0.muscache.com/im/pictures/55824903-6574-4566-a641-0985011c91cb.jpg?im_w=1200', 
       preview: true
-    },
-    { 
-      spotId: 1, 
-      url: 'www.image4.com', 
-      preview: false
     },
    ])
   },
