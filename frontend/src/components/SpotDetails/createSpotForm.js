@@ -1,9 +1,8 @@
 import { createNewSpot, createSpotImage } from "../../store/spots";
 import { useDispatch } from "react-redux";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { useModal } from "../../context/Modal";
-
 
 function CreateSpot(){ 
     const dispatch = useDispatch();
@@ -50,20 +49,18 @@ function CreateSpot(){
             description,
             preViewImage
         }
-        try {
+
+     
         const newSpot = await dispatch(createNewSpot(payload))
         const spotId = newSpot.id;
         const spotImage = { 
             url: preViewImage,
             preview: true
         }
-        const newImage = await dispatch(createSpotImage(spotImage, spotId))
-        modal();
+        await dispatch(createSpotImage(spotImage, spotId))
+        .then(modal)
         history.push(`/spots/${newSpot.id}`)
-    } catch (res) { 
-        const data = await res.json();
-        if(data && data.errors) setErrors(data.errors)
-    }
+    
 };
    
     return ( 
@@ -141,7 +138,6 @@ function CreateSpot(){
             >
             </textarea>
             <input id="input"
-            type="url"
             placeholder="https://example/image1.com"
             onChange={createPreviewImage}
             value={preViewImage}

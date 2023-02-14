@@ -11,6 +11,11 @@ ul.spot-card{
     justify-content: space-between;
 }
 
+.spot-card-column:hover { 
+    cursor: pointer;
+    color:  #dbb9b8
+}
+
 .spot-image { 
     border-radius: 25px;
     width: 420px;
@@ -22,6 +27,3 @@ ul.spot-card{
     flex-direction: column;
 }
 
-:link { 
-    text-decoration: none;
-}
