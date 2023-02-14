@@ -28,10 +28,6 @@ function App() {
             <SpotDetail />
           </Route>
 
-          <Route path={`/spots/new`}>
-            <CreateSpot />
-          </Route>
-          
         </Switch>
       )}
     </>
