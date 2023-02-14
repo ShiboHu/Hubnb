@@ -76,21 +76,19 @@ ul {
   background-color:  #dbb9b8
 }
 
-
-.create-spot-button { 
-  width: 100%;
-  border-radius: 15px;
-  padding: 15px;
-  font-size: 15px;
-}
-
-.create-spot-container :hover { 
-  background-color:  #dbb9b8
-}
-
 .create-spot-container { 
   position: absolute;
   right: 100%;
-  width: 200px;
-  top: 3.5px
+  width: 150px;
+  top: 11px;
+}
+
+.create-spot-button { 
+  width: 90%;
+  padding: 10px;
+  border-radius: 15px;
+}
+
+.create-spot-button:hover { 
+  background-color:  #dbb9b8
 }

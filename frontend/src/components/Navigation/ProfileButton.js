@@ -5,6 +5,7 @@ import OpenModalButton from '../OpenModalButton';
 import LoginFormModal from '../LoginFormModal';
 import SignupFormModal from '../SignupFormModal';
 import { useHistory }from 'react-router-dom'
+import CreateSpot from "../SpotDetails/createSpotForm";
 
 function ProfileButton({ user }) {
   const history = useHistory();
@@ -41,17 +42,18 @@ function ProfileButton({ user }) {
 
   const demoLogin = () => dispatch(sessionActions.login({credential:'john', password:'password2'}))
 
-  const createSpotPage = () => { 
-    history.push('/spots/new')
-  }
-
+ 
   const createSpotButton = () => { 
     if(!user){ 
       return null
     }else { 
-      return <button className="create-spot-button"
-      onClick={createSpotPage}
-      >Create a Spot</button>
+      return <div>
+        <OpenModalButton
+        buttonText="Create A Spot"
+        onButtonClick={closeMenu}
+        modalComponent={<CreateSpot />}
+      />
+      </div>
     }
   };
 

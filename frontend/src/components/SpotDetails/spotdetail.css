@@ -24,3 +24,32 @@
     position: relative;
     left: 30%;
 }
+
+/*create spot form css*/
+
+#input { 
+    padding: 7px;
+    width: 300px;
+    border-radius: 8px;
+    margin: 5px;
+}
+
+.create-spot-form { 
+    display: flex; 
+    flex-direction: column;
+    align-items: center;
+}
+
+.input { 
+    width: 310px;
+    border-radius: 8px;
+    margin: 5px;
+}
+
+.create-spot-button:hover { 
+   cursor: pointer;
+}
+
+.create-errors { 
+    color: red
+}
