@@ -1,0 +1,26 @@
+.spotDetail-content { 
+    display: flex; 
+    flex-direction: column;
+    margin-top: 80px;
+    align-items: center;
+}
+
+.image { 
+    width: 500px;
+    border-radius: 10px;
+}
+
+.spot-image-container { 
+    display: flex;
+    align-items: stretch;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.spot-reverse-box { 
+    display: block;
+    border: 2px solid black; 
+    position: relative;
+    left: 30%;
+}

@@ -4,9 +4,10 @@ import * as sessionActions from '../../store/session';
 import OpenModalButton from '../OpenModalButton';
 import LoginFormModal from '../LoginFormModal';
 import SignupFormModal from '../SignupFormModal';
-
+import { useHistory }from 'react-router-dom'
 
 function ProfileButton({ user }) {
+  const history = useHistory();
   const dispatch = useDispatch();
   const [showMenu, setShowMenu] = useState(false);
   const ulRef = useRef();
@@ -38,15 +39,33 @@ function ProfileButton({ user }) {
 
   const ulClassName = "profile-dropdown" + (showMenu ? "" : "hidden");
 
-
   const demoLogin = () => dispatch(sessionActions.login({credential:'john', password:'password2'}))
+
+  const createSpotPage = () => { 
+    history.push('/spots/new')
+  }
+
+  const createSpotButton = () => { 
+    if(!user){ 
+      return null
+    }else { 
+      return <button className="create-spot-button"
+      onClick={createSpotPage}
+      >Create a Spot</button>
+    }
+  };
 
   return (
     <div className="navbar">
+      <div className="create-spot-container ">
+      {createSpotButton()}
+      </div>
+      <div className="class-hover">
       <button onClick={openMenu} className="menu-icon">
       <i class="fa-solid fa-bars"></i>
       <i class="fa-solid fa-circle-user"></i>
       </button>
+      </div>
       <div className='user-menu-dropdown'>
       <ul className={ulClassName} ref={ulRef}>
         {user ? (
@@ -73,9 +92,9 @@ function ProfileButton({ user }) {
                 onButtonClick={closeMenu}
                 modalComponent={<SignupFormModal />}
               />
+            <button onClick={demoLogin} onButtonClick={closeMenu}>Demo Login</button>
             </li>
             <li>
-              <button onClick={demoLogin}>Demo Login</button>
             </li>
           </div>
         )}

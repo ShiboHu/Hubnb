@@ -26,7 +26,8 @@ function LoginFormModal() {
         if (data && data.errors) setErrors(data.errors);
       });
   }
-
+  const demoLogin = () => dispatch(sessionActions.login({credential:'john', password:'password2'}))
+ 
   return (
     <div className="main-form">
       <h1>Log In</h1>
@@ -56,6 +57,7 @@ function LoginFormModal() {
         </label>
         <button className="login-button" type="submit" disabled={disabled}>Log In</button>
       </form>
+    <button onClick={demoLogin}>Demo User Login</button>
     </div>
   );
 }

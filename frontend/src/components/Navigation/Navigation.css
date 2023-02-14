@@ -26,6 +26,7 @@ ul {
   margin: 0;
   padding: 0;
   position: fixed;
+  background-color: rgb(255, 255, 255);
 }
 
 .profile-dropdownhidden { 
@@ -40,12 +41,17 @@ ul {
   border-radius: 50px;
 }
 
+.class-hover :hover { 
+  background-color:  #dbb9b8
+}
+
 .navbar :hover { 
   cursor: pointer;
 }
 
 .logo { 
   width: 110px;
+  
 }
 
 .user-menu-dropdown { 
@@ -68,4 +74,23 @@ ul {
 
 .user-menu-dropdown li  :hover { 
   background-color:  #dbb9b8
+}
+
+
+.create-spot-button { 
+  width: 100%;
+  border-radius: 15px;
+  padding: 15px;
+  font-size: 15px;
+}
+
+.create-spot-container :hover { 
+  background-color:  #dbb9b8
+}
+
+.create-spot-container { 
+  position: absolute;
+  right: 100%;
+  width: 200px;
+  top: 3.5px
 }
