@@ -405,7 +405,10 @@ router.post('/:id/images', requireAuth, async (req, res) => {
 
     //  Get all Reviews by a Spot's id
     router.get('/:spotId/reviews', async (req, res) => { 
-        const review = await Review.findByPk(req.params.spotId, { 
+        const review = await Review.findAll({ 
+            where: { 
+                spotId: req.params.spotId
+            },
             attributes: { 
                 exclude: ['images']
             },
