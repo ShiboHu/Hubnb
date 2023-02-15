@@ -41,7 +41,7 @@ const validateSpot = [
     check("stars")
       .exists({ checkFalsy: true })
       .withMessage("Stars is required")
-      .isInt({ min: 1, max: 5 })
+    //   .isInt({ min: 1, max: 5 })
       .withMessage("Stars must be an integer from 1 to 5"),
     handleValidationErrors,
   ];
@@ -168,14 +168,14 @@ const validateSpot = [
                 },
                 attributes: ['stars']
             })
-            avgRate.forEach(review => { 
-                return rate += review.dataValues.stars  / spotReview.length
-             })
-            if(avgRate.length <= 0){ 
-                currentUserSpot[i].dataValues.avgRating = 'current spot does not have any ratings'
-            }else { 
-                currentUserSpot[i].dataValues.avgRating += star 
-            }
+            // avgRate.forEach(review => { 
+            //     return rate += review.dataValues.stars  / spotReview.length
+            //  })
+            // if(avgRate.length <= 0){ 
+            //     currentUserSpot[i].dataValues.avgRating = 'current spot does not have any ratings'
+            // }else { 
+            //     currentUserSpot[i].dataValues.avgRating += star 
+            // }
         }
         return res.json({ 
             Spots: currentUserSpot
@@ -442,6 +442,7 @@ router.post('/:id/images', requireAuth, async (req, res) => {
      router.post('/:spotId/reviews', validateReview, requireAuth, async (req, res) => { 
         const { review, stars } = req.body
 
+       
         const spot = await Spot.findOne({ 
             where: { 
                 id: req.params.spotId

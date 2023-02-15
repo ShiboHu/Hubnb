@@ -1,15 +1,22 @@
 import { useSelector, useDispatch } from 'react-redux'
 import { useParams } from 'react-router-dom';
 import { oneSpot } from '../../store/spots';
-import { useEffect} from 'react';
+import { useEffect, useState} from 'react';
 import './spotdetail.css'
 import { reviewDetail } from '../../store/reviews';
+import PostReviews from '../ReviewDetails/postReviews';
+import OpenModalButton from '../OpenModalButton';
 
 function SpotDetail(){ 
     const dispatch = useDispatch();
     const { spotId } = useParams(); 
     const spots = useSelector(state => state.spots.spotDetail); 
     const reviews = useSelector(state => state.reviews.Reviews)
+    const sessionUser = useSelector(state => state.session.user);
+
+
+
+
 
     useEffect(() => { 
         dispatch(oneSpot(spotId))
@@ -27,6 +34,31 @@ function SpotDetail(){
         return <h3>&#9733;{spots.avgRating}</h3>
     }
 }
+
+    const noReivews = () => { 
+        if(spots.numReviews === 0){ 
+            return <h3>&#9733;New</h3>
+        }else { 
+            return <h3>&#9733;{spots.avgRating}</h3>
+        }
+    }
+
+   
+    let reviewed = false; 
+    if(reviews && sessionUser){
+        reviews.forEach(review => { 
+            if(review.userId === sessionUser.id){ 
+               reviewed = true
+            }
+        })
+    }
+    
+    let ownSpot = false;
+    if(sessionUser){
+    if(spots.ownerId === sessionUser.id){ 
+        ownSpot = true
+      }
+    }
 
     return ( 
         <div className='spotDetail-content'>
@@ -55,19 +87,34 @@ function SpotDetail(){
             <h3>Hosted By:{spots.Owner.firstName}&nbsp;{spots.Owner.lastName}</h3>
             <h3>{spots.description}</h3>
             <div className='spot-reverse-box'>
-                <h3>${spots.price} night</h3>
+                <h3>${spots.price} night {noReivews()}</h3>
                 <button>Reserve</button>
             </div>
-            <div className='review-summary-box'>
+            <div>
                 <h3>Reviews</h3>
+                {reviewed && <h3
+                style={{color: 'red'}}
+                >Already Reviwed</h3>}
+                {ownSpot && <h3
+                style={{color: 'red'}}
+                >OwnSpot Cant not review</h3>}
+                {!reviewed && !ownSpot && sessionUser &&   
+                <div className={reviewed}>
+                <OpenModalButton 
+                 buttonText="Create A Review"
+                 modalComponent={<PostReviews props={spotId}/>}
+                />
+                </div>
+                 
+                }
                 {reviewFunction()}
                 <h4>
                 {reviews && !reviews.length ? 'Be first to post a review!' : null}
                 {reviews && reviews.map(review =>  
                 <h4 key={review.id}>
-                {review.User.firstName}&nbsp;
-                {review.createdAt.slice(0,7)}&nbsp;
-                {review.review}&nbsp;
+                {review.User.firstName}&nbsp;: &nbsp;
+                Date:&nbsp;{review.createdAt.slice(0,7)}&nbsp;,
+                Comment: &nbsp;{review.review}&nbsp;
                 </h4>
                 )}
                 </h4>

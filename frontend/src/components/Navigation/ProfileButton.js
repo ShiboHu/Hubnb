@@ -6,12 +6,14 @@ import LoginFormModal from '../LoginFormModal';
 import SignupFormModal from '../SignupFormModal';
 import { useHistory }from 'react-router-dom'
 import CreateSpot from "../SpotDetails/createSpotForm";
+import { useModal } from "../../context/Modal";
 
 function ProfileButton({ user }) {
   const history = useHistory();
   const dispatch = useDispatch();
   const [showMenu, setShowMenu] = useState(false);
   const ulRef = useRef();
+  const { closeModal } = useModal;
 
   const openMenu = () => {
     if (showMenu) return;
@@ -40,10 +42,15 @@ function ProfileButton({ user }) {
 
   const ulClassName = "profile-dropdown" + (showMenu ? "" : "hidden");
 
-  const demoLogin = () => dispatch(sessionActions.login({credential:'john', password:'password2'}))
-
+  const demoLogin = () => {
+    dispatch(sessionActions.login(
+      {credential:'john', password:'password2'}
+      ))
+      .then(closeModal)
+}
  
-  const createSpotButton = () => { 
+ 
+   const createSpotButton = () => { 
     if(!user){ 
       return null
     }else { 
@@ -56,6 +63,10 @@ function ProfileButton({ user }) {
       </div>
     }
   };
+
+  const manageSpotButton = () => { 
+    history.push('/user/current/spots')
+  }
 
   return (
     <div className="navbar">
@@ -76,6 +87,7 @@ function ProfileButton({ user }) {
             <li>{user.firstName} {user.lastName}</li>
             <li>{user.email}</li>
             <li>
+              <button onClick={manageSpotButton}>Manage Spot</button>
               <button onClick={logout}>Log Out</button>
             </li>
           </>

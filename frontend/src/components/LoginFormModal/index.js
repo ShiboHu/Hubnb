@@ -26,7 +26,13 @@ function LoginFormModal() {
         if (data && data.errors) setErrors(data.errors);
       });
   }
-  const demoLogin = () => dispatch(sessionActions.login({credential:'john', password:'password2'}))
+  
+  const demoLogin = () => {
+    dispatch(sessionActions.login(
+      {credential:'john', password:'password2'}
+      ))
+      .then(closeModal)
+}
  
   return (
     <div className="main-form">

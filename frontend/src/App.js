@@ -6,6 +6,7 @@ import Navigation from "./components/Navigation";
 import LandingPage from "./components/LandingPage";
 import SpotDetail from "./components/SpotDetails";
 import CreateSpot from "./components/SpotDetails/createSpotForm";
+import ManageMySpots from "./components/SpotDetails/mySpots";
 
 function App() {
   const dispatch = useDispatch();
@@ -26,6 +27,10 @@ function App() {
 
           <Route path={`/spots/:spotId`}>
             <SpotDetail />
+          </Route>
+
+          <Route path={'/user/current/spots'}>
+            <ManageMySpots />
           </Route>
 
         </Switch>

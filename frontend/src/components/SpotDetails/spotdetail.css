@@ -53,3 +53,39 @@
 .create-errors { 
     color: red
 }
+
+
+/* my spots */
+
+.headers { 
+    position: relative;
+    margin-top: 100px;
+}
+
+.myspot-card { 
+    display: flex;
+    gap: 50px;
+    margin-top: 40px;
+}
+
+.myspot-homepage { 
+    margin-left: 20px;
+}
+
+.my-spot-create-spotbutton { 
+    width: 10%;
+}
+
+.delete-button { 
+    width: 90%;
+    padding: 10px;
+    border-radius: 15px;
+}
+.delete-button:hover { 
+    background-color:  #dbb9b8;
+    cursor: pointer;
+}
+
+.hide-create-review-button { 
+    display: none;
+}

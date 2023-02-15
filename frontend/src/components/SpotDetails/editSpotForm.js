@@ -1,25 +1,33 @@
-import { createNewSpot, createSpotImage } from "../../store/spots";
-import { useDispatch } from "react-redux";
+import { createSpotImage, editSpot, oneSpot } from "../../store/spots";
+import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import { useModal } from "../../context/Modal";
 import { useEffect } from "react";
 
-function CreateSpot(){ 
+function EditSpotForm( id ){ 
     const dispatch = useDispatch();
-    const { closeModal } = useModal();
     const history = useHistory();
-    const [name, setName] = useState('');
-    const [address, setAddress] = useState('');
-    const [state, setState] = useState('');
-    const [country, setCountry] = useState('');
-    const [city, setCity] = useState('');
-    const [price, setPrice] = useState('');
-    const [lat, setLatitude] = useState(0);
-    const [lng, setLongitude] = useState(0);
-    const [description, setDescription] = useState('');
-    const [preViewImage, setPreviewImage] = useState('');
+    let updateSpot = useSelector(state => state.spots.Spots)
+    const mySpot = updateSpot.find(spot => spot.id === id.props)
+    const { closeModal } = useModal();
+
+    useEffect(() => { 
+        dispatch(oneSpot(id.props))
+    },[])
+
+  
+    const [name, setName] = useState(mySpot.name);
+    const [address, setAddress] = useState(mySpot.address);
+    const [state, setState] = useState(mySpot.state);
+    const [country, setCountry] = useState(mySpot.country);
+    const [city, setCity] = useState(mySpot.city);
+    const [price, setPrice] = useState(mySpot.price);
+    const [lat, setLatitude] = useState(mySpot.lat);
+    const [lng, setLongitude] = useState(mySpot.lng);
+    const [description, setDescription] = useState(mySpot.description);
     const [errors, setErrors] = useState([]);
+
     
     const createName = (e) => setName(e.target.value);
     const createAddress = (e) => setAddress(e.target.value);
@@ -30,8 +38,7 @@ function CreateSpot(){
     const createLatitude = (e) => setLatitude(e.target.value);
     const createLongitude = (e) => setLongitude(e.target.value);
     const createDescription = (e) => setDescription(e.target.value);
-    const createPreviewImage = (e) => setPreviewImage(e.target.value);
-    
+
     useEffect(() => { 
         const errors = [];
         
@@ -46,18 +53,16 @@ function CreateSpot(){
         if(!lng) errors.push(`Longitude is required`);
         if(!price) errors.push(`Price is required`);
         if(!description) errors.push(`Description is required`);
-        if(!preViewImage) errors.push(`Image is required`);
         if(description.length < 30)errors.push('Descriptions need to be longer than 30 characters')
         if(!Number(price))errors.push('Price must be a number');
 
          setErrors(errors)
-    },[name, address, city, state, lat, lng, price, description, preViewImage])
+    },[name, address, city, state, lat, lng, price, description])
+    
     
 
     const submit = async (e) => { 
         e.preventDefault();
-
-        setErrors([]);
 
         const payload = { 
             name,
@@ -69,28 +74,19 @@ function CreateSpot(){
             lat,
             lng,
             description,
-            preViewImage
         }
 
     
-        const newSpot = await dispatch(createNewSpot(payload))
-        const spotId = newSpot.id;
-        const spotImage = { 
-            url: preViewImage,
-            preview: true
-        }
-
-        await dispatch(createSpotImage(spotImage, spotId))
+        await dispatch(editSpot(payload, id.props))
         .then(closeModal)
-        history.push(`/spots/${newSpot.id}`)
+        history.push(`/spots/${id.props}`)
         
-    
 };
 
 
     return ( 
         <div className="create-spot-form">
-        <h1>Create New Spot</h1>
+        <h1>Edit a Spot</h1>
         <form onSubmit={submit}>
         <ul className="create-errors">
         {errors.map((error, idx) => 
@@ -162,20 +158,12 @@ function CreateSpot(){
             required
             >
             </textarea>
-            <input id="input"
-            placeholder="https://example/image1.com"
-            onChange={createPreviewImage}
-            value={preViewImage}
-            required
-            >
-            </input>
-            
         </label>
         </form>
-        <button className="create-spot-button" type="submit" onClick={submit} >Create Spot</button>
+        <button className="create-spot-button" type="submit" onClick={submit}>Update Spot</button>
         </div>
     )
 }
 
 
-export default CreateSpot;
+export default EditSpotForm;

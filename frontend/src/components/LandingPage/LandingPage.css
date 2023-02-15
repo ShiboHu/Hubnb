@@ -22,8 +22,11 @@ ul.spot-card{
     height: 320px
 }
 
+.spot-image :hover { 
+    cursor: pointer;
+}
+
 .spot-card-column { 
     display: flex;
     flex-direction: column;
 }
-
