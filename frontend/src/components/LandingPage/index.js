@@ -21,16 +21,16 @@ function LandingPage() {
         <div className="landing-page">
           <ul className="spot-card" >
           {spots.Spots.map((spot) => 
-          <div className="spot-card-column" onClick={()=> {history.push(`/spots/${spot.id}`)}}>
-          <li key={spot.id}>
+          <div key={spot.id} className="spot-card-column" onClick={()=> {history.push(`/spots/${spot.id}`)}}>
+          <li >
             <img 
             className="spot-image" 
             src={spot.previewImage} 
             alt="previewimages">
             </img>
             <h3 className="title-text">{spot.name}&nbsp;&nbsp;&#9733;{spot.avgRating}</h3>
-            <h4 className="city-text">{spot.city},&nbsp;&nbsp;{spot.country}</h4>
-            <h4 className="price-text">${spot.price}&nbsp;night</h4>
+            <h4  className="city-text">{spot.city},&nbsp;&nbsp;{spot.country}</h4>
+            <h4  className="price-text">${spot.price}&nbsp;night</h4>
           </li>
           </div>
           )}

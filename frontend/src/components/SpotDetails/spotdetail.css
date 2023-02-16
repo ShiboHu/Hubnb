@@ -89,3 +89,7 @@
 .hide-create-review-button { 
     display: none;
 }
+
+.delete-review-button-container { 
+    width: 20%
+}

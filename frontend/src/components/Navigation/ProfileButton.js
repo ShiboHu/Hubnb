@@ -66,7 +66,7 @@ function ProfileButton({ user }) {
 
   const manageSpotButton = () => { 
     history.push('/user/current/spots')
-  }
+  };
 
   return (
     <div className="navbar">

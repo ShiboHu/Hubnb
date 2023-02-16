@@ -15,12 +15,13 @@ function CreateSpot(){
     const [country, setCountry] = useState('');
     const [city, setCity] = useState('');
     const [price, setPrice] = useState('');
-    const [lat, setLatitude] = useState(0);
-    const [lng, setLongitude] = useState(0);
+    const [lat, setLatitude] = useState();
+    const [lng, setLongitude] = useState();
     const [description, setDescription] = useState('');
     const [preViewImage, setPreviewImage] = useState('');
     const [errors, setErrors] = useState([]);
-    
+    const [disable, setDisable] = useState(false);
+
     const createName = (e) => setName(e.target.value);
     const createAddress = (e) => setAddress(e.target.value);
     const createCity = (e) => setCity(e.target.value);
@@ -37,20 +38,14 @@ function CreateSpot(){
         
         if(name.length < 5 || name.length > 10)errors.push('name must be between 5-10 characters')
         if(address.length < 5 || address.length > 30) errors.push('Adress length must be between 5-30 characters')
-        if(!name) errors.push(`Name is required`);
-        if(!address) errors.push(`Address is required`);
-        if(!city) errors.push(`City is required`);
-        if(!country) errors.push(`Country is required`);
-        if(!state) errors.push(`State is required`);
-        if(!lat) errors.push(`Latitude is required`);
-        if(!lng) errors.push(`Longitude is required`);
-        if(!price) errors.push(`Price is required`);
-        if(!description) errors.push(`Description is required`);
-        if(!preViewImage) errors.push(`Image is required`);
         if(description.length < 30)errors.push('Descriptions need to be longer than 30 characters')
         if(!Number(price))errors.push('Price must be a number');
-
+        if(!Number(lat) || !Number(lng)) errors.push('Latitude and Longitude must be a number')
+        if(!preViewImage) errors.push('PreviewImage is required')
+        
          setErrors(errors)
+
+         
     },[name, address, city, state, lat, lng, price, description, preViewImage])
     
 
@@ -72,19 +67,23 @@ function CreateSpot(){
             preViewImage
         }
 
-    
-        const newSpot = await dispatch(createNewSpot(payload))
-        const spotId = newSpot.id;
+        try {
         const spotImage = { 
             url: preViewImage,
             preview: true
         }
 
+        const newSpot = await dispatch(createNewSpot(payload))
+        const spotId = newSpot.id;
         await dispatch(createSpotImage(spotImage, spotId))
         .then(closeModal)
         history.push(`/spots/${newSpot.id}`)
-        
-    
+    } catch (e) { 
+        const data = await e.json()
+        if(data && data.errors){ 
+            setErrors(data.errors)
+        }
+    }
 };
 
 
@@ -172,7 +171,7 @@ function CreateSpot(){
             
         </label>
         </form>
-        <button className="create-spot-button" type="submit" onClick={submit} >Create Spot</button>
+        <button className="create-spot-button" type="submit" onClick={submit} disabled={!!errors.length}>Create Spot</button>
         </div>
     )
 }

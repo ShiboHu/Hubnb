@@ -3,8 +3,6 @@ import { useDispatch, useSelector } from "react-redux"
 import { useHistory } from "react-router-dom";
 import { userSpot } from "../../store/spots";
 import OpenModalButton from "../OpenModalButton";
-import CreateSpot from "./createSpotForm";
-import { deleteSpot } from "../../store/spots";
 import EditSpotForm from "./editSpotForm";
 import ConfirmBox from "../ConfirmModal";
 
@@ -12,7 +10,8 @@ import ConfirmBox from "../ConfirmModal";
 function ManageMySpots() { 
     const dispatch = useDispatch();
     const history = useHistory();
-    const userSpots = useSelector(state => state.spots.UserSpots);
+    const userSpots = useSelector(state => state.spots.userSpot);
+
 
     useEffect(() => { 
         dispatch(userSpot())
@@ -61,7 +60,7 @@ function ManageMySpots() {
         <div >
           <ul className="myspot-card" >
           {userSpots.Spots.map((spot) => 
-          <div className="myspot-card-column" >
+          <div key={spot.id}className="myspot-card-column" >
           {deleteSpotButton(spot.id)}
            {editSpotButton(spot.id)}
           <li key={spot.id}>

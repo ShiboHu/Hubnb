@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux"
-import { useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux"
 import { createReviews } from "../../store/reviews";
 import { useModal } from "../../context/Modal";
 import './reviews.css'
@@ -12,6 +11,7 @@ function PostReviews ( spotId ) {
     const [review, setReivew] = useState('');
     const [stars, setStars] = useState(3);
     const [error, setErrors] = useState([]);
+
 
     useEffect(() => { 
         const errors = [];
@@ -26,16 +26,16 @@ function PostReviews ( spotId ) {
 
    const sumbit = async (e) => { 
         e.preventDefault();
-
+        
         const payload = { 
             review,
             stars
         }
         
-       const newReview = await dispatch(createReviews(payload, spotId.props));
-        if(newReview){ 
-            closeModal()
-        }
+
+        await dispatch(createReviews(payload, spotId.props));
+         closeModal();
+       
    }
 
 
@@ -45,7 +45,7 @@ function PostReviews ( spotId ) {
     return ( 
         <div className="create-review-form">
         <form onSubmit={sumbit}>
-        <ul className="create review Errors">
+        <ul className="create-review-Errors">
         {error.map((error, idx) => 
           <li key={idx}>{error}</li>
           )}
@@ -65,15 +65,17 @@ function PostReviews ( spotId ) {
         <label>
         <input
          id="stars"
-         type="number"
+         type="range"
          min={1}
+         step={0.5}
          max={5}
+         onInput="num.value = this.value"
          placeholder="number 1 - 5"
          onChange={(e) => setStars(e.target.value)}
          value={stars}
          required
-          >
-        </input>
+          />
+        <output id="num">{stars}</output>
         </label>
         </form>
         <button type="submit" onClick={sumbit}

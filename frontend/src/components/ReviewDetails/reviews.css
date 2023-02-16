@@ -1,4 +1,3 @@
-
 .create-review-form { 
     display: flex;
     flex-direction: column;
@@ -6,5 +5,25 @@
 }
 
 #stars { 
-    width: 30%;
+    width: 80%;
+}
+
+/* my reviews */ 
+
+.my-review-header-text { 
+    margin-top: 100px;
+    margin-left: 20px;
+}
+
+.my-reviews-page { 
+    margin-left: 2px;
+}
+
+.reviews-container { 
+    width: 50%;
+    position: static;
+}
+
+.create-review-Errors { 
+    color: red
 }

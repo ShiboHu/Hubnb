@@ -4,6 +4,7 @@ const LOAD_SPOTS = 'spots/LOADSPOTS';
 const SPOT_DETAILS = 'spots/SPOTDETAILS';
 const CREATE_SPOTS = 'spots/CREATESPOTS'; 
 const LOAD_USERSPOTS = 'spots/LOADUSERSPOTS';
+const DELETE_SPOT = 'spots/DELETESPOTS';
 
 export const loadSpots = (spots) => ({ 
     type: LOAD_SPOTS,
@@ -23,6 +24,12 @@ export const createSpot = (spot) => ({
 export const loaduserSpot = (spots) => ({ 
     type: LOAD_USERSPOTS,
     spots
+})
+
+export const deleteUserSpot = (spots, spotId) => ({ 
+    type: DELETE_SPOT,
+    spots,
+    spotId
 })
 
 
@@ -48,7 +55,6 @@ export const oneSpot = (id) => async dispatch => {
 
 export const userSpot = () => async dispatch => { 
     const res = await csrfFetch('/api/spots/current');
-
     if(res.ok){ 
         const userSpots = await res.json();
         dispatch(loaduserSpot(userSpots))
@@ -65,7 +71,6 @@ export const createNewSpot = (payload) => async dispatch => {
     
     if(res.ok){ 
         const newSpot = await res.json();
-        console.log(newSpot)
         dispatch(createSpot(newSpot));
         return newSpot
     }
@@ -84,7 +89,11 @@ export const deleteSpot = (spotId) => async dispatch => {
     const res = await csrfFetch(`/api/spots/${spotId}`, { 
         method: "DELETE"
     })
-    return res 
+    if(res.ok){ 
+        dispatch(deleteUserSpot(spotId))
+        dispatch(userSpot())
+    }
+    return res
 }
 
 export const editSpot = (payload, spotId) => async dispatch => { 
@@ -109,7 +118,11 @@ const spotsReducer = (state = {}, action) => {
             newState.Spots = [...newState.Spots, action.spot]
             return newState
         case LOAD_USERSPOTS: 
-            newState.UserSpots = action.spots
+            newState.userSpot = action.spots
+            console.log(action.spots.Spots)
+            return newState
+        case DELETE_SPOT: 
+            newState.userSpot = null
             return newState
         default:
             return state;

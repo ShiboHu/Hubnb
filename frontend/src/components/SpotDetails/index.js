@@ -1,11 +1,12 @@
 import { useSelector, useDispatch } from 'react-redux'
 import { useParams } from 'react-router-dom';
 import { oneSpot } from '../../store/spots';
-import { useEffect, useState} from 'react';
+import { useEffect} from 'react';
 import './spotdetail.css'
 import { reviewDetail } from '../../store/reviews';
 import PostReviews from '../ReviewDetails/postReviews';
 import OpenModalButton from '../OpenModalButton';
+import DeleteReviewBox from '../ConfirmModal/deleteReview';
 
 function SpotDetail(){ 
     const dispatch = useDispatch();
@@ -13,9 +14,6 @@ function SpotDetail(){
     const spots = useSelector(state => state.spots.spotDetail); 
     const reviews = useSelector(state => state.reviews.Reviews)
     const sessionUser = useSelector(state => state.session.user);
-
-
-
 
 
     useEffect(() => { 
@@ -37,9 +35,9 @@ function SpotDetail(){
 
     const noReivews = () => { 
         if(spots.numReviews === 0){ 
-            return <h3>&#9733;New</h3>
+            return <p>&#9733;New</p>
         }else { 
-            return <h3>&#9733;{spots.avgRating}</h3>
+            return <p>&#9733;{spots.avgRating}</p>
         }
     }
 
@@ -60,6 +58,23 @@ function SpotDetail(){
       }
     }
 
+    const deleteReviewButton = (id, spotId) => { 
+        let props = { 
+            id, 
+            spotId
+        }
+
+        return ( 
+          <div> 
+            <OpenModalButton 
+            buttonText="Delete"
+            modalComponent={<DeleteReviewBox  props={props} />}
+            />
+          </div>
+        )
+      }
+     
+
     return ( 
         <div className='spotDetail-content'>
             <h1>{spots.name}&nbsp;&nbsp;</h1>
@@ -76,7 +91,7 @@ function SpotDetail(){
              {spots.country}</h2>
             <div className='spot-image-container'>
             {spots.SpotImages.map(image => 
-            <div key={spots.id} className="spot-image-datailpage">
+            <div key={image.id} className="spot-image-datailpage">
             <img 
             alt="spotdetail-image"
             src={image.url}
@@ -92,14 +107,18 @@ function SpotDetail(){
             </div>
             <div>
                 <h3>Reviews</h3>
-                {reviewed && <h3
+                {reviewed && 
+                <h3
                 style={{color: 'red'}}
-                >Already Reviwed</h3>}
-                {ownSpot && <h3
+                >Already Reviwed
+                </h3>}
+                {ownSpot && 
+                <h3
                 style={{color: 'red'}}
-                >OwnSpot Cant not review</h3>}
+                >OwnSpot Cant not review
+                </h3>}
                 {!reviewed && !ownSpot && sessionUser &&   
-                <div className={reviewed}>
+                <div className={reviewed ? reviewed : undefined}>
                 <OpenModalButton 
                  buttonText="Create A Review"
                  modalComponent={<PostReviews props={spotId}/>}
@@ -108,16 +127,21 @@ function SpotDetail(){
                  
                 }
                 {reviewFunction()}
-                <h4>
-                {reviews && !reviews.length ? 'Be first to post a review!' : null}
+                <div>
+                {reviews && !reviews.length ? 'Be first to post a review!' : undefined}
                 {reviews && reviews.map(review =>  
                 <h4 key={review.id}>
                 {review.User.firstName}&nbsp;: &nbsp;
                 Date:&nbsp;{review.createdAt.slice(0,7)}&nbsp;,
                 Comment: &nbsp;{review.review}&nbsp;
+                {sessionUser.id === review.User.id ?
+                <div className='delete-review-button-container'>
+                 {deleteReviewButton(review.id, spots.id)}
+                 </div>
+                 : undefined}
                 </h4>
                 )}
-                </h4>
+                </div>
             </div>  
         </div>
     )

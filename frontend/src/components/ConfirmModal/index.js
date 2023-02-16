@@ -4,16 +4,23 @@ import { useModal } from "../../context/Modal";
 import { deleteSpot } from "../../store/spots";
 
 function ConfirmBox(id){ 
+    const history = useHistory()
     const dispatch = useDispatch();
     const { closeModal } = useModal()
 
+    const sumbit = e => { 
+        e.preventDefault(); 
+
+        dispatch(deleteSpot(id.props))
+        closeModal()
+        return history.push('/user/current/spots')
+    } 
     return ( 
         <div>
             <h1>Confirm Delete</h1>
             <h3>Are you sure you want to remove this spot from the listsings</h3>
             <button className="delete-button"
-            onClick={() => dispatch(deleteSpot(id.props))
-            ? window.location.reload() : 'fail to delete'}
+            onClick={sumbit}
             >Yes(Delete Spot)</button>
             <button className="delete-button"
             onClick={closeModal}
