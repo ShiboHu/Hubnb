@@ -1,15 +1,15 @@
-import { createSpotImage, editSpot, oneSpot } from "../../store/spots";
+import { editSpot, oneSpot, userSpot } from "../../store/spots";
 import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
-import { useHistory, useParams } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { useModal } from "../../context/Modal";
 import { useEffect } from "react";
 
 function EditSpotForm( id ){ 
     const dispatch = useDispatch();
     const history = useHistory();
-    let updateSpot = useSelector(state => state.spots.Spots)
-    const mySpot = updateSpot.find(spot => spot.id === id.props)
+    let updateSpot = useSelector(state => state.spots.spotDetail)
+    // const updateSpot = updateSpot.find(spot => spot.id === id.props)
     const { closeModal } = useModal();
 
     useEffect(() => { 
@@ -17,15 +17,15 @@ function EditSpotForm( id ){
     },[])
 
   
-    const [name, setName] = useState(mySpot.name);
-    const [address, setAddress] = useState(mySpot.address);
-    const [state, setState] = useState(mySpot.state);
-    const [country, setCountry] = useState(mySpot.country);
-    const [city, setCity] = useState(mySpot.city);
-    const [price, setPrice] = useState(mySpot.price);
-    const [lat, setLatitude] = useState(mySpot.lat);
-    const [lng, setLongitude] = useState(mySpot.lng);
-    const [description, setDescription] = useState(mySpot.description);
+    const [name, setName] = useState(updateSpot.name);
+    const [address, setAddress] = useState(updateSpot.address);
+    const [state, setState] = useState(updateSpot.state);
+    const [country, setCountry] = useState(updateSpot.country);
+    const [city, setCity] = useState(updateSpot.city);
+    const [price, setPrice] = useState(updateSpot.price);
+    const [lat, setLatitude] = useState(updateSpot.lat);
+    const [lng, setLongitude] = useState(updateSpot.lng);
+    const [description, setDescription] = useState(updateSpot.description);
     const [errors, setErrors] = useState([]);
 
     

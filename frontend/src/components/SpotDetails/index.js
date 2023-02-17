@@ -25,11 +25,11 @@ function SpotDetail(){
 
     const reviewFunction = () => { 
         if(spots.numReviews > 1){ 
-            return <h3>&#9733;{spots.avgRating} · {spots.numReviews} Reviews</h3>
+            return <h3>&#9733;{fixedDecimal(spots.avgRating)} · {spots.numReviews} Reviews</h3>
         }else if(spots.numReviews === 1) { 
-            return <h3>&#9733;{spots.avgRating} · {spots.numReviews} Review</h3>
+            return <h3>&#9733;{fixedDecimal(spots.avgRating)} · {spots.numReviews} Review</h3>
         }else {
-        return <h3>&#9733;{spots.avgRating}</h3>
+        return <h3>&#9733;{fixedDecimal(spots.avgRating)}</h3>
     }
 }
 
@@ -37,20 +37,21 @@ function SpotDetail(){
         if(spots.numReviews === 0){ 
             return <p>&#9733;New</p>
         }else if(spots.numReviews === 1) { 
-            return <p>&#9733;{spots.avgRating} · {spots.numReviews} Review</p>
+            return <p>&#9733;{fixedDecimal(spots.avgRating)} · {spots.numReviews} Review</p>
         }else { 
-            return <p>&#9733;{spots.avgRating} · {spots.numReviews} Reviews</p>
+            return <p>&#9733;{fixedDecimal(spots.avgRating)} · {spots.numReviews} Reviews</p>
         }
     }
 
     const fixedDecimal = (num) => { 
-        if(typeof num !== 'number' || num === 0){ 
-          return 'New'
-        }else if (num % 1 === 0) {
-          return num.toString() + '.0'
-        }else { 
-          return num
-        }
+        // if(typeof num !== 'number' || num === 0){ 
+        //   return 'New'
+        // }else if (num % 1 === 0) {
+        //   return num.toString() + '.0'
+        // }else { 
+        //   return num
+        // }
+        return parseInt(num).toPrecision(2)
       }
    
     let reviewed = false; 

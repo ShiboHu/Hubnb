@@ -5,6 +5,7 @@ const SPOT_DETAILS = 'spots/SPOTDETAILS';
 const CREATE_SPOTS = 'spots/CREATESPOTS'; 
 const LOAD_USERSPOTS = 'spots/LOADUSERSPOTS';
 const DELETE_SPOT = 'spots/DELETESPOTS';
+const UPDATE_SPOT = 'spots/UPDATESPOTS';
 
 export const loadSpots = (spots) => ({ 
     type: LOAD_SPOTS,
@@ -104,6 +105,9 @@ export const editSpot = (payload, spotId) => async dispatch => {
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify(payload)
     });
+    if(res.ok){ 
+        dispatch(oneSpot(spotId))
+    }
     return res
 }
 
@@ -124,6 +128,8 @@ const spotsReducer = (state = {}, action) => {
             return newState
         case DELETE_SPOT: 
             newState.userSpot = null
+            return newState
+        case UPDATE_SPOT: 
             return newState
         default:
             return state;
