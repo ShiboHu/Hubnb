@@ -135,7 +135,7 @@ const validateSpot = [
 
         const avgRatingObj = avgRatingArr[0];
         if(!avgRatingObj.avgRating) {
-            spot.avgRating = 'New'
+            spot.avgRating = 0
         } else {
             console.log(avgRatingObj.avgRating)
             spot.avgRating = avgRatingObj.avgRating;
