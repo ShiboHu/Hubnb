@@ -16,7 +16,7 @@ function LandingPage() {
     if(!spots.Spots) return null;
 
     const fixedDecimal = (num) => { 
-      if(typeof num !== 'number' || num === 0){ 
+      if( num === 0){ 
         return 'New'
       }else if (num % 1 === 0) {
         return num.toString() + '.0'
