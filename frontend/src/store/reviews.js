@@ -50,7 +50,7 @@ export const deleteCurrentReview = (reviewId, spotId) => async dispatch => {
     if(res.ok){ 
         dispatch(deleteReviews(reviewId))
         dispatch(reviewDetail(spotId))
-        // dispatch(oneSpot(3))
+        dispatch(oneSpot(spotId))
     }
     return res
 }

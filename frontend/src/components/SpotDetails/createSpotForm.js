@@ -73,17 +73,20 @@ function CreateSpot(){
             preview: true
         }
 
-        const newSpot = await dispatch(createNewSpot(payload))
-        const spotId = newSpot.id;
-        await dispatch(createSpotImage(spotImage, spotId))
-        .then(closeModal)
-        history.push(`/spots/${newSpot.id}`)
+        const newSpot = await dispatch(createNewSpot(payload, spotImage))
+
+        if(newSpot){ 
+        closeModal();
+       return history.push(`/spots/${newSpot.id}`)
+        }
     } catch (e) { 
         const data = await e.json()
         if(data && data.errors){ 
             setErrors(data.errors)
         }
     }
+
+
 };
 
 
