@@ -5,16 +5,18 @@ import { userSpot } from "../../store/spots";
 import OpenModalButton from "../OpenModalButton";
 import EditSpotForm from "./editSpotForm";
 import ConfirmBox from "../ConfirmModal";
-
+import { reviewDetail } from "../../store/reviews";
 
 function ManageMySpots() { 
     const dispatch = useDispatch();
     const history = useHistory();
     const userSpots = useSelector(state => state.spots.userSpot);
+    const reviews = useSelector(state => state.reviews.Reviews)
 
-
+    console.log(reviews)
     useEffect(() => { 
         dispatch(userSpot())
+        dispatch(reviewDetail())
     }, [])
 
 
@@ -70,8 +72,9 @@ function ManageMySpots() {
             src={spot.previewImage} 
             alt="previewimages">
             </img>
+           
+            <h3 className="title-text">{spot.name}</h3>
             
-            <h3 className="title-text">{spot.name}&nbsp;&nbsp;&#9733;{spot.avgRating}</h3>
             <h4 className="city-text">{spot.city},&nbsp;&nbsp;{spot.country}</h4>
             <h4 className="spotprice-text">${spot.price}&nbsp;night
             </h4>
