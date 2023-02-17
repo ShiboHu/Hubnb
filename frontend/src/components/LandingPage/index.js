@@ -16,7 +16,7 @@ function LandingPage() {
     if(!spots.Spots) return null;
 
     const fixedDecimal = (num) => { 
-      if(typeof num !== 'number' || num === 0){ 
+      if(num === 0){ 
         return 'New'
       // }else if (num % 1 === 0) {
       //   return num.toString() + '.0'
@@ -41,7 +41,11 @@ function LandingPage() {
             src={spot.previewImage} 
             alt="previewimages">
             </img>
-            <h3 className="title-text">{spot.name}&nbsp;&nbsp;&#9733;{fixedDecimal(spot.avgRating)}</h3>
+            <h3 className="title-text">
+            {spot.name}
+            &nbsp;&nbsp;&#9733;
+            {fixedDecimal(spot.avgRating)}
+            </h3>
             <h4  className="city-text">{spot.city},&nbsp;&nbsp;{spot.country}</h4>
             <h4  className="price-text">${spot.price}&nbsp;night</h4>
           </li>
