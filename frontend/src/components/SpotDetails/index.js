@@ -134,7 +134,7 @@ function SpotDetail(){
                 {review.User.firstName}&nbsp;: &nbsp;
                 Date:&nbsp;{review.createdAt.slice(0,7)}&nbsp;,
                 Comment: &nbsp;{review.review}&nbsp;
-                {sessionUser.id === review.User.id ?
+                {sessionUser && sessionUser.id === review.User.id ?
                 <div className='delete-review-button-container'>
                  {deleteReviewButton(review.id, spots.id)}
                  </div>
