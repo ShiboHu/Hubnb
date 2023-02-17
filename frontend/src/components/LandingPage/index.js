@@ -17,7 +17,7 @@ function LandingPage() {
 
     const fixedDecimal = (num) => { 
       if(num === 0){ 
-        return 'New'
+        return <p>New</p>
       // }else if (num % 1 === 0) {
       //   return num.toString() + '.0'
       // }else { 

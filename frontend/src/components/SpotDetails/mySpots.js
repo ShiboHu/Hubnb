@@ -13,7 +13,7 @@ function ManageMySpots() {
     const userSpots = useSelector(state => state.spots.userSpot);
     const reviews = useSelector(state => state.reviews.Reviews)
 
-    console.log(reviews)
+
     useEffect(() => { 
         dispatch(userSpot())
         dispatch(reviewDetail())
