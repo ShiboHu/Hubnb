@@ -3,7 +3,7 @@ const router = express.Router();
 
 const {requireAuth } = require('../../utils/auth');
 const { handleValidationErrors } = require('../../utils/validation');
-const { Spot, User, SpotImage, Review, ReviewImage, Booking } = require('../../db/models');
+const { Spot, User, SpotImage, Review, ReviewImage, Booking, sequelize } = require('../../db/models');
 const { check } = require('express-validator');
 const { Op } = require("sequelize");
 
@@ -48,84 +48,123 @@ const validateSpot = [
 
 
   // get all spots 
-  router.get("/", async (req, res) => {
-    let { page, size } = req.query;
-    if (!page) {
-      page = 1;
-    }
-    if (!size) {
-      size = 20;
-    }
-  
-    page = parseInt(page);  
-    size = parseInt(size);
-  
-    let pagination = {};
-  
-    if (size >= 1 && page >= 1) {
-      pagination.limit = size;
-      pagination.offset = size * (page - 1);
-    } else {
-      res.json({
-        message: "Validation Error",
-        statusCode: 400,
-        errors: {
-          page: "Page must be greater than or equal to 0",
-          size: "Size must be greater than or equal to 0",
-          maxLat: "Maximum latitude is invalid",
-          minLat: "Minimum latitude is invalid",
-          minLng: "Maximum longitude is invalid",
-          maxLng: "Minimum longitude is invalid",
-          minPrice: "Maximum price must be greater than or equal to 0",
-          maxPrice: "Minimum price must be greater than or equal to 0",
-        },
-      });
-    }
-  
-    const allSpots = await Spot.findAll({
-        attributes: { 
-            exclude: ['numReviews']
-        },
-        ...pagination,
-    });
+  router.get('/', async (req, res) => {
+    let { page, size, minLat, maxLat, minLng, maxLng, minPrice, maxPrice } = req.query;
 
-    let rate = 0; 
-    for(let i = 0; i < allSpots.length; i++){ 
-        let id = allSpots[i].dataValues.id
-        let previewUrl = await SpotImage.findOne({ 
+    const pagination = {};
+
+    page = +page;
+    size = +size;
+    if (!page) page = 1;
+    if(page > 10) page = 10;
+    if (!size || size > 20) size = 20;
+
+    if (page >=1 && size >=1) {
+        pagination.limit = size;
+        pagination.offset = size * (page - 1);
+    }
+
+    let query = {
+        where: {},
+        ...pagination
+    }
+
+  
+    if (minLat && !maxLat) {
+        query.where.lat = { [Op.gte]: req.query.minLat }
+    } else if (!minLat && maxLat) {
+        query.where.lat = { [Op.lte]: req.query.maxLat }
+    } else if (minLat && maxLat) {
+        query.where.lat = {
+            [Op.and]: { [Op.gte]: req.query.minLat, [Op.lte]: req.query.maxLat}
+        }
+    }
+
+    
+    if (minLng && !maxLng) {
+        query.where.lng = { [Op.gte]: req.query.minLng }
+    } else if (!minLng && maxLng) {
+        query.where.lng = { [Op.lte]: req.query.maxLng }
+    } else if (minLng && maxLng) {
+        query.where.lng = {
+            [Op.and]: { [Op.gte]: req.query.minLng, [Op.lte]: req.query.maxLng}
+        }
+    }
+
+
+    if (minPrice && !maxPrice) {
+        query.where.price = { [Op.gte]: req.query.minPrice }
+    } else if (!minPrice && maxPrice) {
+        query.where.price = { [Op.lte]: req.query.maxPrice }
+    } else if (minPrice && maxPrice) {
+        query.where.price = {
+            [Op.and]: { [Op.gte]: req.query.minPrice, [Op.lte]: req.query.maxPrice}
+        }
+    }
+
+    const spots = await Spot.findAll(query);
+    const spotsArr = [];
+
+    for (let spot of spots) {
+        spot = spot.toJSON();
+        let avgRatingArr = await Review.findAll({
+            where: {
+                spotId: spot.id
+            },
+            attributes: [
+                [
+                    sequelize.fn('AVG', sequelize.col('stars')),
+                    'avgRating'
+                ]
+            ],
+            raw: true
+        });
+        let lengthReview = await Review.findAll({ 
             where: { 
-                spotId: id,
+                spotId: spot.id
+            },
+        })
+
+        console.log(lengthReview.length)
+
+        if(!lengthReview){ 
+            spot.numReviews = 0
+        }else { 
+            spot.numReviews = lengthReview.length
+        }
+
+        const avgRatingObj = avgRatingArr[0];
+        if(!avgRatingObj.avgRating) {
+            spot.avgRating = 'New'
+        } else {
+            console.log(avgRatingObj.avgRating)
+            spot.avgRating = avgRatingObj.avgRating;
+        }
+
+        let previewImages = await SpotImage.findAll({
+            where: {
+                spotId: spot.id,
                 preview: true
             },
             attributes: ['url']
         });
-        if(!previewUrl){ 
-            allSpots[i].dataValues.previewImage = 'current spot does not have preview images'
-        }else { 
-            allSpots[i].dataValues.previewImage = previewUrl.url
+
+        if (previewImages.length === 0) {
+            spot.previewImage = 'Current Spot dont have any preview images'
+        } else if (previewImages.length > 0) {
+            spot.previewImage = previewImages[0].url;
         }
-        let avgRate = await Review.findAll({ 
-            where: { 
-                spotId: id
-            },
-            attributes: ['stars']
-        })
-        for(let review of avgRate){ 
-           var star = review.stars + rate / avgRate.length;
-        }
-        if(avgRate.length <= 0){ 
-         allSpots[i].dataValues.avgRating = 'New'
-        }else { 
-         allSpots[i].dataValues.avgRating = star.toFixed(2);
-        }
+
+        spotsArr.push(spot);
     }
 
-   return res.json({ 
-        Spots: allSpots,
-        page,
-        size
+    return res.json({
+        Spots: spotsArr,
+        page: page,
+        size: size
     })
 });
+
 
     //getting current user spots
     router.get('/current', requireAuth, async (req, res) => { 
@@ -234,7 +273,7 @@ const validateSpot = [
         return star += review.dataValues.stars  / spotReview.length
      })
 
-     spot.dataValues.avgRating = star.toFixed(2);
+     spot.dataValues.avgRating = star
      spot.dataValues.numReviews = spotReview.length;
      spot.dataValues.Owner = spotOwner;
      return res.json(spot)
