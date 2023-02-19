@@ -33,6 +33,50 @@ function SpotDetail(){
     }
 }
 
+
+const fixedDecimal = (num) => { 
+    // if(typeof num !== 'number' || num === 0){ 
+        //   return 'New'
+        // }else if (num % 1 === 0) {
+            //   return num.toString() + '.0'
+            // }else { 
+                //   return num
+                // }
+                return num
+            }
+            
+            let reviewed = false; 
+            if(reviews && sessionUser){
+                reviews.forEach(review => { 
+                    if(review.userId === sessionUser.id){ 
+                        reviewed = true
+                    }
+                })
+            }
+            
+            let ownSpot = false;
+            if(sessionUser){
+                if(spots.ownerId === sessionUser.id){ 
+                    ownSpot = true
+                }
+            }
+            
+            const deleteReviewButton = (id, spotId) => { 
+                let props = { 
+                    id, 
+                    spotId
+                }
+                
+                return ( 
+                    <div> 
+            <OpenModalButton 
+            buttonText="Delete"
+            modalComponent={<DeleteReviewBox  props={props} />}
+            />
+          </div>
+        )
+    }
+    
     const noReivews = () => { 
         if(spots.numReviews === 0){ 
             return <p>&#9733;New</p>
@@ -42,50 +86,6 @@ function SpotDetail(){
             return <p>&#9733;{fixedDecimal(spots.avgRating)} · {spots.numReviews} Reviews</p>
         }
     }
-
-    const fixedDecimal = (num) => { 
-        // if(typeof num !== 'number' || num === 0){ 
-        //   return 'New'
-        // }else if (num % 1 === 0) {
-        //   return num.toString() + '.0'
-        // }else { 
-        //   return num
-        // }
-        return parseInt(num).toPrecision(2)
-      }
-   
-    let reviewed = false; 
-    if(reviews && sessionUser){
-        reviews.forEach(review => { 
-            if(review.userId === sessionUser.id){ 
-               reviewed = true
-            }
-        })
-    }
-    
-    let ownSpot = false;
-    if(sessionUser){
-    if(spots.ownerId === sessionUser.id){ 
-        ownSpot = true
-      }
-    }
-
-    const deleteReviewButton = (id, spotId) => { 
-        let props = { 
-            id, 
-            spotId
-        }
-
-        return ( 
-          <div> 
-            <OpenModalButton 
-            buttonText="Delete"
-            modalComponent={<DeleteReviewBox  props={props} />}
-            />
-          </div>
-        )
-      }
-     
 
     return ( 
         <div className='spotDetail-content'>
@@ -146,6 +146,7 @@ function SpotDetail(){
                 {review.User.firstName}&nbsp;: &nbsp;
                 Date:&nbsp;{review.createdAt.slice(0,7)}&nbsp;,
                 Comment: &nbsp;{review.review}&nbsp;
+                Stars: &nbsp;{review.stars}
                 {sessionUser && sessionUser.id === review.User.id ?
                 <div className='delete-review-button-container'>
                  {deleteReviewButton(review.id, spots.id)}
