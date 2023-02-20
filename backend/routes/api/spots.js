@@ -207,14 +207,14 @@ const validateSpot = [
                 },
                 attributes: ['stars']
             })
-            // avgRate.forEach(review => { 
-            //     return rate += review.dataValues.stars  / spotReview.length
-            //  })
-            // if(avgRate.length <= 0){ 
-            //     currentUserSpot[i].dataValues.avgRating = 'current spot does not have any ratings'
-            // }else { 
-            //     currentUserSpot[i].dataValues.avgRating += star 
-            // }
+            avgRate.forEach(review => { 
+                let starValue = rate + review.dataValues.stars  / avgRate.length
+                if(avgRate.length === 0){ 
+                    currentUserSpot[i].dataValues.avgRating = 'New'
+                }else { 
+                    currentUserSpot[i].dataValues.avgRating = starValue 
+                }
+             })
         }
         return res.json({ 
             Spots: currentUserSpot

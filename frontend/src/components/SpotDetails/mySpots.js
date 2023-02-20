@@ -41,6 +41,21 @@ function ManageMySpots() {
       )
     }
    
+    const fixedDecimal = (num) => { 
+      if(num === 0){ 
+        return 'New'
+      }
+        else if (num % 1 === 0) {
+          console.log(num)
+          // console.log(num.toString().match(/^\d+(?:\.\d{0,2})?/))
+            // return num.toString().match(/^\d+(?:\.\d{0,1})?/)
+          }
+      //   return num
+      // }
+      else { 
+      return Math.floor(num * 100) / 100
+      }
+    }
     
     if(!userSpots) return( 
       <div>
@@ -73,8 +88,9 @@ function ManageMySpots() {
             alt="previewimages">
             </img>
            
-            <h3 className="title-text">{spot.name}</h3>
-            
+            <h3 className="title-text">{spot.name}, &nbsp;&nbsp;
+            &#9733;{spot.avgRating}
+            </h3>
             <h4 className="city-text">{spot.city},&nbsp;&nbsp;{spot.country}</h4>
             <h4 className="spotprice-text">${spot.price}&nbsp;night
             </h4>
