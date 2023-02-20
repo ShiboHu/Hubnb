@@ -42,7 +42,6 @@ function CreateSpot(){
         if(!Number(price))errors.push('Price must be a number');
         if(!Number(lat) || !Number(lng)) errors.push('Latitude and Longitude must be a number')
         if(!preViewImage) errors.push('PreviewImage is required')
-        
          setErrors(errors)
 
          

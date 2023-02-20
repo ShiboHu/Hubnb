@@ -42,13 +42,12 @@ function ManageMySpots() {
     }
    
     const fixedDecimal = (num) => { 
-      if(num === 0 || num === null){ 
+      if(num === 0 || num === null || num === 'null'){ 
         return 'New'
       }
         else if (num % 1 === 0) {
-          console.log(num)
           // console.log(num.toString().match(/^\d+(?:\.\d{0,2})?/))
-            // return num.toString().match(/^\d+(?:\.\d{0,1})?/)
+            return num.toString().match(/^\d+(?:\.\d{0,1})?/)
           }
       //   return num
       // }
