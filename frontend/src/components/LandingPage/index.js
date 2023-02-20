@@ -20,8 +20,8 @@ function LandingPage() {
         return 'New'
       }
         else if (num % 1 === 0) {
-          // console.log(num + '.0')
-            return num + '.0'
+          // console.log(num.toString().match(/^\d+(?:\.\d{0,2})?/))
+            return num.toString().match(/^\d+(?:\.\d{0,2})?/)
           }
       //   return num
       // }
