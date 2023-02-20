@@ -18,12 +18,12 @@ function LandingPage() {
     const fixedDecimal = (num) => { 
       if(num === 0){ 
         return 'New'
-      // }else if (num % 1 === 0) {
-      //   return num.toString() + '.0'
-      // }else { 
+      }
+        else if (num % 1 === 0) {
+            return num.toString() + '.0'
+          }
       //   return num
       // }
-      }
       else { 
       return Math.floor(num * 100) / 100
       }

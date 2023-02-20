@@ -40,9 +40,9 @@ const fixedDecimal = (num) => {
     }
     // if(typeof num !== 'number' || num === 0){ 
         //   return 'New'
-        // }else if (num % 1 === 0) {
-            //   return num.toString() + '.0'
-            // }else { 
+        else if (num % 1 === 0) {
+              return num.toString() + '.0'
+            }
                 //   return num
                 // }
                 return Math.floor(num * 100) / 100
