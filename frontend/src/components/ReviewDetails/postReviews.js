@@ -67,7 +67,7 @@ function PostReviews ( spotId ) {
          id="stars"
          type="range"
          min={1}
-         step={0.5}
+         step={1}
          max={5}
          onInput="num.value = this.value"
          placeholder="number 1 - 5"
