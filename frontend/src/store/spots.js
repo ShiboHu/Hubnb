@@ -107,6 +107,7 @@ export const editSpot = (payload, spotId) => async dispatch => {
     });
     if(res.ok){ 
         dispatch(oneSpot(spotId))
+        dispatch(spotDetail(payload))
     }
     return res
 }
