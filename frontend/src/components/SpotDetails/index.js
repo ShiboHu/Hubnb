@@ -35,6 +35,9 @@ function SpotDetail(){
 
 
 const fixedDecimal = (num) => { 
+    if(num === 0) { 
+        return '0.0'
+    }
     // if(typeof num !== 'number' || num === 0){ 
         //   return 'New'
         // }else if (num % 1 === 0) {
