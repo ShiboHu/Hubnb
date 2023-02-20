@@ -20,7 +20,8 @@ function LandingPage() {
         return 'New'
       }
         else if (num % 1 === 0) {
-            return num.toString() + '.0'
+          // console.log(num + '.0')
+            return num + '.0'
           }
       //   return num
       // }
