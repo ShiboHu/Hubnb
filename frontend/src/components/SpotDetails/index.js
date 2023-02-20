@@ -42,7 +42,7 @@ const fixedDecimal = (num) => {
             // }else { 
                 //   return num
                 // }
-                return num.toFixed(1)
+                return Math.floor(num * 100) / 100
             }
             
             let reviewed = false; 

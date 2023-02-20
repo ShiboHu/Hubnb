@@ -25,7 +25,7 @@ function LandingPage() {
       // }
       }
       else { 
-      return num.toFixed(1)
+      return Math.floor(num * 100) / 100
       }
     }
 
