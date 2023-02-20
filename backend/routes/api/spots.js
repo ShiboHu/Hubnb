@@ -209,7 +209,7 @@ const validateSpot = [
             })
             avgRate.forEach(review => { 
                 let starValue = rate + review.dataValues.stars  / avgRate.length
-                if(avgRate.length === 0){ 
+                if(!avgRate.length === 0){ 
                     currentUserSpot[i].dataValues.avgRating = 'New'
                 }else { 
                     currentUserSpot[i].dataValues.avgRating = starValue 

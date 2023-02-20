@@ -42,7 +42,7 @@ function ManageMySpots() {
     }
    
     const fixedDecimal = (num) => { 
-      if(num === 0){ 
+      if(num === 0 || num === null){ 
         return 'New'
       }
         else if (num % 1 === 0) {
@@ -89,7 +89,7 @@ function ManageMySpots() {
             </img>
            
             <h3 className="title-text">{spot.name}, &nbsp;&nbsp;
-            &#9733;{spot.avgRating}
+            &#9733;{fixedDecimal(spot.avgRating)}
             </h3>
             <h4 className="city-text">{spot.city},&nbsp;&nbsp;{spot.country}</h4>
             <h4 className="spotprice-text">${spot.price}&nbsp;night
