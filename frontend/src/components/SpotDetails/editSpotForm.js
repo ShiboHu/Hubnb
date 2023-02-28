@@ -8,8 +8,9 @@ import { useEffect } from "react";
 function EditSpotForm( id ){ 
     const dispatch = useDispatch();
     const history = useHistory();
-    let updateSpot = useSelector(state => state.spots.spotDetail)
-    // const updateSpot = updateSpot.find(spot => spot.id === id.props)
+    let el = useSelector(state => state.spots.userSpot.Spots)
+    const updateSpot = el.find(spot => spot.id === id.props)
+    
     const { closeModal } = useModal();
 
     useEffect(() => { 
