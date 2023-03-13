@@ -1,21 +1,26 @@
 .spotDetail-content { 
-    display: flex; 
+    /* display: flex; 
     flex-direction: column;
     margin-top: 80px;
+    align-items: center; */
+    display: flex;
+    flex-direction: column;
+    padding: 24px;
+    background-color: white;
+    border-radius: 8px;
     align-items: center;
 }
 
-.image { 
-    width: 500px;
-    border-radius: 10px;
+.spot-image-container { 
+   display: flex;
 }
 
-.spot-image-container { 
-    display: flex;
-    align-items: stretch;
-    flex-direction: row;
-    flex-wrap: wrap;
-    gap: 10px;
+.spotdetail-image { 
+    height: 400px;
+    background-position: center;
+    background-size: cover;
+    border-radius: 8px;
+    margin-bottom: 32px;
 }
 
 .spot-reverse-box { 
