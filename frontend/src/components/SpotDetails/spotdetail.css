@@ -1,33 +1,39 @@
-.spotDetail-content { 
-    /* display: flex; 
-    flex-direction: column;
-    margin-top: 80px;
-    align-items: center; */
+.spot-detail-page { 
+  display: flex;
+  flex-direction: column;
+  padding: 30px;
+  background-color: white;
+  width: 1000px;
+}
+
+.spot-detail-header { 
     display: flex;
     flex-direction: column;
-    padding: 24px;
-    background-color: white;
-    border-radius: 8px;
-    align-items: center;
+    justify-content: center;
+    margin-top: 45px;
 }
 
-.spot-image-container { 
-   display: flex;
+.spot-detail-image-container { 
+    display: flex;
 }
 
-.spotdetail-image { 
-    height: 400px;
-    background-position: center;
-    background-size: cover;
-    border-radius: 8px;
-    margin-bottom: 32px;
-}
-
-.spot-reverse-box { 
-    display: block;
-    border: 2px solid black; 
+.spot-detail-info { 
     position: relative;
-    left: 30%;
+    vertical-align: top;
+    flex-direction: column;
+}
+
+.spot-image-spot-page { 
+    border-radius: 40px;
+    width: 1000px;
+}
+
+.spot-reserve-box { 
+    display: block;
+    border: 2px solid rgb(233, 44, 44);
+    width: 300px;
+    display: flex;
+    flex-direction: column;
 }
 
 /*create spot form css*/

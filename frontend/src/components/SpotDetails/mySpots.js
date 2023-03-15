@@ -11,7 +11,6 @@ function ManageMySpots() {
     const dispatch = useDispatch();
     const history = useHistory();
     const userSpots = useSelector(state => state.spots.userSpot);
-    const reviews = useSelector(state => state.reviews.Reviews)
 
 
     useEffect(() => { 

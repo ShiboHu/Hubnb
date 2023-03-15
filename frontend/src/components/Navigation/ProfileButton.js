@@ -69,6 +69,14 @@ function ProfileButton({ user }) {
     history.push('/user/current/spots')
   };
 
+  const manageReviewButton = () => { 
+    history.push('/user/current/reviews')
+  }
+
+  const manageBookingButton = () => { 
+    history.push('/user/current/bookings')
+  }
+
   return (
     <div className="navbar">
       <div className="create-spot-container ">
@@ -89,6 +97,8 @@ function ProfileButton({ user }) {
             <li>{user.email}</li>
             <li>
               <button onClick={manageSpotButton}>Manage Spot</button>
+              <button onClick={manageReviewButton}>Manage Review</button>
+              <button onClick={manageBookingButton}>Manage Booking</button>
               <button onClick={logout}>Log Out</button>
             </li>
           </>

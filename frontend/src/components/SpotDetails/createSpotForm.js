@@ -20,7 +20,6 @@ function CreateSpot(){
     const [description, setDescription] = useState('');
     const [preViewImage, setPreviewImage] = useState('');
     const [errors, setErrors] = useState([]);
-    const [disable, setDisable] = useState(false);
 
     const createName = (e) => setName(e.target.value);
     const createAddress = (e) => setAddress(e.target.value);
@@ -169,8 +168,7 @@ function CreateSpot(){
             value={preViewImage}
             required
             >
-            </input>
-            
+            </input>    
         </label>
         </form>
         <button className="create-spot-button" type="submit" onClick={submit} disabled={!!errors.length}>Create Spot</button>
