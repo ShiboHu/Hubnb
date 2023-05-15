@@ -3,37 +3,36 @@
   flex-direction: column;
   padding: 30px;
   background-color: white;
-  width: 1000px;
 }
 
-.spot-detail-header { 
+.spot-detail-leftside-container { 
     display: flex;
     flex-direction: column;
-    justify-content: center;
     margin-top: 45px;
+    width: 50%;
+}
+
+.spot-detail-info-container{ 
+    display: flex;
+    justify-content: space-between;
 }
 
 .spot-detail-image-container { 
     display: flex;
-}
-
-.spot-detail-info { 
-    position: relative;
-    vertical-align: top;
-    flex-direction: column;
+    
 }
 
 .spot-image-spot-page { 
     border-radius: 40px;
-    width: 1000px;
+    width: 950px;
 }
 
 .spot-reserve-box { 
-    display: block;
-    border: 2px solid rgb(233, 44, 44);
-    width: 300px;
-    display: flex;
-    flex-direction: column;
+ display: flex;
+ flex-direction: column;
+ align-items: center;
+ justify-content: center;
+
 }
 
 /*create spot form css*/
@@ -64,6 +63,8 @@
 .create-errors { 
     color: red
 }
+
+
 
 
 /* my spots */

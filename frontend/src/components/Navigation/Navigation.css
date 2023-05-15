@@ -9,10 +9,9 @@ ul {
   margin: 0;
 }
 
-.navbar { 
-  width: 100%;
-  position: sticky;
-  
+.navbar{ 
+  display: flex;
+  align-items: center;
 }
 
 .navigation-bar { 
@@ -33,16 +32,18 @@ ul {
     display: none;
 } 
 
+
+.user-drop-down-information { 
+  display: flex;
+  flex-direction: column;
+}
+
 .menu-icon { 
   display: flex;
   align-items: center;
   padding: 20px;
   margin: 10px;
   border-radius: 50px;
-}
-
-.class-hover :hover { 
-  background-color:  #dbb9b8
 }
 
 .navbar :hover { 
@@ -55,40 +56,69 @@ ul {
 }
 
 .user-menu-dropdown { 
-  box-sizing: border-box;
   border-radius: 10px;
-  background-color: #f3f2f1;
+  background-color: white;
   position: fixed;
   right: 40px;
   top: 10%;
   font-size: 20px;
   align-items: center;
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
 }
 
-.user-menu-dropdown button { 
-  width: 100%;
-  border-radius: 15px;
-  padding: 15px;
-  font-size: 15px;
+
+
+
+
+
+
+
+
+
+.button-23 {
+  background-color: #FFFFFF;
+  border: 1px solid #222222;
+  border-radius: 8px;
+  box-sizing: border-box;
+  color: #222222;
+  cursor: pointer;
+  display: inline-block;
+  font-family: Circular,-apple-system,BlinkMacSystemFont,Roboto,"Helvetica Neue",sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 20px;
+  margin: 0;
+  outline: none;
+  padding: 13px 23px;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  touch-action: manipulation;
+  transition: box-shadow .2s,-ms-transform .1s,-webkit-transform .1s,transform .1s;
+  user-select: none;
+  -webkit-user-select: none;
+  width: auto;
 }
 
-.user-menu-dropdown li  :hover { 
-  background-color:  #dbb9b8
+.button-23:focus-visible {
+  box-shadow: #222222 0 0 0 2px, rgba(255, 255, 255, 0.8) 0 0 0 4px;
+  transition: box-shadow .2s;
 }
 
-.create-spot-container { 
-  position: absolute;
-  right: 100%;
-  width: 150px;
-  top: 11px;
+.button-23:active {
+  background-color: #F7F7F7;
+  border-color: #000000;
+  transform: scale(.96);
 }
 
-.create-spot-button { 
-  width: 90%;
-  padding: 10px;
-  border-radius: 15px;
+.button-23:disabled {
+  border-color: #DDDDDD;
+  color: #DDDDDD;
+  cursor: not-allowed;
+  opacity: 1;
 }
 
-.create-spot-button:hover { 
-  background-color:  #dbb9b8
+.button-23:hover{ 
+  background-color: #ece3e3;
+
 }

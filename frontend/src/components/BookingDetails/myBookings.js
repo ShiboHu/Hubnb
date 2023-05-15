@@ -6,50 +6,41 @@ import OpenModalButton from "../OpenModalButton";
 
 function ManageMyBookings(){ 
     const dispatch = useDispatch();
-    const mybookings = useSelector(state => state.bookings.Bookings);
-    const spots = useSelector(state => state.spots.Spots)
+    const mybookings = useSelector(state => state.bookings.bookings);
 
-    console.log(spots)
-    const spotName = (id) => { 
-       return spots.find(spot => spot.id === id).name
-    }
-
-    const spotImage = (id) => { 
-        return spots.find(spot => spot.id === id).previewImage
-    }
+    console.log(mybookings)
 
     useEffect(() => { 
         dispatch(getCurrentBooking())
-        // dispatch(allSpots())
-    }, [])
-
-    const deleteBookButton = () => { 
+        }, [dispatch])
 
 
-        return (
-        <OpenModalButton 
-        buttonText="Delete"
-        modalComponent={<DeleteBookingModal />}
-        />
-        )
-    }
-
-    if(!mybookings || !spots) return null 
+    if(!mybookings.Bookings) return null; 
 
     return(
-        <div>
-        <h1 className="manage-booking-title">Manage Bookings</h1>
-        {mybookings && mybookings.map(book => 
         <div className="bookings-page-container">
-        <h3>Spot Name: {spotName(book.id)}</h3>
-        <img className="booking-spot-image" src={spotImage(book.id)}></img>
-        <h3>Start Date: {book.startDate}</h3>
-        <h3>End Date: {book.endDate}</h3>
-        <div className="deletebookbutton">{deleteBookButton()}</div>
-        <h1>-----------------------------------------------------------------------</h1>
+        <h1 className="manage-booking-title">Manage Bookings</h1>
+
+        <ul className="bookings-page-left-container">
+        {mybookings?.Bookings.map(book => 
+        <div>
+        
+        <div>
+        <h3>{book.Spot.name}</h3>
+        <OpenModalButton 
+        buttonText="Delete"
+        modalComponent={<DeleteBookingModal props={book.id}/>}
+        />
         </div>
-        )
-    }
+
+        <img className="bookings-image" alt="spotimage" src={book.Spot.previewImage}></img>
+        <li>Start Date: {book.startDate}</li>
+        <li>End Date: {book.endDate}</li>
+        </div>
+
+        )}
+        </ul>
+
         </div>
     )
 }

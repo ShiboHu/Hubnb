@@ -11,35 +11,12 @@ module.exports = {
     //Dates all from 2021-01-01 ------ 2022-01-01
    await queryInterface.bulkInsert(options, [
     {
-      userId: 1,
-      spotId: 2, 
-      startDate: "2021-01-01",
-      endDate: "2021-01-08"
-    },
-    {
       userId: 2,
-      spotId: 3, 
-      startDate: "2021-02-01",
-      endDate: "2021-03-08"
-    },
-    {
-      userId: 3,
       spotId: 1, 
-      startDate: "2021-05-01",
-      endDate: "2021-05-026"
+      startDate: "2023-08-02",
+      endDate: "2021-08-08"
     },
-    { 
-      userId: 2,
-      spotId: 2,
-      startDate: "2021-03-05",
-      endDate: "2021-03-08"
-    },
-    { 
-      userId: 3,
-      spotId: 4,
-      startDate: "2021-07-02",
-      endDate: "2021-07-05"
-    }
+
    ])
   },
 

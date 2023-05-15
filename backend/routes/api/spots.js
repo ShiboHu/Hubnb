@@ -583,7 +583,10 @@ router.post('/:id/images', requireAuth, async (req, res) => {
             res.status(403);
             res.json({
             message: "Can't create booking for your own spot",
-            statusCode: 403
+            statusCode: 403,
+            errors: [
+                "Can't create booking for your own spot"
+            ]
         })
     }
     
@@ -592,9 +595,9 @@ router.post('/:id/images', requireAuth, async (req, res) => {
         return res.json({
             message: "Validation error",
             statusCode: 400,
-            errors: {
-                "endDate": "endDate cannot be on or before startDate"
-            }
+            errors: 
+            ["endDate cannot be on or before startDate"]
+             
         })
     }
     
@@ -617,10 +620,13 @@ router.post('/:id/images', requireAuth, async (req, res) => {
             return res.json({
                 message: "Sorry, this spot is already booked for the specified dates",
                 statusCode: 403,
-                errors: {
-                    startDate: "Start date conflicts with an existing booking",
-                    endDate: "End date conflicts with an existing booking"
-                }
+                errors: 
+                    [
+                    "Start date conflicts with an existing booking",
+                     "End date conflicts with an existing booking",
+                     "Please choose a different date"
+                    ]
+                
             })
         }
     };

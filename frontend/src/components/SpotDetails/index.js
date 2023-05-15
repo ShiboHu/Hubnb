@@ -1,5 +1,5 @@
 import { useSelector, useDispatch } from 'react-redux'
-import { useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import { oneSpot } from '../../store/spots';
 import { useEffect, useState} from 'react';
 import './spotdetail.css'
@@ -9,6 +9,7 @@ import PostReviews from '../ReviewDetails/postReviews';
 import OpenModalButton from '../OpenModalButton';
 import DeleteReviewBox from '../ConfirmModal/deleteReview';
 import { createBooking } from '../../store/booking';
+import CreateBooking from '../BookingDetails';
 
 
 function SpotDetail(){ 
@@ -17,40 +18,6 @@ function SpotDetail(){
     const spots = useSelector(state => state.spots.spotDetail); 
     const reviews = useSelector(state => state.reviews.Reviews)
     const sessionUser = useSelector(state => state.session.user);
-    
-    
-    const [startDate, setStartDate] = useState('');
-    const [endDate, setEndDate] = useState('');
-    const [errors, setErrors] = useState([])
-
-    const createStartDate = (e) => setStartDate(e.target.value);
-    const createEndDate = (e) => setEndDate(e.target.value);
-  
-  
-    const handleSubmit = async (e) => {
-      e.preventDefault();
-
-        setErrors([])
-
-      const payload = { 
-        startDate,
-        endDate,
-      }
-
-      try{
-        const newBooking = await dispatch(createBooking(payload, spotId))
-        if(newBooking){ 
-            console.log(newBooking)
-            return window.alert('book success')
-        }
-    } catch (e) { 
-        const data = await e.json()
-        if(data && data.errors){ 
-            setErrors(data.errors)
-        }
-    }
-
-    };
  
     useEffect(() => { 
         dispatch(oneSpot(spotId))
@@ -82,7 +49,7 @@ const fixedDecimal = (num) => {
                 //   return num
                 // }
                 return Math.floor(num * 100) / 100
-            }
+    }
             
             let reviewed = false; 
             if(reviews && sessionUser){
@@ -130,7 +97,9 @@ const fixedDecimal = (num) => {
 
     return ( 
         <div className='spot-detail-page'>
-            <div className='spot-detail-header'>
+
+
+            <div className='spot-detail-leftside-container'>
             <h1>{spots.name}&nbsp;&nbsp;</h1>
             <h2>
              {spots.city},
@@ -138,47 +107,34 @@ const fixedDecimal = (num) => {
              {spots.state},
              &nbsp;
              {spots.country}</h2>
-             </div>
+
             <div>
             {spots.SpotImages.map(image => 
-            <div key={image.id} className="spot-image-datailpage">
-            <div className='spot-image-container'>
             <img 
             alt="spotdetail-image"
             src={image.url}
             className="spot-image-spot-page"
             >
-            </img>
+            </img>)}
             </div>
-            </div>)}
-            </div>
+
+
+            <div className='spot-detail-info-container'>
+
             <div className='spot-detail-info'>
-            <h3 className='host-text'>Hosted By:{spots.Owner.firstName}&nbsp;{spots.Owner.lastName}</h3>
-            <h3>{spots.description}</h3>
+            <h3 className='host-text'>Hosted By:</h3>
+            <h3 className='host-text'>{spots.Owner.firstName}  {spots.Owner.lastName}</h3>
+            </div>
+
             <div className='spot-reserve-box'>
-                <h3>${spots.price} night {noReivews()}</h3>
-
-            <form onSubmit={handleSubmit} className="spot-page-booking-box">
-            <div>
-              <label>Start Date:</label>
-              <input type="date" 
-              id="startDate" 
-              name="startDate" 
-              value={startDate} 
-              onChange={createStartDate} />
+             <h3>${spots.price}/night</h3>
+             <CreateBooking />
             </div>
-            <div>
-              <label >End Date:</label>
-              <input type="date" 
-              id="endDate"
-              name="endDate"
-              value={endDate} 
-              onChange={createEndDate} />
-            </div>
-            <button type="submit">Reserve</button>
-           </form>
 
             </div>
+            
+            <p>{spots.description}</p>
+
             <div className='spot-detail-reviews'>
                 <h3>Reviews</h3>
                 {reviewed && 
@@ -192,15 +148,18 @@ const fixedDecimal = (num) => {
                 >OwnSpot Cant not review
                 </h3>}
                 {!reviewed && !ownSpot && sessionUser &&   
+
                 <div className={reviewed ? reviewed : undefined}>
                 <OpenModalButton 
                  buttonText="Create A Review"
                  modalComponent={<PostReviews props={spotId}/>}
-                />
+                 />
                 </div>
+
                  
                 }
                 {reviewFunction()}
+
                 <div>
                 {reviews && !reviews.length ? 'Be first to post a review!' : undefined}
                 {reviews && reviews.map(review =>  
@@ -210,16 +169,22 @@ const fixedDecimal = (num) => {
                 Comment: &nbsp;{review.review}&nbsp;
                 Stars: &nbsp;{review.stars}
                 {sessionUser && sessionUser.id === review.User.id ?
+
                 <div className='delete-review-button-container'>
                  {deleteReviewButton(review.id, spots.id)}
                  </div>
+
                  : undefined}
                 </h4>
                 )}
                 </div>
+
             </div>  
+
+
             </div>
-        </div>
+                </div>
+    
     )
 }
 

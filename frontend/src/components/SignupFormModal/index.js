@@ -102,7 +102,7 @@ function SignupFormModal() {
             placeholder="Confirm Password"
           />
         </label>
-        <button type="submit" disabled={disabled}>Sign Up</button>
+        <button className="button-23" type="submit" disabled={disabled}>Sign Up</button>
       </form>
     </>
   );

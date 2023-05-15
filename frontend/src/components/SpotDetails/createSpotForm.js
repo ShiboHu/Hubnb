@@ -171,7 +171,7 @@ function CreateSpot(){
             </input>    
         </label>
         </form>
-        <button className="create-spot-button" type="submit" onClick={submit} disabled={!!errors.length}>Create Spot</button>
+        <button className="button-23" type="submit" onClick={submit} disabled={!!errors.length}>Create Spot</button>
         </div>
     )
 }

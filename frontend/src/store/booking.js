@@ -4,6 +4,8 @@ import { allSpots } from "./spots";
 
 const CREATE_BOOKING = 'bookings/CREATEBOOKINGS'
 const CURRENT_BOOKING = 'bookings/CURRENTBOOK';
+const DELETE_BOOKINGS = 'booings/DELETE'
+
 
 export const createBooking = (payload) => ({
     type: CREATE_BOOKING,
@@ -14,6 +16,13 @@ export const currentBooking = (book) => ({
     type: CURRENT_BOOKING,
     book
 })
+
+const deletebook = (id) => ({ 
+    type: CURRENT_BOOKING,
+    id
+})
+
+
 
 
 export const createBookings = (payload, spotId) => async dispatch => { 
@@ -37,19 +46,38 @@ export const getCurrentBooking = () => async dispatch => {
     if(res.ok){ 
         const currentbook = await res.json(); 
         dispatch(currentBooking(currentbook))
-        dispatch(allSpots())
         return currentbook
     }
 }
 
-const bookingReducer = (state = {}, action) => { 
-    let newState = {...state};
+export const deleteBooking = (id) => async dispatch => { 
+    const res = await csrfFetch(`/api/bookings/${id}`, { 
+        method: 'DELETE'
+    })
+    if(res.ok){ 
+        const data = await res.json()
+        dispatch(deletebook(data.id))
+    }
+}
+
+const initialState = {bookings: []}
+const bookingReducer = (state = initialState, action) => { 
     switch(action.type){ 
         case CURRENT_BOOKING:
-            newState = action.book
-            return newState
+            return { 
+                ...state, 
+                bookings: action.book
+            }
         case CREATE_BOOKING:
-            return {...newState, book: action.payload}
+            return {
+                ...state,
+                bookings: [...state.bookings, action.payload]
+                }
+        case DELETE_BOOKINGS: 
+            return { 
+                ...state, 
+                bookings: state.bookings.filter((booking) => booking.id !== action.id)
+            }
         default:
             return state;
     }

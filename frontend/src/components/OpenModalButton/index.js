@@ -16,7 +16,7 @@ function OpenModalButton({
     };
     
     return (
-    <button onClick={onClick} className="create-spot-button">{buttonText}</button>
+    <button onClick={onClick} className="button-23">{buttonText}</button>
     );
 }
 

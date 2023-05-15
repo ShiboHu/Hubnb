@@ -79,29 +79,31 @@ function ProfileButton({ user }) {
 
   return (
     <div className="navbar">
+
       <div className="create-spot-container ">
       {createSpotButton()}
       </div>
+
+
       <div className="class-hover">
       <button onClick={openMenu} className="menu-icon">
       <i class="fa-solid fa-bars"></i>
       <i class="fa-solid fa-circle-user"></i>
       </button>
       </div>
+
       <div className='user-menu-dropdown'>
       <ul className={ulClassName} ref={ulRef}>
         {user ? (
-          <>
+          <div className="user-drop-down-information">
             <li>Hello, {user.username}</li>
             <li>{user.firstName} {user.lastName}</li>
             <li>{user.email}</li>
-            <li>
-              <button onClick={manageSpotButton}>Manage Spot</button>
-              <button onClick={manageReviewButton}>Manage Review</button>
-              <button onClick={manageBookingButton}>Manage Booking</button>
-              <button onClick={logout}>Log Out</button>
-            </li>
-          </>
+              <button className="button-23" onClick={manageSpotButton}>Manage Spot</button>
+              <button className="button-23" onClick={manageBookingButton}>Manage Booking</button>
+              <button className="button-23" onClick={logout}>Log Out</button>
+          </div>
+        
         ) : (
           <div>
             <li>
@@ -117,9 +119,6 @@ function ProfileButton({ user }) {
                 onButtonClick={closeMenu}
                 modalComponent={<SignupFormModal />}
               />
-            <button onClick={demoLogin} onButtonClick={closeMenu}>Demo Login</button>
-            </li>
-            <li>
             </li>
           </div>
         )}

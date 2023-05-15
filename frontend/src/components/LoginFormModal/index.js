@@ -61,9 +61,9 @@ function LoginFormModal() {
             required
           />
         </label>
-        <button className="login-button" type="submit" disabled={disabled}>Log In</button>
+        <button className="button-23" type="submit" disabled={disabled}>Log In</button>
       </form>
-    <button onClick={demoLogin}>Demo User Login</button>
+    <button className="button-23" onClick={demoLogin}>Demo User Login</button>
     </div>
   );
 }

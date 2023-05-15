@@ -6,7 +6,6 @@ import Navigation from "./components/Navigation";
 import LandingPage from "./components/LandingPage";
 import SpotDetail from "./components/SpotDetails";
 import ManageMySpots from "./components/SpotDetails/mySpots";
-import ManageMyReviews from "./components/ReviewDetails/myReview";
 import ManageMyBookings from "./components/BookingDetails/myBookings";
 
 function App() {
@@ -34,9 +33,6 @@ function App() {
           <ManageMySpots />
           </Route>
 
-          <Route path={'/user/current/reviews'}>
-          <ManageMyReviews />
-          </Route>
 
           <Route path={'/user/current/bookings'}>
           <ManageMyBookings />
