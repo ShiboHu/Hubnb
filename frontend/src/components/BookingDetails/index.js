@@ -2,6 +2,8 @@ import { useState } from 'react'
 import { createBookings } from '../../store/booking';
 import { useHistory, useParams } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
+import Calendar from 'react-calendar';
+
 
 
 function CreateBooking(){ 
@@ -27,7 +29,7 @@ function CreateBooking(){
 
 
       if(newBook){ 
-        history.push('/user/current/bookings')
+       return history.push('/user/current/bookings')
       }
 
     }catch (err) { 
@@ -42,7 +44,7 @@ function CreateBooking(){
 
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className='calendar'>
 
     <div>
       <ul>
@@ -53,8 +55,8 @@ function CreateBooking(){
     </div>
 
 
-      <div>
-        <label>Start Date:</label>
+      <div >
+        <label >Start Date:</label>
         <input type="date" 
         id="startDate" 
         name="startDate" 
@@ -71,6 +73,9 @@ function CreateBooking(){
         onChange={(e) => setEndDate(e.target.value)} />
       </div>
 
+          <div style={{marginTop: '10px'}}>
+
+          </div>
       <button className='button-23' type="submit">Reserve</button>
 
     </form>

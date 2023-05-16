@@ -7,6 +7,7 @@ import LandingPage from "./components/LandingPage";
 import SpotDetail from "./components/SpotDetails";
 import ManageMySpots from "./components/SpotDetails/mySpots";
 import ManageMyBookings from "./components/BookingDetails/myBookings";
+import CreateSpot from "./components/SpotDetails/createSpotForm";
 
 function App() {
   const dispatch = useDispatch();
@@ -36,6 +37,10 @@ function App() {
 
           <Route path={'/user/current/bookings'}>
           <ManageMyBookings />
+          </Route>
+
+          <Route path={'/create/spot'}>
+            <CreateSpot />
           </Route>
         </Switch>
       )}

@@ -7,29 +7,29 @@ const LOAD_USERSPOTS = 'spots/LOADUSERSPOTS';
 const DELETE_SPOT = 'spots/DELETESPOTS';
 const UPDATE_SPOT = 'spots/UPDATESPOTS';
 
-export const loadSpots = (spots) => ({ 
+export const loadSpots = (payload) => ({ 
     type: LOAD_SPOTS,
-    spots
+    payload
 })
 
-export const spotDetail = (spot) => ({ 
+export const spotDetail = (payload) => ({ 
     type: SPOT_DETAILS,
-    spot
+    payload
 })
 
-export const createSpot = (spot) => ({ 
+export const createSpot = (payload) => ({ 
     type: CREATE_SPOTS,
-    spot
+    payload
 })
 
-export const loaduserSpot = (spots) => ({ 
+export const loaduserSpot = (payload) => ({ 
     type: LOAD_USERSPOTS,
-    spots
+    payload
 })
 
-export const deleteUserSpot = (spots, spotId) => ({ 
+export const deleteUserSpot = (payload, spotId) => ({ 
     type: DELETE_SPOT,
-    spots,
+    payload,
     spotId
 })
 
@@ -113,27 +113,34 @@ export const editSpot = (payload, spotId) => async dispatch => {
     return res
 }
 
-const spotsReducer = (state = {}, action) => { 
-    let newState = {...state}
+
+const intialState = {spots: [], userSpots: [], singleSpot: {}}
+const spotsReducer = (state = intialState, action) => { 
     switch(action.type){
         case LOAD_SPOTS:  
-             newState = action.spots;
-             return newState
+             return { 
+                ...state, 
+                spots: action.payload
+             }
         case SPOT_DETAILS:
-             newState.spotDetail = action.spot;
-             return newState
+             return { 
+                ...state, 
+                singleSpot: action.payload
+             }
         case CREATE_SPOTS: 
-            newState.newSpot = [...newState.Spots, action.spot]
-            return newState
+            return { 
+                ...state, 
+                spots: [...state.spots, action.payload]
+            }
         case LOAD_USERSPOTS: 
-            newState.userSpot = action.spots
-            return newState
+            return { 
+                ...state, 
+                userSpots: action.payload
+            }
         case DELETE_SPOT: 
-            newState.userSpot = null
-            return newState
+            return state
         case UPDATE_SPOT: 
-            newState.newSpot = [...newState.Spots, action.spot]
-        return newState
+            
         default:
             return state;
     }

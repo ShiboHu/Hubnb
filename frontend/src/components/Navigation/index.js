@@ -11,7 +11,7 @@ function Navigation({ isLoaded }){
   
   return (
     <div className='page'>
-    <ul className='navigation-bar'>
+     <ul className='navigation-bar'>
       <li>
         <NavLink exact to="/"><img src={hubnbLogo} className='logo' alt='hubnb'/></NavLink>
       </li>
@@ -22,6 +22,7 @@ function Navigation({ isLoaded }){
       )}
     </ul>
     </div>
+ 
   );
 }
 

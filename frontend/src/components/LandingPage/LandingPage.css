@@ -1,4 +1,9 @@
-ul.spot-card{ 
+.landing-page { 
+  margin-top: 2%;
+  margin-left: 2%;
+}
+
+.spot-card{ 
     /* display: flex;
     flex-direction: row;
     justify-content: flex-start;
@@ -12,24 +17,20 @@ ul.spot-card{
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
   grid-gap: 40px;
-  margin-top: 100px;
-  margin-left: 40px;
 }
 
-.spot-card-column:hover { 
-    cursor: pointer;
-    color:  #dbb9b8
-}
+
 
 .spot-image { 
     /* border-radius: 25px;
     width: 420px;
     height: 320px */
-  border-radius: 25px;
+  border-radius: 15px;
   height: 300px;
   width: 400px;
   background-position: center;
   background-size: cover;
+  cursor: pointer;
 }
 
 .spot-image :hover { 
@@ -37,15 +38,33 @@ ul.spot-card{
 }
 
 .spot-card-column { 
-    /* display: flex;
-    flex-direction: column; */
   display: flex;
   flex-direction: column;
   height: 100%;
   background-color: white;
   border-radius: 8px;
-  /* box-shadow: 0 0 4px rgba(0,0,0,0.1); */
   overflow: hidden;
+  width: 400px;
+
+}
+
+.landing-firstline-container { 
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.landing-secondline-container { 
+  display: flex;
+  gap: 5%;
+}
+
+
+.spot-card-column h4,
+.spot-card-column div,
+.spot-card-column p {
+  margin: 1px;
+  padding: 0;
 }
 
 

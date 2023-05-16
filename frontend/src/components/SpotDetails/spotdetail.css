@@ -1,20 +1,15 @@
 .spot-detail-page { 
   display: flex;
-  flex-direction: column;
-  padding: 30px;
   background-color: white;
+  gap: 100px;
+  margin-left: 2%;
 }
 
-.spot-detail-leftside-container { 
-    display: flex;
-    flex-direction: column;
-    margin-top: 45px;
-    width: 50%;
-}
 
 .spot-detail-info-container{ 
     display: flex;
     justify-content: space-between;
+    border-bottom: 1px solid grey;
 }
 
 .spot-detail-image-container { 
@@ -28,61 +23,100 @@
 }
 
 .spot-reserve-box { 
- display: flex;
- flex-direction: column;
- align-items: center;
- justify-content: center;
+  text-align: center;
+  border: 2px solid #e6e6e6;
+  border-radius: 8px;
+  padding: 16px;
+  background-color: #f9f9f9;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 
+}
+
+.spot-detail-rightside-container { 
+
+}
+
+.map-spot-image { 
+    width: 250px;
 }
 
 /*create spot form css*/
 
-#input { 
-    padding: 7px;
-    width: 300px;
-    border-radius: 8px;
-    margin: 5px;
-}
-
-.create-spot-form { 
-    display: flex; 
+.create-spot-form {
+    max-width: 500px;
+    margin: 0 auto;
+  }
+  
+  .create-spot-main-form {
+    display: flex;
     flex-direction: column;
-    align-items: center;
+  }
+  
+  .create-spot-main-form label {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
+  }
+  
+  #create-errors {
+    color: red;
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  #create-errors li {
+    margin-bottom: 5px;
+  }
+  
+  #create-errors li:first-child {
+    margin-top: 5px;
+  }
+  
+  .input {
+    padding: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-top: 5px;
+  }
+#input { 
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+  
+  .button-23:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+
+  .signuppage-errors { 
+    color: rgb(255, 0, 0);
+    list-style-type: none;
 }
 
-.input { 
-    width: 310px;
-    border-radius: 8px;
-    margin: 5px;
-}
-
-.create-spot-button:hover { 
-   cursor: pointer;
-}
-
-.create-errors { 
-    color: red
-}
-
-
+  
 
 
 /* my spots */
 
 .headers { 
     position: relative;
-    margin-top: 100px;
 }
 
 .myspot-card { 
     display: flex;
-    gap: 50px;
-    margin-top: 40px;
+    flex-direction: column;
+    gap: 20px;
 }
 
 .myspot-homepage { 
     margin-left: 20px;
 }
+
+.myspot-buttons { 
+  display: flex;
+}
+
 
 .my-spot-create-spotbutton { 
     width: 10%;
@@ -104,4 +138,13 @@
 
 .delete-review-button-container { 
     width: 20%
+}
+
+.myspot-image { 
+  width: 750px;
+  border-radius: 15px;
+}
+
+.myspot-left-container { 
+  width: 50%;
 }

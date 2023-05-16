@@ -7,8 +7,9 @@ import { useHistory } from "react-router-dom";
 function LandingPage() { 
     const history = useHistory();
     const dispatch = useDispatch();
-    const spots = useSelector(state => state.spots)
+    const spots = useSelector(state => state.spots.spots)
 
+    console.log(spots)
     useEffect(() => { 
         dispatch(allSpots(spots))
     },[]);
@@ -31,30 +32,42 @@ function LandingPage() {
     }
 
     return ( 
-      <>
         <div className="landing-page">
+
           <ul className="spot-card" >
           {spots.Spots.map((spot) => 
-          <div key={spot.id} className="spot-card-column" onClick={()=> {history.push(`/spots/${spot.id}`)}}>
-          <li >
+
+          <div key={spot.id} className="spot-card-column">
+
             <img 
+            onClick={()=> {history.push(`/spots/${spot.id}`)}}
             className="spot-image" 
             src={spot.previewImage} 
             alt="previewimages">
             </img>
-            <h3 className="title-text">
-            {spot.name}
-            &nbsp;&nbsp;&#9733;
-            {fixedDecimal(spot.avgRating)}
-            </h3>
-            <h4  className="city-text">{spot.city},&nbsp;&nbsp;{spot.country}</h4>
-            <h4  className="price-text">${spot.price}&nbsp;night</h4>
-          </li>
+
+
+            <div className="landing-firstline-container">
+            <h4 className="title-text"> {spot.name}</h4>
+            <h4> &#x2605;{fixedDecimal(spot.avgRating)}</h4>
+            </div>
+
+
+            <div className="landing-secondline-container">
+            <p>{spot.city}</p>
+            <p>{spot.country}</p>
+            </div>
+
+            <div>
+              <h4>${spot.price} night</h4>
+            </div>
+
+
           </div>
           )}
           </ul>
         </div>    
-        </>
+
     )
 }
 

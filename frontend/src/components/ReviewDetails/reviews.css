@@ -25,3 +25,10 @@
     width: 30%;
     border-radius: 20px;
 }
+
+.fa-star { 
+    font-size: 25px;
+    margin-bottom: 25px;
+    margin-top: 10px;
+    cursor: pointer;
+}

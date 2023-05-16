@@ -51,19 +51,7 @@ function ProfileButton({ user }) {
 }
  
  
-   const createSpotButton = () => { 
-    if(!user){ 
-      return null
-    }else { 
-      return <div>
-        <OpenModalButton
-        buttonText="Create A Spot"
-        onButtonClick={closeMenu}
-        modalComponent={<CreateSpot />}
-      />
-      </div>
-    }
-  };
+
 
   const manageSpotButton = () => { 
     history.push('/user/current/spots')
@@ -79,53 +67,43 @@ function ProfileButton({ user }) {
 
   return (
     <div className="navbar">
-
-      <div className="create-spot-container ">
-      {createSpotButton()}
+      <div className="create-spot-container">
+        <button className="button-23" onClick={() => history.push('/create/spot')}>
+          Hubnb your home
+        </button>
+        <button className='button-23' onClick={openMenu}>
+          <i class="fa-solid fa-bars"></i>
+          <i class="fa-regular fa-user"></i>
+        </button>
       </div>
-
-
-      <div className="class-hover">
-      <button onClick={openMenu} className="menu-icon">
-      <i class="fa-solid fa-bars"></i>
-      <i class="fa-solid fa-circle-user"></i>
-      </button>
-      </div>
-
+  
       <div className='user-menu-dropdown'>
-      <ul className={ulClassName} ref={ulRef}>
-        {user ? (
-          <div className="user-drop-down-information">
-            <li>Hello, {user.username}</li>
-            <li>{user.firstName} {user.lastName}</li>
-            <li>{user.email}</li>
+        <ul className={`user-menu ${ulClassName}`} ref={ulRef}>
+          {user ? (
+            <div>
               <button className="button-23" onClick={manageSpotButton}>Manage Spot</button>
               <button className="button-23" onClick={manageBookingButton}>Manage Booking</button>
               <button className="button-23" onClick={logout}>Log Out</button>
-          </div>
-        
-        ) : (
-          <div>
-            <li>
+            </div>
+          ) : (
+            <div className='user-drop-down-information'>
               <OpenModalButton
                 buttonText="Log In"
                 onButtonClick={closeMenu}
                 modalComponent={<LoginFormModal />}
               />
-            </li>
-            <li>
               <OpenModalButton
                 buttonText="Sign Up"
                 onButtonClick={closeMenu}
                 modalComponent={<SignupFormModal />}
               />
-            </li>
-          </div>
-        )}
-      </ul>
+            </div>
+          )}
+        </ul>
       </div>
     </div>
   );
+  
 }
 
 export default ProfileButton;

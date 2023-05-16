@@ -4,87 +4,86 @@ import { createReviews } from "../../store/reviews";
 import { useModal } from "../../context/Modal";
 import './reviews.css'
 
-function PostReviews ( spotId ) { 
-    const dispatch = useDispatch();
-    const { closeModal } = useModal();
+function PostReviews({ spotId }) { 
+  const dispatch = useDispatch();
+  const { closeModal } = useModal();
 
-    const [review, setReivew] = useState('');
-    const [stars, setStars] = useState(3);
-    const [error, setErrors] = useState([]);
+  const [review, setReview] = useState('');
+  const [error, setErrors] = useState([]);
+  const [rating, setRating] = useState(1);
+  const [hoverRating, setHoverRating] = useState(null);
 
-
-    useEffect(() => { 
-        const errors = [];
+  useEffect(() => { 
+    const errors = [];
        
-        if(!review) errors.push('Review cant not be empty')
-        if(review.length < 10) errors.push('Review cant not be less than 10 characters')
+    if (!review) errors.push('Review cannot be empty');
+    if (review.length < 10) errors.push('Review cannot be less than 10 characters');
 
-        setErrors(errors)
+    setErrors(errors);
+  }, [review]);
     
-    }, [review, stars])
-    
 
-   const sumbit = async (e) => { 
-        e.preventDefault();
+  const submit = async (e) => { 
+    e.preventDefault();
         
-        const payload = { 
-            review,
-            stars
-        }
+    const payload = { 
+      review,
+      rating
+    };
         
-
-        await dispatch(createReviews(payload, spotId.props));
-         closeModal();
-       
-   }
+    await dispatch(createReviews(payload, spotId.props));
+    closeModal();
+  }
 
 
 
-//star!
-  
-    return ( 
-        <div className="create-review-form">
-        <form onSubmit={sumbit}>
+  return ( 
+    <div className="create-review-form">
+      <form onSubmit={submit}>
         <ul className="create-review-Errors">
-        {error.map((error, idx) => 
-          <li key={idx}>{error}</li>
-          )}
+          {error.map((error, idx) => (
+            <li key={idx}>{error}</li>
+          ))}
         </ul>
-        <h1>How was your stay</h1>
+        <h1>How was your stay?</h1>
         <label>
-        <textarea 
-        id="descrip"
-        rows={4}
-        placeholder="What do you think"
-        value={review}
-        onChange={(e) => setReivew(e.target.value)}
-        required
-        >
-        </textarea>
-        </label>
-        <label>
-        <input
-         id="stars"
-         type="range"
-         min={1}
-         step={1}
-         max={5}
-         onInput="num.value = this.value"
-         placeholder="number 1 - 5"
-         onChange={(e) => setStars(e.target.value)}
-         value={stars}
-         required
+          <textarea 
+            id="descrip"
+            rows={4}
+            placeholder="What do you think"
+            value={review}
+            onChange={(e) => setReview(e.target.value)}
+            required
           />
-        <output id="num">{stars}</output>
         </label>
-        </form>
-        <button type="submit" onClick={sumbit}
-        disabled={!!error.length}
-        >Submit Your Review</button>
-        </div>
-    )
+        <label>
+                <div className="stars">
+                    {[...Array(5)].map((star, index) => {
+                        const ratingValue = index + 1;
+                        return (
+                            <span 
+                                key={ratingValue} 
+                                onClick={() => setRating(ratingValue)} 
+                                onMouseEnter={() => setHoverRating(ratingValue)}
+                                onMouseLeave={() => setHoverRating(null)}
+                            >
+                                <i className={ratingValue <= (hoverRating || rating) ? "fas fa-star" : "far fa-star"}></i>
+                            </span>
+                        );
+                    })}
+                </div>
+            </label>
+        <button
+          className="button-23"
+          type="submit"
+          onClick={submit}
+          disabled={!!error.length}
+        >
+          Submit Your Review
+        </button>
+      </form>
+    </div>
+  );
 }
-
-
 
 export default PostReviews

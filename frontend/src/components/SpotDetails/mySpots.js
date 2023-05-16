@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux"
 import { useHistory } from "react-router-dom";
 import { userSpot } from "../../store/spots";
@@ -6,17 +6,26 @@ import OpenModalButton from "../OpenModalButton";
 import EditSpotForm from "./editSpotForm";
 import ConfirmBox from "../ConfirmModal";
 import { reviewDetail } from "../../store/reviews";
+import { GoogleMap, useJsApiLoader, Marker, InfoWindow } from '@react-google-maps/api';
+import { getKey } from '../../store/map'
+
 
 function ManageMySpots() { 
     const dispatch = useDispatch();
     const history = useHistory();
-    const userSpots = useSelector(state => state.spots.userSpot);
+    const userSpots = useSelector(state => state.spots.userSpots);
+    const [selectedPlace, setSelectedPlace] = useState(null);
+    const key = useSelector((state) => state.maps.key);
 
 
     useEffect(() => { 
         dispatch(userSpot())
         dispatch(reviewDetail())
-    }, [])
+
+        if (!key) {
+          dispatch(getKey());
+        }
+    }, [dispatch, key])
 
 
     
@@ -56,34 +65,49 @@ function ManageMySpots() {
       return Math.floor(num * 100) / 100
       }
     }
-    
-    if(!userSpots) return( 
-      <div>
-      <div className="headers">
-      <h1>Manage Your Spots</h1>
-      </div>
-      <div className="my-spot-create-spotbutton">
-      </div>
-      </div>
-    );
+
+    if (!key) {
+      return null;
+    }
+
+    const handleMarkerClick = (place) => {
+      setSelectedPlace(place);
+    };
+  
+    const handleInfoWindowClose = () => {
+      setSelectedPlace(null);
+    };
+
+  const containerStyle = {
+      width: '800px',
+      height: '100%',
+    };
+
+
 
     return (
         <div className="myspot-homepage">
+
+          <div className="myspot-left-container">
         <div className="headers">
         <h1>Manage Your Spots</h1>
-        <div className="my-spot-create-spotbutton">
         </div>
-        </div>
-        <div >
+
+
+        <div>
           <ul className="myspot-card" >
-          {userSpots.Spots.map((spot) => 
+          {userSpots?.Spots?.map((spot) => 
           <div key={spot.id}className="myspot-card-column" >
+
+          <div className="myspot-buttons">
           {deleteSpotButton(spot.id)}
            {editSpotButton(spot.id)}
+           </div>
+
           <li key={spot.id}>
             <img 
             onClick={()=> {history.push(`/spots/${spot.id}`)}}
-            className="spot-image" 
+            className="myspot-image" 
             src={spot.previewImage} 
             alt="previewimages">
             </img>
@@ -99,6 +123,12 @@ function ManageMySpots() {
           )}
           </ul>
         </div>    
+        </div>
+
+        <div className="myspot-right-container"> 
+        <Maps apiKey={key}/>
+        </div>
+
         </div>
     )
 }
