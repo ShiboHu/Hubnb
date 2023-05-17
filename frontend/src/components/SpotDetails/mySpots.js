@@ -126,7 +126,6 @@ function ManageMySpots() {
         </div>
 
         <div className="myspot-right-container"> 
-        <Maps apiKey={key}/>
         </div>
 
         </div>
