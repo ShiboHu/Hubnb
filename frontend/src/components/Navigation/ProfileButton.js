@@ -78,29 +78,30 @@ function ProfileButton({ user }) {
       </div>
   
       <div className='user-menu-dropdown'>
-        <ul className={`user-menu ${ulClassName}`} ref={ulRef}>
-          {user ? (
-            <div>
-              <button className="button-23" onClick={manageSpotButton}>Manage Spot</button>
-              <button className="button-23" onClick={manageBookingButton}>Manage Booking</button>
-              <button className="button-23" onClick={logout}>Log Out</button>
-            </div>
-          ) : (
-            <div className='user-drop-down-information'>
-              <OpenModalButton
-                buttonText="Log In"
-                onButtonClick={closeMenu}
-                modalComponent={<LoginFormModal />}
-              />
-              <OpenModalButton
-                buttonText="Sign Up"
-                onButtonClick={closeMenu}
-                modalComponent={<SignupFormModal />}
-              />
-            </div>
-          )}
-        </ul>
+  <ul className={`user-menu ${ulClassName}`} ref={ulRef}>
+    {user ? (
+      <div>
+        <button className="button-23" onClick={manageSpotButton}>Manage Spot</button>
+        <button className="button-23" onClick={manageBookingButton}>Manage Booking</button>
+        <button className="button-23" onClick={logout}>Log Out</button>
       </div>
+    ) : (
+      <div className='user-drop-down-information'>
+        <OpenModalButton
+          buttonText="Log In"
+          onButtonClick={closeMenu}
+          modalComponent={<LoginFormModal />}
+        />
+        <OpenModalButton
+          buttonText="Sign Up"
+          onButtonClick={closeMenu}
+          modalComponent={<SignupFormModal />}
+        />
+      </div>
+    )}
+  </ul>
+</div>
+
     </div>
   );
   

@@ -50,6 +50,16 @@ function SpotDetail(){
     }
 }
 
+const headlinefunction = () => { 
+  if(spots.numReviews > 1){ 
+      return <p>&#9733;{fixedDecimal(spots.avgRating)} · {spots.numReviews} Reviews  · <i class="fa-solid fa-award"></i> Superhost · {spots.city}, {spots.country} </p>
+  }else if(spots.numReviews === 1) { 
+      return <p>&#9733;{fixedDecimal(spots.avgRating)} · {spots.numReviews} Review  · <i class="fa-solid fa-award"></i> Superhost · {spots.city}, {spots.country} </p>
+  }else {
+    return <p>&#9733;{fixedDecimal(spots.avgRating)} · {spots.numReviews} Review  · <i class="fa-solid fa-award"></i> Superhost · {spots.city}, {spots.country} </p>
+}
+}
+
   
 if (!key) {
     return null;
@@ -122,8 +132,8 @@ const fixedDecimal = (num) => {
       };
 
     const containerStyle = {
-        width: '800px',
-        height: '100%',
+        width: '100%',
+        height: '500px',
       };
 
     const center = { 
@@ -171,51 +181,78 @@ const fixedDecimal = (num) => {
           </>
         );
       };
+      console.log(spots)
 
       return (
-        <div className='spot-detail-page'>
+        <div className='listing-container'>
           {isLoaded ? (
-            <div className='spot-detail-leftside-container'>
+            <div className='listing-left-container'>
               <h1>{spots.name}</h1>
-              <h2>
-                {spots.city},&nbsp;
-                {spots.state},&nbsp;
-                {spots.country}
-              </h2>
+              
+              <div className='spot-headline'>
+                <p>{headlinefunction()}</p>
+              </div>
       
-              <div>
-                {spots.SpotImages.map(image => (
+              <div className='listing-images'>
+                {spots.SpotImages.map((image) => (
                   <img
                     alt="spotdetail-image"
                     src={image.url}
-                    className="spot-image-spot-page"
+                    className="listing-image"
                   />
                 ))}
               </div>
       
-              <div className='spot-detail-info-container'>
-                <div className='spot-detail-info'>
-                  <h3 className='host-text'>Hosted By:</h3>
-                  <h3 className='host-text'>{spots.Owner.firstName}</h3>
-                  <h3 className='host-text'>{spots.Owner.lastName}</h3>
+              <div className='listing-info-container'>
+                <div className='listing-info'>
+                  <h3 className='host-text'>Hosted By: {spots.Owner.firstName}, {spots.Owner.lastName} </h3>
+                  <h4><i className="fas fa-home"></i> Room in a rental unit</h4>
+                  <h4><i className="far fa-calendar-alt"></i> Free cancellation for 48 hours</h4>
+                  <h4><i className="fas fa-door-open"></i> Self check-in</h4>
+                  <h4><i class="fa-solid fa-water-ladder"></i> This is one of the few places in the area with a pool</h4>
+                  <h4><i class="fa-solid fa-briefcase"></i> A common area with wifi that’s well-suited for working</h4>
                 </div>
       
-                <div className='spot-reserve-box'>
-                  <h3>${spots.price}/night</h3>
-                  <CreateBooking />
+                <div className='listing-reserve-box'>
+                  <div className='listing-revserve-top'>
+                    <h3>${spots.price}/night</h3>
+                    {reviewFunction()} 
+                  </div>
+      
+                  <div>
+                    <CreateBooking props={spots.price} />
+                  </div>
                 </div>
               </div>
-      
+                  
+                  <div style={{borderTop: '1px solid gray', marginTop: '40px'}}> </div>
               <p>{spots.description}</p>
       
-              <div className='spot-detail-reviews'>
+                  <div style={{borderTop: '1px solid gray'}}> </div>
+
+
+            <div>
+                  <h4>Where you will be</h4>
+                  <Maps apiKey={key}/>
+            </div>
+
+
+
+            <div style={{borderTop: '1px solid gray', marginTop: '40px'}}> </div>
+
+
+
+
+
+
+
+
+
+
+              <div className='listing-reviews'>
                 <h3>Reviews</h3>
-                {reviewed && (
-                  <h3 style={{ color: 'red' }}>Already Reviewed</h3>
-                )}
-                {ownSpot && (
-                  <h3 style={{ color: 'red' }}>OwnSpot Cannot Review</h3>
-                )}
+                {reviewed && <h3 style={{ color: 'red' }}>Already Reviewed</h3>}
+                {ownSpot && <h3 style={{ color: 'red' }}>OwnSpot Cannot Review</h3>}
                 {!reviewed && !ownSpot && sessionUser && (
                   <div className={reviewed ? reviewed : undefined}>
                     <OpenModalButton
@@ -224,36 +261,62 @@ const fixedDecimal = (num) => {
                     />
                   </div>
                 )}
-      
+
+
+
+
+
                 {reviewFunction()}
       
-                <div>
+                <div className='review'>
                   {reviews && !reviews.length ? 'Be the first to post a review!' : undefined}
                   {reviews &&
-                    reviews?.map(review => (
-                      <h4 key={review.id}>
-                        {review.User.firstName}&nbsp;: &nbsp;
-                        Date:&nbsp;{review.createdAt.slice(0, 7)}&nbsp;,
-                        Comment: &nbsp;{review.review}&nbsp;
-                        Stars: &nbsp;{review.stars}
-                        {sessionUser && sessionUser.id === review.User.id ? (
-                          <div className='delete-review-button-container'>
-                            {deleteReviewButton(review.id, spots.id)}
-                          </div>
-                        ) : undefined}
-                      </h4>
+                    reviews?.map((review) => (
+                      <div className='review-content' key={review.id}>
+                        <h4>{review.User.firstName}-{convertDate(review.createdAt)}</h4>
+                        <p>{review.review}</p>
+                          {sessionUser && sessionUser.id === review.User.id ? (
+                            <div className='delete-review-button-container'>
+                              {deleteReviewButton(review.id, spots.id)}
+                            </div>
+                          ) : undefined}
+                      </div>
                     ))}
                 </div>
               </div>
             </div>
           ) : null}
-          <div className='spot-detail-rightside-container'>
-            <Maps apiKey={key}/>
-          </div>
         </div>
       );
+      
         
 }
+
+
+export const convertDate = (date) => { 
+  const newDate = new Date(date); 
+  const options = {year: 'numeric', month: 'long'}
+  return newDate.toLocaleString('en-US', options)
+}
+
+
+
+export const renderStars = (rating) => {
+  const filledStars = Math.round(rating);
+  const emptyStars = 5 - filledStars;
+  const stars = [];
+
+  for (let i = 1; i <= filledStars; i++) {
+     stars.push(<i key={i} className="fa fa-star"></i>);
+   }
+
+  for (let i = 1; i <= emptyStars; i++) {
+      stars.push(<i key={filledStars + i} className="fa fa-star-o"></i>);
+   }
+
+return stars;
+};
+
 
 
 export default SpotDetail

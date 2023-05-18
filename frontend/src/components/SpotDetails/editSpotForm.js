@@ -1,20 +1,21 @@
 import { editSpot, oneSpot, userSpot } from "../../store/spots";
 import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import { useModal } from "../../context/Modal";
 import { useEffect } from "react";
 
-function EditSpotForm( id ){ 
+function EditSpotForm(){ 
+    const { spotId } = useParams()
     const dispatch = useDispatch();
     const history = useHistory();
-    let el = useSelector(state => state.spots.userSpot.Spots)
-    const updateSpot = el.find(spot => spot.id === id.props)
+    let updateSpot = useSelector(state => state.spots.singleSpot)
     
+    console.log(updateSpot)
     const { closeModal } = useModal();
 
     useEffect(() => { 
-        dispatch(oneSpot(id.props))
+        dispatch(oneSpot(spotId))
     },[])
 
   
@@ -43,21 +44,15 @@ function EditSpotForm( id ){
     useEffect(() => { 
         const errors = [];
         
-        if(name.length < 5 || name.length > 10)errors.push('name must be between 5-10 characters')
-        if(address.length < 5 || address.length > 30) errors.push('Adress length must be between 5-30 characters')
-        if(!name) errors.push(`Name is required`);
-        if(!address) errors.push(`Address is required`);
-        if(!city) errors.push(`City is required`);
-        if(!country) errors.push(`Country is required`);
-        if(!state) errors.push(`State is required`);
-        if(!lat) errors.push(`Latitude is required`);
-        if(!lng) errors.push(`Longitude is required`);
-        if(!price) errors.push(`Price is required`);
-        if(!description) errors.push(`Description is required`);
+        if(name.length < 5 || name.length > 10)errors.push('Name must be between 5-10 characters')
+        if(address.length < 5 || address.length > 30) errors.push('Address length must be between 5-30 characters')
         if(description.length < 30)errors.push('Descriptions need to be longer than 30 characters')
         if(!Number(price))errors.push('Price must be a number');
-
+        if(!Number(lat))errors.push('Latitude must be a number');
+        if(!Number(lng))errors.push('Longitude must be a number');
          setErrors(errors)
+
+         
     },[name, address, city, state, lat, lng, price, description])
     
     
@@ -78,92 +73,166 @@ function EditSpotForm( id ){
         }
 
     
-        await dispatch(editSpot(payload, id.props))
+        await dispatch(editSpot(payload, spotId))
         .then(closeModal)
-        history.push(`/spots/${id.props}`)
+        history.push(`/spots/${spotId}`)
         
 };
 
 
-    return ( 
-        <div className="create-spot-form">
-        <h1>Edit a Spot</h1>
-        <form onSubmit={submit}>
-        <ul className="create-errors">
-        {errors.map((error, idx) => 
-          <li key={idx}>{error}</li>
-          )}
-        </ul>
+return (
+    <div className="create-spot-form">
+      <h1>Edit  Spot</h1>
+      <form onSubmit={submit} className="create-spot-main-form">
+  
         <label>
-            <input id="input"
-            placeholder="Name of your spot"
-            onChange={createName}
-            value={name}
-            required
-            >
-            </input>
-            <input id="input"
-            placeholder="Address"
-            onChange={createAddress}
-            value={address}
-            required
-            >
-            </input>
-            <input id="input"
-            placeholder="City"
-            onChange={createCity}
-            value={city}
-            required
-            >
-            </input>
-            <input id="input"
-            placeholder="State"
-            onChange={createState}
-            value={state}
-            required
-            >
-            </input>
-            <input id="input"
-            placeholder="Country"
-            onChange={createCountry}
-            value={country}
-            required
-            >
-            </input>
-            <input id="input"
-            placeholder="Price per night(USD)"
-            onChange={createPrice}
-            value={price}
-            required
-            >
-            </input>
-            <input id="input"
-            placeholder="Latitude"
-            onChange={createLatitude}
-            value={lat}
-            required
-            >
-            </input>
-            <input id="input"
-            placeholder="Longitude"
-            onChange={createLongitude}
-            value={lng}
-            required
-            >
-            </input>
-            <textarea className="input" 
-            rows={4}
-            placeholder="Description"
-            onChange={createDescription}
-            value={description}
-            required
-            >
-            </textarea>
-        </label>
-        </form>
-        <button className="create-spot-button" type="submit" onClick={submit}>Update Spot</button>
+        {errors.map((error, idx) => (
+        <div className="signuppage-errors" key={idx}>
+         {error.includes('Name') && <li>{error}</li>}
         </div>
-    )
+        ))}
+            <input
+              id="input"
+              placeholder="Name of your spot"
+              onChange={createName}
+              value={name}
+              required
+            />
+        </label>
+  
+        <label>
+        {errors.map((error, idx) => (
+        <div className="signuppage-errors" key={idx}>
+         {error.includes('Street') && <li>{error}</li>}
+        </div>
+        ))}
+            <input
+              id="input"
+              placeholder="Address"
+              onChange={createAddress}
+              value={address}
+              required
+            />
+        </label>
+  
+        <label>
+        {errors.map((error, idx) => (
+        <div className="signuppage-errors" key={idx}>
+         {error.includes('City') && <li>{error}</li>}
+        </div>
+        ))}
+            <input
+              id="input"
+              placeholder="City"
+              onChange={createCity}
+              value={city}
+              required
+            />
+        </label>
+  
+        <label>
+        {errors.map((error, idx) => (
+        <div className="signuppage-errors" key={idx}>
+         {error.includes('State') && <li>{error}</li>}
+        </div>
+        ))}
+            <input
+              id="input"
+              placeholder="State"
+              onChange={createState}
+              value={state}
+              required
+            />
+        </label>
+  
+        <label>
+        {errors.map((error, idx) => (
+        <div className="signuppage-errors" key={idx}>
+         {error.includes('Country') && <li>{error}</li>}
+        </div>
+        ))}
+            <input
+              id="input"
+              placeholder="Country"
+              onChange={createCountry}
+              value={country}
+              required
+            />
+        </label>
+  
+        <label>
+        {errors.map((error, idx) => (
+        <div className="signuppage-errors" key={idx}>
+         {error.includes('Price') && <li>{error}</li>}
+        </div>
+        ))}
+            <input
+              id="input"
+              placeholder="Price per night(USD)"
+              onChange={createPrice}
+              value={price}
+              required
+            />
+        </label>
+  
+        <label>
+        {errors.map((error, idx) => (
+        <div className="signuppage-errors" key={idx}>
+         {error.includes('Latitude') && <li>{error}</li>}
+        </div>
+        ))}
+            <input
+              id="input"
+              placeholder="Latitude"
+              onChange={createLatitude}
+              value={lat}
+              required
+            />
+        </label>
+  
+        <label>
+        {errors.map((error, idx) => (
+        <div className="signuppage-errors" key={idx}>
+         {error.includes('Longitude') && <li>{error}</li>}
+        </div>
+        ))}
+            <input
+              id="input"
+              placeholder="Longitude"
+              onChange={createLongitude}
+              value={lng}
+              required
+            />
+        </label>
+  
+        <label>
+        {errors.map((error, idx) => (
+        <div className="signuppage-errors" key={idx}>
+         {error.includes('Description') && <li>{error}</li>}
+        </div>
+        ))}
+            <textarea
+              className="input"
+              rows={4}
+              placeholder="Description"
+              onChange={createDescription}
+              value={description}
+              required
+            />
+        </label>
+  
+  
+        <button
+          className="button-23"
+          type="submit"
+          onClick={submit}
+          disabled={!!errors.length}
+        >
+          Create Spot
+        </button>
+      </form>
+    </div>
+  );
 }
 
 

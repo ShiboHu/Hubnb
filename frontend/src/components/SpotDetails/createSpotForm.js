@@ -86,7 +86,6 @@ function CreateSpot(){
 
 };
 
-console.log(errors)
 
 return (
     <div className="create-spot-form">

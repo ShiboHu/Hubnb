@@ -14,29 +14,13 @@ function ManageMySpots() {
     const dispatch = useDispatch();
     const history = useHistory();
     const userSpots = useSelector(state => state.spots.userSpots);
-    const [selectedPlace, setSelectedPlace] = useState(null);
-    const key = useSelector((state) => state.maps.key);
 
-
+  console.log(userSpots)
     useEffect(() => { 
         dispatch(userSpot())
-        dispatch(reviewDetail())
-
-        if (!key) {
-          dispatch(getKey());
-        }
-    }, [dispatch, key])
 
 
-    
-    const editSpotButton = (id) => { 
-      return <div>
-        <OpenModalButton
-        buttonText="Edit Spot"
-        modalComponent={<EditSpotForm props={id}/>}
-        />
-      </div>
-    }
+    }, [dispatch])
 
     const deleteSpotButton = (id) => { 
       return ( 
@@ -66,24 +50,6 @@ function ManageMySpots() {
       }
     }
 
-    if (!key) {
-      return null;
-    }
-
-    const handleMarkerClick = (place) => {
-      setSelectedPlace(place);
-    };
-  
-    const handleInfoWindowClose = () => {
-      setSelectedPlace(null);
-    };
-
-  const containerStyle = {
-      width: '800px',
-      height: '100%',
-    };
-
-
 
     return (
         <div className="myspot-homepage">
@@ -101,7 +67,9 @@ function ManageMySpots() {
 
           <div className="myspot-buttons">
           {deleteSpotButton(spot.id)}
-           {editSpotButton(spot.id)}
+           <button className="button-23" onClick={() => history.push(`/spot/edit/${spot.id}`)}> 
+            Edit
+           </button>
            </div>
 
           <li key={spot.id}>

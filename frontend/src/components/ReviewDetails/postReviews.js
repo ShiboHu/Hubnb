@@ -4,7 +4,7 @@ import { createReviews } from "../../store/reviews";
 import { useModal } from "../../context/Modal";
 import './reviews.css'
 
-function PostReviews({ spotId }) { 
+function PostReviews( props ) { 
   const dispatch = useDispatch();
   const { closeModal } = useModal();
 
@@ -13,6 +13,7 @@ function PostReviews({ spotId }) {
   const [rating, setRating] = useState(1);
   const [hoverRating, setHoverRating] = useState(null);
 
+console.log(rating)
   useEffect(() => { 
     const errors = [];
        
@@ -28,10 +29,10 @@ function PostReviews({ spotId }) {
         
     const payload = { 
       review,
-      rating
+      rating: parseInt(rating)
     };
         
-    await dispatch(createReviews(payload, spotId.props));
+    await dispatch(createReviews(payload, props.props));
     closeModal();
   }
 

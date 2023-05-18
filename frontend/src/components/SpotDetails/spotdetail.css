@@ -1,43 +1,112 @@
-.spot-detail-page { 
+.listing-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.listing-left-container {
   display: flex;
+  flex-direction: column;
+}
+
+.spot-headline {
+  font-size: 18px;
+  color: #888;
+}
+
+.listing-images {
+  margin-top: 20px;
+}
+
+.listing-image {
+  width: 100%;
+  max-height: 600px;
+  object-fit: cover;
+  margin-bottom: 10px;
+  border-radius: 15px;
+}
+
+.listing-info-container {
+ display: flex;
+ justify-content: space-between;
+}
+
+.listing-info {
+  margin-bottom: 20px;
+}
+
+.host-text {
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+.listing-reserve-box {
   background-color: white;
-  gap: 100px;
-  margin-left: 2%;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;}
+
+.listing-revserve-top {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.listing-revserve-top h3 {
+  margin-right: 10px;
+}
+
+.review {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.review-content { 
+  background-color: white;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+  min-width: 230px;
+  min-height: 150px;
+  max-width: 230px;
+  max-height: 250px;
 }
 
 
-.spot-detail-info-container{ 
-    display: flex;
-    justify-content: space-between;
-    border-bottom: 1px solid grey;
+.delete-review-button-container {
+  display: inline-block;
+  margin-left: 10px;
 }
 
-.spot-detail-image-container { 
-    display: flex;
-    
+p {
+  margin-top: 20px;
 }
 
-.spot-image-spot-page { 
-    border-radius: 40px;
-    width: 950px;
+h1 {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 10px;
 }
 
-.spot-reserve-box { 
-  text-align: center;
-  border: 2px solid #e6e6e6;
-  border-radius: 8px;
-  padding: 16px;
-  background-color: #f9f9f9;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-
+h3 {
+  font-size: 18px;
+  margin-bottom: 10px;
 }
 
-.spot-detail-rightside-container { 
-
+h4 {
+  font-size: 16px;
 }
 
-.map-spot-image { 
-    width: 250px;
+.fa-home,
+.fa-calendar-alt,
+.fa-door-open,
+.fa-water-ladder,
+.fa-briefcase {
+  margin-right: 8px;
 }
 
 /*create spot form css*/

@@ -51,23 +51,42 @@ ul {
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
-.profile-dropdown button {
-  width: 100%;
+.user-menu-dropdown {
+  position: relative; /* Ensure the dropdown menu is positioned relative to its container */
 }
 
-.user-drop-down-information {
-  position: absolute;
-  top: 100%;
-  right: 0;
+.user-menu {
+  list-style: none;
+  padding: 0;
+  margin: 0;
   background-color: #fff;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-  width: 200px; /* Adjust the width as needed */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  border-radius: 4px;
+  position: absolute;
+  top: 100%; /* Position the dropdown menu below its container */
+  right: 15px; /* Adjust the positioning based on your needs */
+  width: 200px; /* Set the width of the dropdown menu */
 }
 
-.user-drop-down-information button {
+.user-menu div,
+.user-menu button {
+  display: block;
   width: 100%;
-
+  padding: 10px;
+  text-align: left;
 }
+
+.user-menu button {
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.user-menu button:hover {
+  background-color: #f2f2f2;
+}
+
+
 
 
 
@@ -115,6 +134,6 @@ ul {
 }
 
 .button-23:hover{ 
-  background-color: #ece3e3;
+  background-color: #f2f2f2;
 
 }

@@ -17,10 +17,10 @@ function DeleteReviewBox(props){
         <div>
         <h1>Confirm Delete</h1>
         <h3>Are you sure you want to delete this review?</h3>
-        <button className="delete-button"
+        <button className="button-23"
         onClick={submit}
         >Yes(Delete Review)</button>
-        <button className="delete-button"
+        <button className="button-23"
         onClick={closeModal}
         >No(Keep Review)</button>
     </div>
