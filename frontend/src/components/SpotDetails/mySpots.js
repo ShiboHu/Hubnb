@@ -52,7 +52,7 @@ function ManageMySpots() {
       return Math.floor(num * 100) / 100;
     }
   }
-  let locations = userSpots.Spots.map(spot => ({ lat: spot.lat, lng: spot.lng }));
+  let locations = userSpots?.Spots?.map(spot => ({ lat: spot.lat, lng: spot.lng }));
 
   if (!key) {
     return null;
@@ -65,6 +65,7 @@ function ManageMySpots() {
     setSelectedPlace(place);
   };
   
+  console.log(selectedPlace)
   const handleInfoWindowClose = () => {
     setSelectedPlace(null);
   };
@@ -74,6 +75,8 @@ const Maps = ({ apiKey }) => {
     id: 'google-map-script',
     googleMapsApiKey: apiKey,
   });
+  
+
   
   return (
     <>
@@ -96,7 +99,7 @@ const Maps = ({ apiKey }) => {
                 <div>
                   <img
                     alt="myspotdetail-image"
-                    src={selectedPlace.previewImage}
+                    src={userSpot?.Spots?.filter(spot=> spot.lat === selectedPlace.lat).previewImage}
                     className="myspotdetail-image"
                   />
                 </div>
@@ -109,6 +112,7 @@ const Maps = ({ apiKey }) => {
     </>
   );
 };
+
   
   return (
     <div className="myspot-homepage">
