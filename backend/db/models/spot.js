@@ -68,13 +68,6 @@ module.exports = (sequelize, DataTypes) => {
     },
     description: { 
       type: DataTypes.STRING,
-      validate: { 
-        checkZero(value){ 
-          if(value.length <= 0){ 
-            throw new Error('Description is required')
-          }
-        }
-      }
     },
     avgRating: { 
       type: DataTypes.FLOAT, 
