@@ -19,10 +19,10 @@ function ConfirmBox(id){
         <div>
             <h1>Confirm Delete</h1>
             <h3>Are you sure you want to remove this spot from the listsings</h3>
-            <button className="delete-button"
+            <button className="button-23"
             onClick={sumbit}
             >Yes(Delete Spot)</button>
-            <button className="delete-button"
+            <button className="button-23"
             onClick={closeModal}
             >No(Keep Spot)</button>
         </div>

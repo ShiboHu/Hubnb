@@ -65,8 +65,7 @@ if (!key) {
     return null;
   }
 
-
-const fixedDecimal = (num) => { 
+ const fixedDecimal = (num) => { 
     if(num === 0) { 
         return '0.0'
     }
@@ -111,16 +110,7 @@ const fixedDecimal = (num) => {
           </div>
         )
     }
-    
-    const noReivews = () => { 
-        if(spots.numReviews === 0){ 
-            return <p>&#9733;New</p>
-        }else if(spots.numReviews === 1) { 
-            return <p>&#9733;{fixedDecimal(spots.avgRating)} · {spots.numReviews} Review</p>
-        }else { 
-            return <p>&#9733;{fixedDecimal(spots.avgRating)} · {spots.numReviews} Reviews</p>
-        }
-    }
+  
 
 
     const handleMarkerClick = (place) => {
@@ -210,7 +200,7 @@ const fixedDecimal = (num) => {
                   <h4><i className="far fa-calendar-alt"></i> Free cancellation for 48 hours</h4>
                   <h4><i className="fas fa-door-open"></i> Self check-in</h4>
                   <h4><i class="fa-solid fa-water-ladder"></i> This is one of the few places in the area with a pool</h4>
-                  <h4><i class="fa-solid fa-briefcase"></i> A common area with wifi that’s well-suited for working</h4>
+                  <h4><i class="fa-solid fa-briefcase"></i> A common area with wifi that's well-suited for working</h4>
                 </div>
       
                 <div className='listing-reserve-box'>

@@ -172,14 +172,9 @@ h4 {
     position: relative;
 }
 
-.myspot-card { 
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-}
 
 .myspot-homepage { 
-    margin-left: 20px;
+    display: flex;
 }
 
 .myspot-buttons { 
@@ -191,15 +186,6 @@ h4 {
     width: 10%;
 }
 
-.delete-button { 
-    width: 90%;
-    padding: 10px;
-    border-radius: 15px;
-}
-.delete-button:hover { 
-    background-color:  #dbb9b8;
-    cursor: pointer;
-}
 
 .hide-create-review-button { 
     display: none;
@@ -210,10 +196,40 @@ h4 {
 }
 
 .myspot-image { 
-  width: 750px;
+  width: 300px;
+  height: 300px;
   border-radius: 15px;
 }
 
+.myspot-image:hover { 
+  cursor: pointer;
+}
+
 .myspot-left-container { 
-  width: 50%;
+  width: 35%;
+  margin-left: 3%;
+}
+
+.myspot-ul-card { 
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.myspot-card-column h4,
+.myspot-card-column div,
+.myspot-card-column p {
+  margin: 1px;
+  padding: 0;
+}
+
+.myspot-right-container { 
+  width: 55%;
+  margin-right: 3%;
+  margin-left: 4%;
+}
+
+
+.myspotdetail-image { 
+  width: 300px;
 }
