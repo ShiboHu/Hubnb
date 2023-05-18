@@ -34,17 +34,7 @@ const validateSpot = [
     handleValidationErrors,
   ];
 
-  const validateReview = [
-    check("review")
-      .exists({ checkFalsy: true })
-      .withMessage("Review text is required"),
-    check("stars")
-      .exists({ checkFalsy: true })
-      .withMessage("Stars is required")
-    //   .isInt({ min: 1, max: 5 })
-      .withMessage("Stars must be an integer from 1 to 5"),
-    handleValidationErrors,
-  ];
+
 
 
   // get all spots 
@@ -361,7 +351,7 @@ router.post('/:id/images', requireAuth, async (req, res) => {
 
 
     //Edit a spot
-    router.put('/:spotId', validateSpot, requireAuth, async (req, res) => { 
+    router.put('/:spotId', requireAuth, async (req, res) => { 
         const { name, ownerId, address, city, country, 
              price, lat, lng, description } = req.body;
 
@@ -478,7 +468,7 @@ router.post('/:id/images', requireAuth, async (req, res) => {
     });
 
     //create a review for a spot base on spot id
-     router.post('/:spotId/reviews', validateReview, requireAuth, async (req, res) => { 
+     router.post('/:spotId/reviews', requireAuth, async (req, res) => { 
         const { review, stars } = req.body
 
        
