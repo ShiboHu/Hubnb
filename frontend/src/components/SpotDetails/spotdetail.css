@@ -175,6 +175,7 @@ h4 {
 
 .myspot-homepage { 
     display: flex;
+    height: 100vh;
 }
 
 .myspot-buttons { 

@@ -16,7 +16,7 @@ router.get('/current', requireAuth, async (req, res) => {
         include: { 
             model: Spot,
             attributes: { 
-              exclude: ['updatedAt', 'createdAt', 'numReviews', 'avgRating','description']
+              exclude: ['updatedAt', 'createdAt', 'numReviews','description']
             }
         }
     })
@@ -45,7 +45,7 @@ router.get('/current', requireAuth, async (req, res) => {
         }
     
     return res.json({ 
-        Bookings: booking
+        booking
     })
 });
 

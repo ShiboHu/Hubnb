@@ -33,10 +33,10 @@ function DeleteBookingModal( { props } ){
             </ul>
         <h1>Confirm Delete</h1>
         <h3>Are you sure you want to delete this Booking?</h3>
-        <button className="delete-button"
+        <button className="button-23"
         onClick={submit}
         >Yes(Delete Booking)</button>
-        <button className="delete-button"
+        <button className="button-23"
         onClick={closeModal}
         >No(Keep Booking)</button>
     </div>

@@ -11,6 +11,8 @@ import DeleteReviewBox from '../ConfirmModal/deleteReview';
 import { GoogleMap, useJsApiLoader, Marker, InfoWindow } from '@react-google-maps/api';
 import { getKey } from '../../store/map'
 import CreateBooking from '../BookingDetails';
+import hubnbimage from '../Navigation/hubnblogo.png'
+import Skeleton from 'react-loading-skeleton'
 
 
 
@@ -34,7 +36,7 @@ function SpotDetail(){
 
         setTimeout(() => { 
             setIsLoaded(true)
-        },500)
+        },700)
         
     }, [dispatch, key])
 
@@ -61,12 +63,9 @@ const headlinefunction = () => {
 }
 
   
-if (!key) {
-    return null;
-  }
 
- const fixedDecimal = (num) => { 
-    if(num === 0) { 
+const fixedDecimal = (num) => { 
+  if(num === 0) { 
         return '0.0'
     }
     // if(typeof num !== 'number' || num === 0){ 
@@ -74,49 +73,49 @@ if (!key) {
         else if (num % 1 === 0) {
               return num.toString() + '.0'
             }
-                //   return num
-                // }
+            //   return num
+            // }
                 return Math.floor(num * 100) / 100
-    }
+              }
             
-            let reviewed = false; 
-            if(reviews && sessionUser){
+              let reviewed = false; 
+              if(reviews && sessionUser){
                 reviews.forEach(review => { 
-                    if(review.userId === sessionUser.id){ 
+                  if(review.userId === sessionUser.id){ 
                         reviewed = true
                     }
-                })
-            }
-            
-            let ownSpot = false;
-            if(sessionUser){
-                if(spots.ownerId === sessionUser.id){ 
-                    ownSpot = true
+                  })
                 }
-            }
             
-    const deleteReviewButton = (id, spotId) => { 
+                let ownSpot = false;
+                if(sessionUser){
+                if(spots.ownerId === sessionUser.id){ 
+                  ownSpot = true
+                }
+              }
+            
+              const deleteReviewButton = (id, spotId) => { 
                 let props = { 
-                    id, 
-                    spotId
+                  id, 
+                  spotId
                 }
                 
                 return ( 
-                    <div> 
+                  <div> 
             <OpenModalButton 
             buttonText="Delete"
             modalComponent={<DeleteReviewBox  props={props} />}
             />
           </div>
         )
-    }
+      }
   
-
-
-    const handleMarkerClick = (place) => {
+      
+      
+      const handleMarkerClick = (place) => {
         setSelectedPlace(place);
       };
-    
+      
       const handleInfoWindowClose = () => {
         setSelectedPlace(null);
       };
@@ -125,32 +124,32 @@ if (!key) {
         width: '100%',
         height: '500px',
       };
-
-    const center = { 
-        lat: spots.lat,
-        lng: spots.lng
-    }
-
-    const Maps = ({ apiKey }) => {
+      
+      const center = { 
+        lat: +spots.lat,
+        lng: +spots.lng
+      }
+      
+      const Maps = ({ apiKey }) => {
         const { isLoaded } = useJsApiLoader({
           id: 'google-map-script',
           googleMapsApiKey: apiKey,
         });
-      
+        
         return (
           <>
             {isLoaded && (
               <GoogleMap
-                mapContainerStyle={containerStyle}
-                center={center}
-                zoom={10}
-                >
+              mapContainerStyle={containerStyle}
+              center={center}
+              zoom={10}
+              >
                  <Marker position={center} onClick={() => handleMarkerClick(center)}/>
             {selectedPlace && (
-            <InfoWindow
+              <InfoWindow
               position={selectedPlace}
               onCloseClick={handleInfoWindowClose}
-            >
+              >
               <div>
                 <h3>Place Details</h3>
                 <div>
@@ -159,8 +158,9 @@ if (!key) {
                     alt="spotdetail-image"
                     src={image.url}
                     className="map-spot-image"
-                  />
-                ))}
+                    style={{width: '200px'}}
+                    />
+                    ))}
               </div>
                 <p>${spots.price}/night</p>
               </div>
@@ -171,8 +171,11 @@ if (!key) {
           </>
         );
       };
+     
+      if (!key) {
+          return null;
+        }
       console.log(spots)
-
       return (
         <div className='listing-container'>
           {isLoaded ? (
@@ -184,13 +187,13 @@ if (!key) {
               </div>
       
               <div className='listing-images'>
-                {spots.SpotImages.map((image) => (
+               
                   <img
                     alt="spotdetail-image"
-                    src={image.url}
+                    src={spots.SpotImages.includes('Current') ? hubnbimage : spots.SpotImages[0].url}
                     className="listing-image"
                   />
-                ))}
+            
               </div>
       
               <div className='listing-info-container'>
@@ -275,7 +278,31 @@ if (!key) {
                 </div>
               </div>
             </div>
-          ) : null}
+          ) : ( 
+            <div className='listing-left-container'>
+              <Skeleton width={200} height={40} baseColor="grey" highlightColor="white"></Skeleton>
+
+              <div className='spot-headline' style={{marginTop:'20px'}}>
+                <Skeleton width={500} height={30} baseColor="grey" highlightColor="white"></Skeleton>
+              </div>
+              
+              <div className='listing-images'>
+                <Skeleton className='listing-image' height={600} baseColor="grey" highlightColor="white"/>
+              </div>
+
+              <div className='listing-info-container'>
+                <div className='listing-info'>
+                  <Skeleton className='host-text'  width={400} baseColor="grey" highlightColor="white"/>
+                  <Skeleton className='host-text' count={5} width={300} baseColor="grey" highlightColor="white"/>
+                </div>
+
+             
+                <Skeleton width={285} height={500} baseColor="grey" highlightColor="white"></Skeleton>
+            
+              </div>
+
+            </div>
+          )}
         </div>
       );
       

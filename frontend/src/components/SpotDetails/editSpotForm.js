@@ -11,7 +11,6 @@ function EditSpotForm(){
     const history = useHistory();
     let updateSpot = useSelector(state => state.spots.singleSpot)
     
-    console.log(updateSpot)
     const { closeModal } = useModal();
 
     useEffect(() => { 
@@ -228,7 +227,7 @@ return (
           onClick={submit}
           disabled={!!errors.length}
         >
-          Create Spot
+          Edit Spot
         </button>
       </form>
     </div>

@@ -8,12 +8,8 @@ import ConfirmBox from "../ConfirmModal";
 import { reviewDetail } from "../../store/reviews";
 import { GoogleMap, useJsApiLoader, Marker, InfoWindow } from '@react-google-maps/api';
 import { getKey } from '../../store/map';
-
-
-const containerStyle = {
-  width: '100%',
-  height: '100vh',
-};
+import hubnbimage from '../Navigation/hubnblogo.png'
+import './spotdetail.css'
 
 function ManageMySpots() { 
   const dispatch = useDispatch();
@@ -21,15 +17,23 @@ function ManageMySpots() {
   const userSpots = useSelector(state => state.spots.userSpots);
   const [selectedPlace, setSelectedPlace] = useState(null);
   const key = useSelector((state) => state.maps.key);
+  const [isLoaded, setIsLoaded] = useState(false)
 
   console.log(userSpots);
 
   useEffect(() => { 
+
     dispatch(userSpot());
+
+
+    setTimeout(() => { 
+      setIsLoaded(true)
+    }, 800)
 
     if (!key) {
       dispatch(getKey());
     }
+
   }, [dispatch, key]);
 
   const deleteSpotButton = (id) => { 
@@ -52,14 +56,12 @@ function ManageMySpots() {
       return Math.floor(num * 100) / 100;
     }
   }
-  let locations = userSpots?.Spots?.map(spot => ({ lat: spot.lat, lng: spot.lng }));
+  let locations = userSpots?.Spots?.map(spot => ({ lat: +spot.lat, lng: +spot.lng }));
 
   if (!key) {
     return null;
   }
   
-
-
 
   const handleMarkerClick = (place) => {
     setSelectedPlace(place);
@@ -69,6 +71,12 @@ function ManageMySpots() {
   const handleInfoWindowClose = () => {
     setSelectedPlace(null);
   };
+
+  const containerStyle = {
+    width: '100%',
+    height: '100%',
+  };
+  
 
 const Maps = ({ apiKey }) => {
   const { isLoaded } = useJsApiLoader({
@@ -83,10 +91,10 @@ const Maps = ({ apiKey }) => {
       {isLoaded && (
         <GoogleMap
           mapContainerStyle={containerStyle}
-          center={locations.length > 0 ? locations[0] : null}
+          center={locations?.length > 0 ? locations[0] : null}
           zoom={10}
         >
-          {locations.map((location, index) => (
+          {locations?.map((location, index) => (
             <Marker key={index} position={location} onClick={() => handleMarkerClick(location)} />
           ))}
           {selectedPlace && (
@@ -126,20 +134,23 @@ const Maps = ({ apiKey }) => {
           <ul className='myspot-ul-card'>
             {userSpots?.Spots?.map((spot) => (
               <div key={spot.id} className="myspot-card-column">
+
+                <div key={spot.id} className="myspot-card-column">
+
+                  <div className="image-containered">
                 <div className="myspot-buttons">
                   {deleteSpotButton(spot.id)}
                   <button className="button-23" onClick={() => history.push(`/spot/edit/${spot.id}`)}> 
                     Edit Spot
                   </button>
                 </div>
-
-                <div key={spot.id} className="myspot-card-column">
                   <img 
                     onClick={()=> {history.push(`/spots/${spot.id}`)}}
                     className="myspot-image" 
-                    src={spot.previewImage} 
+                    src={spot.previewImage.includes('not') ? hubnbimage : spot.previewImage} 
                     alt="previewimages"
                     />
+                    </div>
                     
                   <div className="landing-firstline-container">
                     <h4 className="title-text"> {spot.name}</h4>
@@ -161,8 +172,8 @@ const Maps = ({ apiKey }) => {
         </div>
       </div>
 
-      <div className="myspot-right-container"> 
-        <Maps apiKey={key} />
+      <div className="myspot-right-container" > 
+        <Maps apiKey={key}/>
       </div>
 
     </div>

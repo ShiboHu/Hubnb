@@ -33,7 +33,33 @@ module.exports = {
       spotId: 5, 
       url: 'https://a0.muscache.com/im/pictures/miso/Hosting-48225744/original/310a27fd-a714-4e89-bcb3-a55b20f68c85.jpeg?im_w=1200',
       preview: true
-    }
+    },
+    { 
+      spotId: 6, 
+      url: 'https://a0.muscache.com/im/pictures/82c577ee-3422-4fda-ae09-6716d76e8bef.jpg?im_w=1200',
+      preview: true
+    },
+    { 
+      spotId: 7, 
+      url: 'https://a0.muscache.com/im/pictures/prohost-api/Hosting-46392684/original/3cf8b1b6-e7ea-4b4a-982a-d5c1b7c1d4b8.jpeg?im_w=1200',
+      preview: true
+    },
+    { 
+      spotId: 8, 
+      url: 'https://a0.muscache.com/im/pictures/9cef5c15-9f3b-4159-99c8-bc8939013907.jpg?im_w=1200',
+      preview: true
+    },
+    { 
+      spotId: 9, 
+      url: 'https://a0.muscache.com/im/pictures/prohost-api/Hosting-862658880612163925/original/e687611d-40ed-4f06-b957-12f068794d09.jpeg?im_w=1200',
+      preview: true
+    },
+    { 
+      spotId: 10, 
+      url: 'https://a0.muscache.com/im/pictures/miso/Hosting-852648839472089209/original/293aeb86-b8ca-4c3f-a416-350de1c2a80f.jpeg?im_w=1200',
+      preview: true
+    },
+
    ])
   },
 

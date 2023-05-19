@@ -1,6 +1,5 @@
 .manage-booking-title { 
-    margin-top: 100px;
-    margin-left: 20px;
+    margin-left: 3%;
 }
 
 .bookings-image { 
@@ -11,6 +10,27 @@
 .bookings-page-left-container { 
     width: 47%;
     margin-left: 3%;
+}
+
+.image-container {
+  position: relative; /* Set position to relative for the container */
+}
+
+.image-container button {
+  position: absolute; /* Set position to absolute for the delete button */
+  top: 10px; /* Adjust the top position of the button as needed */
+  right: 10px; /* Adjust the left position of the button as needed */
+  z-index: 2; /* Set a higher z-index for the button to appear on top */
+}
+
+.image-containered { 
+  position: relative;
+}
+
+.image-containered .myspot-buttons { 
+  position: absolute;
+  top: 5px;
+  z-index: 2;
 }
 
 

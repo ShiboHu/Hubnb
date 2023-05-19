@@ -9,6 +9,7 @@ import ManageMySpots from "./components/SpotDetails/mySpots";
 import ManageMyBookings from "./components/BookingDetails/myBookings";
 import CreateSpot from "./components/SpotDetails/createSpotForm";
 import EditSpotForm from "./components/SpotDetails/editSpotForm";
+import ScrollToTop from "./components/ScrollToTop/ScrollToTop";
 
 function App() {
   const dispatch = useDispatch();
@@ -20,7 +21,9 @@ function App() {
   return (
     <>
       <Navigation isLoaded={isLoaded} />
+      <ScrollToTop />
       {isLoaded && (
+
         <Switch>
 
           <Route exact path={'/'}>
