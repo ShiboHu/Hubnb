@@ -6,7 +6,7 @@ import OpenModalButton from "../OpenModalButton";
 import EditSpotForm from "./editSpotForm";
 import ConfirmBox from "../ConfirmModal";
 import { reviewDetail } from "../../store/reviews";
-import { GoogleMap, useJsApiLoader, Marker, InfoWindow } from '@react-google-maps/api';
+import { GoogleMap, useJsApiLoader, Marker, InfoWindow, OverlayView } from '@react-google-maps/api';
 import { getKey } from '../../store/map';
 import hubnbimage from '../Navigation/hubnblogo.png'
 import './spotdetail.css'
@@ -56,7 +56,7 @@ function ManageMySpots() {
       return Math.floor(num * 100) / 100;
     }
   }
-  let locations = userSpots?.Spots?.map(spot => ({ lat: +spot.lat, lng: +spot.lng }));
+  let locations = userSpots?.Spots ? userSpots.Spots.map(spot => ({ lat: +spot.lat, lng: +spot.lng })) : [];
 
   if (!key) {
     return null;
@@ -76,16 +76,13 @@ function ManageMySpots() {
     width: '100%',
     height: '100%',
   };
-  
 
 const Maps = ({ apiKey }) => {
   const { isLoaded } = useJsApiLoader({
     id: 'google-map-script',
     googleMapsApiKey: apiKey,
   });
-  
 
-  
   return (
     <>
       {isLoaded && (
@@ -95,7 +92,17 @@ const Maps = ({ apiKey }) => {
           zoom={10}
         >
           {locations?.map((location, index) => (
-            <Marker key={index} position={location} onClick={() => handleMarkerClick(location)} />
+            <OverlayView 
+            key={index}
+            position={location}
+            mapPaneName={OverlayView.OVERLAY_MOUSE_TARGET}
+            >
+            <div className="spot-marker">
+            <button className="button-23" onClick={() => setSelectedPlace(location)}>
+            ${userSpots?.Spots?.find(spot => spot.lat === location.lat)?.price}
+             </button>
+               </div>
+            </OverlayView>
           ))}
           {selectedPlace && (
             <InfoWindow
@@ -107,11 +114,13 @@ const Maps = ({ apiKey }) => {
                 <div>
                   <img
                     alt="myspotdetail-image"
-                    src={userSpot?.Spots?.filter(spot=> spot.lat === selectedPlace.lat).previewImage}
+                    src={userSpots?.Spots?.find(spot => spot.lat === selectedPlace.lat)?.previewImage}
                     className="myspotdetail-image"
+                    onClick={() => history.push(`/spots/${userSpots?.Spots?.find(spot => spot.lat === selectedPlace.lat)?.id}`)}
+                    style={{cursor:'pointer'}}
                   />
                 </div>
-                <p>${selectedPlace.price}/night</p>
+                <p>${userSpots?.Spots?.find(spot => spot.lat === selectedPlace.lat)?.price}/night</p>
               </div>
             </InfoWindow>
           )}
@@ -173,7 +182,7 @@ const Maps = ({ apiKey }) => {
       </div>
 
       <div className="myspot-right-container" > 
-        <Maps apiKey={key}/>
+        <Maps apiKey={key} userSpots={userSpots}/>
       </div>
 
     </div>

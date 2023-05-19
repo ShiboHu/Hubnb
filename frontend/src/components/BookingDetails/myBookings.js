@@ -42,7 +42,7 @@ function ManageMyBookings(){
             }
           }
         
-          let locations = mybookings?.booking?.map(spot => ({ lat: +spot.Spot.lat, lng: +spot.Spot.lng }));
+          let locations = mybookings?.booking ? mybookings.booking.map(spot => ({ lat: +spot.Spot.lat, lng: +spot.Spot.lng })) : [];
 
           console.log(mybookings)
           if (!key) {
@@ -64,13 +64,13 @@ function ManageMyBookings(){
           };
           
         
-        const Maps = ({ apiKey }) => {
+          console.log(mybookings?.booking.find(booking => booking.Spot.lat === 34.196395)?.Spot.previewImage);
+          const Maps = ({ apiKey }) => {
           const { isLoaded } = useJsApiLoader({
             id: 'google-map-script',
             googleMapsApiKey: apiKey,
           });
           
-        
           
           return (
             <>
@@ -81,7 +81,16 @@ function ManageMyBookings(){
                   zoom={10}
                 >
                   {locations?.map((location, index) => (
-                    <Marker key={index} position={location} onClick={() => handleMarkerClick(location)} />
+                    <Marker
+                 key={index}
+                        position={location}
+                 icon={{
+                         url: 'https://cdn-icons-png.flaticon.com/512/2357/2357048.png',
+                       scaledSize: new window.google.maps.Size(40, 40),
+                     anchor: new window.google.maps.Point(20, 20), // Adjust the anchor values as needed
+                    }}
+                 onClick={() => handleMarkerClick(location)}
+                 />
                   ))}
                   {selectedPlace && (
                     <InfoWindow
@@ -89,15 +98,14 @@ function ManageMyBookings(){
                       onCloseClick={handleInfoWindowClose}
                     >
                       <div>
-                        <h3>Place Details</h3>
+                        <h3>Your Booked At This Place</h3>
                         <div>
                           <img
                             alt="myspotdetail-image"
-                            src={mybookings?.Spots?.filter(spot=> spot.lat === selectedPlace.lat).previewImage}
+                            src={mybookings?.booking?.find(spot=> spot.Spot.lat === selectedPlace.lat)?.Spot.previewImage}
                             className="myspotdetail-image"
                           />
                         </div>
-                        <p>${selectedPlace.price}/night</p>
                       </div>
                     </InfoWindow>
                   )}
