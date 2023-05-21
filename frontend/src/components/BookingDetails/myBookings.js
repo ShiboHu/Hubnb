@@ -9,6 +9,7 @@ import { getKey } from '../../store/map';
 import hubnbimage from '../Navigation/hubnblogo.png'
 import { useHistory } from "react-router-dom";
 import Skeleton from 'react-loading-skeleton'
+import ReactLoading from "react-loading";
 
 
 function ManageMyBookings(){ 
@@ -25,7 +26,7 @@ function ManageMyBookings(){
 
         setTimeout(() => { 
             setIsLoadeded(true)
-        }, 800)
+        }, 1500)
 
         if (!key) {
             dispatch(getKey());
@@ -65,7 +66,6 @@ function ManageMyBookings(){
           };
           
         
-          console.log(mybookings?.booking.find(booking => booking.Spot.lat === 34.196395)?.Spot.previewImage);
           const Maps = ({ apiKey }) => {
           const { isLoaded } = useJsApiLoader({
             id: 'google-map-script',
@@ -174,21 +174,11 @@ function ManageMyBookings(){
           </div>
           </>
           ) : ( 
-            <div className="myspot-left-container">
+            <div style={{marginLeft:'50%', marginTop:'20%'}}>
+            <ReactLoading type="spokes" color="#0000FF"
+            height={100} width={50} />
+          </div>
 
-              <div className="headers">
-              <Skeleton width={200} height={40} baseColor="grey" highlightColor="white"></Skeleton>
-             </div>
-
-             <div className="spot-card">
-              <ul className="myspot-ul-card">
-
-              </ul>
-             </div>
-
-
-          
-            </div>
 
           )}
         </div>

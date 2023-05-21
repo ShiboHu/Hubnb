@@ -10,6 +10,7 @@ import { GoogleMap, useJsApiLoader, Marker, InfoWindow, OverlayView } from '@rea
 import { getKey } from '../../store/map';
 import hubnbimage from '../Navigation/hubnblogo.png'
 import './spotdetail.css'
+import ReactLoading from "react-loading";
 
 function ManageMySpots() { 
   const dispatch = useDispatch();
@@ -19,7 +20,6 @@ function ManageMySpots() {
   const key = useSelector((state) => state.maps.key);
   const [isLoaded, setIsLoaded] = useState(false)
 
-  console.log(userSpots);
 
   useEffect(() => { 
 
@@ -28,7 +28,7 @@ function ManageMySpots() {
 
     setTimeout(() => { 
       setIsLoaded(true)
-    }, 800)
+    }, 1500)
 
     if (!key) {
       dispatch(getKey());
@@ -133,7 +133,8 @@ const Maps = ({ apiKey }) => {
   
   return (
     <div className="myspot-homepage">
-
+      {isLoaded ? (
+        <>
       <div className="myspot-left-container">
         <div className="headers">
           <h1>Manage Your Spots</h1>
@@ -184,7 +185,13 @@ const Maps = ({ apiKey }) => {
       <div className="myspot-right-container" > 
         <Maps apiKey={key} userSpots={userSpots}/>
       </div>
-
+      </>
+      ) : (
+        <div style={{marginLeft:'50%', marginTop:'20%'}}>
+        <ReactLoading type="spokes" color="#0000FF"
+        height={100} width={50} />
+      </div>
+      )}
     </div>
   );
 }
