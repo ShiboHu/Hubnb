@@ -8,6 +8,7 @@ import { GoogleMap, useJsApiLoader, Marker, InfoWindow } from '@react-google-map
 import { getKey } from '../../store/map';
 import hubnbimage from '../Navigation/hubnblogo.png'
 import { useHistory } from "react-router-dom";
+import Skeleton from 'react-loading-skeleton'
 
 
 function ManageMyBookings(){ 
@@ -16,14 +17,14 @@ function ManageMyBookings(){
     const mybookings = useSelector(state => state.bookings.bookings);
     const [selectedPlace, setSelectedPlace] = useState(null);
     const key = useSelector((state) => state.maps.key);
-    const [isLoaded, setIsLoaded] = useState(false)
+    const [isLoadeded, setIsLoadeded] = useState(false)
 
 
     useEffect(() => { 
         dispatch(getCurrentBooking())
 
         setTimeout(() => { 
-            setIsLoaded(true)
+            setIsLoadeded(true)
         }, 800)
 
         if (!key) {
@@ -118,7 +119,9 @@ function ManageMyBookings(){
 
     return (
         <div className="myspot-homepage">
-    
+          
+          {isLoadeded ? (
+            <>
           <div className="myspot-left-container">
             <div className="headers">
               <h1>Manage Your Bookings</h1>
@@ -169,7 +172,25 @@ function ManageMyBookings(){
           <div className="myspot-right-container" > 
             <Maps apiKey={key}/>
           </div>
-    
+          </>
+          ) : ( 
+            <div className="myspot-left-container">
+
+              <div className="headers">
+              <Skeleton width={200} height={40} baseColor="grey" highlightColor="white"></Skeleton>
+             </div>
+
+             <div className="spot-card">
+              <ul className="myspot-ul-card">
+
+              </ul>
+             </div>
+
+
+          
+            </div>
+
+          )}
         </div>
       );
 }
