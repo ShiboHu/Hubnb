@@ -43,4 +43,5 @@ Terminal(2-frontend): npm start
 - Googlemap api
 - HTML/CSS
 - S3 AWS
+- etc...
 
