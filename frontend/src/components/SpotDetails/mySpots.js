@@ -67,7 +67,6 @@ function ManageMySpots() {
     setSelectedPlace(place);
   };
   
-  console.log(selectedPlace)
   const handleInfoWindowClose = () => {
     setSelectedPlace(null);
   };
@@ -104,11 +103,12 @@ const Maps = ({ apiKey }) => {
                </div>
             </OverlayView>
           ))}
-          {selectedPlace && (
+          {!!selectedPlace && (
             <InfoWindow
               position={selectedPlace}
               onCloseClick={handleInfoWindowClose}
             >
+              {userSpots &&(
               <div>
                 <h3>Place Details</h3>
                 <div>
@@ -122,6 +122,7 @@ const Maps = ({ apiKey }) => {
                 </div>
                 <p>${userSpots?.Spots?.find(spot => spot.lat === selectedPlace.lat)?.price}/night</p>
               </div>
+                )}
             </InfoWindow>
           )}
         </GoogleMap>
@@ -188,7 +189,7 @@ const Maps = ({ apiKey }) => {
       </>
       ) : (
         <div style={{marginLeft:'50%', marginTop:'20%'}}>
-        <ReactLoading type="spokes" color="#0000FF"
+        <ReactLoading type="spokes" color="#888"
         height={100} width={50} />
       </div>
       )}

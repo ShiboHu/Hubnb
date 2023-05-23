@@ -175,7 +175,7 @@ function ManageMyBookings(){
           </>
           ) : ( 
             <div style={{marginLeft:'50%', marginTop:'20%'}}>
-            <ReactLoading type="spokes" color="#0000FF"
+            <ReactLoading type="spokes" color="#888"
             height={100} width={50} />
           </div>
 
