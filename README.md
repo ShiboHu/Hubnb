@@ -30,9 +30,9 @@ npm install
 
 ### 4. Run the application 
 
-In 2 separate terminal windows. 
-Terminal(1-backend):npm start
-Terminal(2-frontend): npm start
+- In 2 separate terminal windows. 
+  - Terminal(1-backend):npm start
+  - Terminal(2-frontend): npm start
 
 
 ## Technologies Used
