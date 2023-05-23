@@ -36,11 +36,11 @@ Terminal(2-frontend): npm start
 
 
 ## Technologies Used
--Node.js
--Express.js
--React/Redux
--PostgreSQL
--Googlemap api
--HTML/CSS
--S3 AWS
+- Node.js
+- Express.js
+- React/Redux
+- PostgreSQL
+- Googlemap api
+- HTML/CSS
+- S3 AWS
 
