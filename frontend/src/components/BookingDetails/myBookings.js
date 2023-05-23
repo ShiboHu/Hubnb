@@ -144,7 +144,7 @@ function ManageMyBookings(){
                         <img
                           onClick={() => { history.push(`/spots/${spot.Spot.id}`) }}
                           className="myspot-image" 
-                          src={spot.Spot.previewImage.includes('not') ? hubnbimage : spot.Spot.previewImage} 
+                          src={spot?.Spot?.previewImage?.includes('not') ? hubnbimage : spot?.Spot?.previewImage} 
                           alt="previewimages"
                         />
                         </div>

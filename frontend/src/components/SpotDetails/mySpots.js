@@ -114,7 +114,7 @@ const Maps = ({ apiKey }) => {
                 <div>
                   <img
                     alt="myspotdetail-image"
-                    src={userSpots?.Spots?.find(spot => spot.lat === selectedPlace.lat)?.previewImage}
+                    src={userSpots?.Spots?.find(spot => spot?.lat === selectedPlace?.lat)?.previewImage}
                     className="myspotdetail-image"
                     onClick={() => history.push(`/spots/${userSpots?.Spots?.find(spot => spot.lat === selectedPlace.lat)?.id}`)}
                     style={{cursor:'pointer'}}
