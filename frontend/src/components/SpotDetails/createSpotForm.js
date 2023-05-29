@@ -32,6 +32,7 @@ function CreateSpot(){
     const createDescription = (e) => setDescription(e.target.value);
     const createPreviewImage = (e) => setPreviewImage(e.target.value);
     
+    
     useEffect(() => { 
         const errors = [];
         
