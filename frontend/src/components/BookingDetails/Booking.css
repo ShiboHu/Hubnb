@@ -53,7 +53,7 @@
   }
   
   .calendar input[type="date"] {
-    width: 100%;
+    width: 300px;
     padding: 8px;
     border: 1px solid #ccc;
     border-radius: 4px;

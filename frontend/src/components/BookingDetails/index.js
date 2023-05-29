@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { createBookings } from '../../store/booking';
 import { useHistory, useParams } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Calendar from 'react-calendar';
 import moment from 'moment';
 
@@ -9,6 +9,8 @@ function CreateBooking( props ) {
   const { spotId } = useParams();
   const dispatch = useDispatch();
   const history = useHistory();
+
+  const currentUser = useSelector(state => state.session.user)
 
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');

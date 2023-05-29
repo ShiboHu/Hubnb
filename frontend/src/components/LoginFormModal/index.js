@@ -61,9 +61,13 @@ function LoginFormModal() {
             required
           />
         </label>
+
+    <div style={{display:"flex", gap:'10px'}}>    
         <button className="button-23" type="submit" disabled={disabled}>Log In</button>
+    <button className="button-23" onClick={demoLogin}>Demo</button>
+    </div>
+
       </form>
-    <button className="button-23" onClick={demoLogin}>Demo User Login</button>
     </div>
   );
 }

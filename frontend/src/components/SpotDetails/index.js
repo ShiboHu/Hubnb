@@ -175,7 +175,7 @@ const fixedDecimal = (num) => {
       if (!key) {
           return null;
         }
-      console.log(spots)
+        
       return (
         <div className='listing-container'>
           {isLoaded ? (
