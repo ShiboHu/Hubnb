@@ -46,7 +46,6 @@ function ManageMyBookings(){
         
           let locations = mybookings?.booking ? mybookings.booking.map(spot => ({ lat: +spot.Spot.lat, lng: +spot.Spot.lng })) : [];
 
-          console.log(mybookings)
           if (!key) {
             return null;
           }

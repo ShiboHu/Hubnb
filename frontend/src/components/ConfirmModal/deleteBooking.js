@@ -18,7 +18,6 @@ function DeleteBookingModal( { props } ){
         }
         catch (e) { 
             const data = await e.json();
-            console.log(data)
             if(data && data.message){ 
                 setErrors(data.message)
             }

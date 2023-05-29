@@ -13,7 +13,6 @@ function PostReviews( props ) {
   const [rating, setRating] = useState(1);
   const [hoverRating, setHoverRating] = useState(null);
 
-console.log(rating)
   useEffect(() => { 
     const errors = [];
        

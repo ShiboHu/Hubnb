@@ -67,7 +67,6 @@ export const getCurrentReview = () => async dispatch => {
     const res = await csrfFetch('/api/reviews/current')
     if(res.ok){ 
         const allReview = await res.json()
-        console.log(allReview)
         dispatch(loadUserReviews(allReview))
         return allReview
     }

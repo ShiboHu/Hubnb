@@ -52,7 +52,6 @@ function CreateBooking( props ) {
       }
     } catch (err) {
       const data = await err.json();
-      console.log(data.errors);
       if (data && data.errors) {
         setErrors(data.errors);
       }

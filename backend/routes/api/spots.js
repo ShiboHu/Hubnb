@@ -115,7 +115,6 @@ const validateSpot = [
             },
         })
 
-        console.log(lengthReview.length)
 
         if(!lengthReview){ 
             spot.numReviews = 0
@@ -127,7 +126,6 @@ const validateSpot = [
         if(!avgRatingObj.avgRating) {
             spot.avgRating = 0
         } else {
-            console.log(avgRatingObj.avgRating)
             spot.avgRating = avgRatingObj.avgRating;
         }
 
