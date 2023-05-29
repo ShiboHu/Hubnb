@@ -66,7 +66,6 @@ function LoginFormModal() {
         <button className="button-23" type="submit" disabled={disabled}>Log In</button>
     <button className="button-23" onClick={demoLogin}>Demo</button>
     </div>
-
       </form>
     </div>
   );
