@@ -103,7 +103,7 @@ const Maps = ({ apiKey }) => {
                </div>
             </OverlayView>
           ))}
-          {!!selectedPlace && (
+          {selectedPlace && (
             <InfoWindow
               position={selectedPlace}
               onCloseClick={handleInfoWindowClose}

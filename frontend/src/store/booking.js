@@ -57,6 +57,7 @@ export const deleteBooking = (id) => async dispatch => {
     if(res.ok){ 
         const data = await res.json()
         dispatch(deletebook(data.id))
+        dispatch(getCurrentBooking())
     }
 }
 

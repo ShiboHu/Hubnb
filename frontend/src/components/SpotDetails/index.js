@@ -266,7 +266,7 @@ const fixedDecimal = (num) => {
                   {reviews &&
                     reviews?.map((review) => (
                       <div className='review-content' key={review.id}>
-                        <h4>{review.User.firstName}-{convertDate(review.createdAt)}</h4>
+                        <h4>{review.User.firstName} | {convertDate(review.createdAt)}</h4>
                         <p>{review.review}</p>
                           {sessionUser && sessionUser.id === review.User.id ? (
                             <div className='delete-review-button-container'>
