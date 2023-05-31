@@ -98,7 +98,7 @@ const Maps = ({ apiKey }) => {
             >
             <div className="spot-marker">
             <button className="button-23" onClick={() => setSelectedPlace(location)}>
-            ${userSpots?.Spots?.find(spot => spot.lat === location.lat)?.price}
+            ${userSpots?.Spots?.find(spot => spot?.lat === location?.lat)?.price}
              </button>
                </div>
             </OverlayView>
@@ -116,11 +116,11 @@ const Maps = ({ apiKey }) => {
                     alt="myspotdetail-image"
                     src={userSpots?.Spots?.find(spot => spot?.lat === selectedPlace?.lat)?.previewImage}
                     className="myspotdetail-image"
-                    onClick={() => history.push(`/spots/${userSpots?.Spots?.find(spot => spot.lat === selectedPlace.lat)?.id}`)}
+                    onClick={() => history.push(`/spots/${userSpots?.Spots?.find(spot => spot?.lat === selectedPlace?.lat)?.id}`)}
                     style={{cursor:'pointer'}}
                   />
                 </div>
-                <p>${userSpots?.Spots?.find(spot => spot.lat === selectedPlace.lat)?.price}/night</p>
+                <p>${userSpots?.Spots?.find(spot => spot?.lat === selectedPlace?.lat)?.price}/night</p>
               </div>
                 )}
             </InfoWindow>
