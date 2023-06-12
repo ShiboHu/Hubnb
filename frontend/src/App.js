@@ -40,7 +40,6 @@ function App() {
           <ManageMySpots />
           </Route>
 
-
           <Route path={'/user/current/bookings'}>
           <ManageMyBookings />
           </Route>
