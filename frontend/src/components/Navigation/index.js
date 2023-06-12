@@ -34,8 +34,8 @@ function Navigation({ isLoaded }){
         Portfolio
         </i>
       </a>
-
 </div>
+
       {isLoaded && (
         <li>
           <ProfileButton user={sessionUser} />
