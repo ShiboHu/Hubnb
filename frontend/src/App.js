@@ -47,7 +47,6 @@ function App() {
           <Route path={'/create/spot'}>
             <CreateSpot />
           </Route>
-
           <Route path={'/spot/edit/:spotId'}>
           <EditSpotForm />  
           </Route>
