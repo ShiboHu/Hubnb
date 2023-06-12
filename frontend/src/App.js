@@ -22,6 +22,7 @@ function App() {
     <>
 
       <Navigation isLoaded={isLoaded} />
+      
       <ScrollToTop />
       {isLoaded && (
 
@@ -53,7 +54,7 @@ function App() {
 
         </Switch>
       )}
-      
+
     </>
   );
 }
