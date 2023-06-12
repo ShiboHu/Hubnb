@@ -20,7 +20,7 @@ function App() {
 
   return (
     <>
-    
+
       <Navigation isLoaded={isLoaded} />
       <ScrollToTop />
       {isLoaded && (
@@ -38,7 +38,6 @@ function App() {
           <Route path={'/user/current/spots'}>
           <ManageMySpots />
           </Route>
-
 
           <Route path={'/user/current/bookings'}>
           <ManageMyBookings />
