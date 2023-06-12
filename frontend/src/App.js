@@ -20,9 +20,8 @@ function App() {
 
   return (
     <>
-
       <Navigation isLoaded={isLoaded} />
-      
+
       <ScrollToTop />
       {isLoaded && (
 
