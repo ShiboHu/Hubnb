@@ -24,6 +24,7 @@ function DeleteBookingModal( { props } ){
         }
 
     }
+    
     return (
         <div>
 

@@ -9,7 +9,6 @@ function DeleteReviewBox(props){
 
     const submit = e => { 
         e.preventDefault();
-      
         dispatch(deleteCurrentReview(props.props.id, props.props.spotId));
         closeModal();
     }
