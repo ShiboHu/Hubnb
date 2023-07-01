@@ -10,16 +10,19 @@
 
 /* my reviews */ 
 
+
 .my-review-header-text { 
     margin-top: 100px;
     margin-left: 20px;
 }
+
 
 .review-cards { 
     display: flex;
     flex-wrap: wrap;
     gap: 40px;
 }
+
 
 .my-review-image { 
     width: 30%;

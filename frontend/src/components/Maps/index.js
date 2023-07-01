@@ -8,20 +8,23 @@ const MapContainer = () => {
   const key = useSelector((state) => state.maps.key);
   const dispatch = useDispatch();
 
-  
+
   useEffect(() => {
     if (!key) {
       dispatch(getKey());
     }
   }, [dispatch, key]);
 
+
   if (!key) {
     return null;
   }
+
 
   return (
     <Maps apiKey={key} />
   );
 };
+
 
 export default MapContainer;
