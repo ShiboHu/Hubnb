@@ -11,6 +11,7 @@ import CreateSpot from "./components/SpotDetails/createSpotForm";
 import EditSpotForm from "./components/SpotDetails/editSpotForm";
 import ScrollToTop from "./components/ScrollToTop/ScrollToTop";
 
+
 function App() {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
