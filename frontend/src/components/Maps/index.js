@@ -8,6 +8,7 @@ const MapContainer = () => {
   const key = useSelector((state) => state.maps.key);
   const dispatch = useDispatch();
 
+  
   useEffect(() => {
     if (!key) {
       dispatch(getKey());
