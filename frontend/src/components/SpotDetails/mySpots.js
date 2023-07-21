@@ -98,7 +98,7 @@ const Maps = ({ apiKey }) => {
             >
             <div className="spot-marker">
             <button className="button-23" onClick={() => setSelectedPlace(location)}>
-            ${userSpots?.Spots?.find(spot => spot?.lat === location?.lat)?.price}
+            HuBnB
              </button>
                </div>
             </OverlayView>
