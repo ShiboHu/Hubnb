@@ -120,7 +120,7 @@ const Maps = ({ apiKey }) => {
                     style={{cursor:'pointer'}}
                   />
                 </div>
-                <p>${userSpots?.Spots?.find(spot => spot?.lat === selectedPlace?.lat)?.price}/night</p>
+                <p>HuBnB</p>
               </div>
                 )}
             </InfoWindow>
