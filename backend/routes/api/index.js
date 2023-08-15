@@ -8,7 +8,9 @@ const spotImageRouter = require('./spotimages');
 const reviewImageRouter = require('./reviewimage');
 const mapsRouter = require('./maps');
 
+
 const { restoreUser } = require("../../utils/auth.js");
+
 
 router.use(restoreUser);
 router.use('/session', sessionRouter); //login, logout
