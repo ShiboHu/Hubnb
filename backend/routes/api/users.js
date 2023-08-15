@@ -97,7 +97,9 @@ const validateSignup = [
         user
       });
     } else return res.json({user: null });
+    
   }
+
 );
 
 
