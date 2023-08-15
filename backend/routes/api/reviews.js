@@ -18,6 +18,7 @@ const validateReview = [
       .withMessage("Stars must be an integer from 1 to 5"),
     handleValidationErrors,
   ];
+  
 
 //get all the reviews of current user;
 router.get('/current', requireAuth, async (req, res) => { 
